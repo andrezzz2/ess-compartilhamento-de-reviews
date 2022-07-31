@@ -1,0 +1,14 @@
+{
+  "name": "test-acceptance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cucumber": "^6.0.7"
+  }
+}
