@@ -47,7 +47,13 @@ Then("O site mostra uma tela para criação lista", function() {
     throw "nada criado ainda";
 });
 
+Then("O site mostra na tela as listas do usuário", function() {
+    //checar se os resultados do Then estão corretos
+    throw "nada criado ainda";
+});
+
 Then("O site mostra a lista {string}", function(listName) {
     //checar se os resultados do Then estão corretos
     throw "nada criado ainda";
 });
+
