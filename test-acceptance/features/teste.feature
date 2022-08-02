@@ -41,5 +41,9 @@ Feature: Listas de assistidos
         Then O site mostra a lista "animes"
 
 
-        
+    Scenario: O usuário deseja acessar uma de suas listas
+        Given Eu estou logado com o usuário "andrezzz"
+        And Eu estou na página "/listas"
+        When Eu clico na lista "animes"
+        Then O site mostra a lista "animes"
 
