@@ -46,4 +46,5 @@ Feature: Listas de assistidos
         And Eu estou na página "/listas"
         When Eu clico na lista "animes"
         Then O site mostra a lista "animes"
+        Then para o roteiro
 
