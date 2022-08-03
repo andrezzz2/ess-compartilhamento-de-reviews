@@ -69,3 +69,7 @@ Feature: Listas de assistidos
         Then O site mostra na tela a mensagem "lista criada"
 
     Scenario: Questao 14 commit na main
+
+    Scenario: Q 14
+        Given cenario pra questao 14
+    
