@@ -67,3 +67,5 @@ Feature: Listas de assistidos
         When Eu insiro o nome da lista "animes" 
         And Eu clico para finalizar a criação da lista
         Then O site mostra na tela a mensagem "lista criada"
+
+    Scenario: Questao 14 commit na main
