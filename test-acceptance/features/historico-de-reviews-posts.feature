@@ -15,6 +15,4 @@ Feature: Histórico de Reviews, Posts
         Given O usuário está logado com o usuário "andrezzz"
         And Eu vou para a página "/Listas"
         When Tenta clicar no histórico de Reviews
-        Then O site retorna o histórico estruturado de reviews
-
-    
+        Then O site retorna o histórico de reviews
