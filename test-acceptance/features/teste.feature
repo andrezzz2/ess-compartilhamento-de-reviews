@@ -53,7 +53,7 @@ Feature: Listas de assistidos
         And Eu estou na página "/listas"
         When Eu clico para criar uma lista
         Then O site mostra uma tela para criação lista
-        When Eu insiro o nome da lista "animes" 
+        When Modificando apenas para questao 8 do roteiro
         And Eu clico para finalizar a criação da lista
         Then O site mostra na tela a mensagem "lista já existe"
 
