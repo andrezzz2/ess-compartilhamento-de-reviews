@@ -72,4 +72,4 @@ Feature: Listas de assistidos
 
     Scenario: Q 14
         Given cenario pra questao 14
-    
+        And segundo commit questao 14
