@@ -1,17 +1,77 @@
 .HomePage {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-color: whitesmoke;
 }
 
 .HomeContainer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    min-width: 55rem;
-    background-color: gray;
+    border: 1px solid black;
+    border-radius: 0.8rem;
+    margin-top: 2rem;
+    width: 90vw;
+    height: 100%;
+}
+
+.HomeBar {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    border-bottom: 1px solid black;
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+    background-color: #240047;
+}
+
+.OptionsBar {
+    padding: 0.8rem 0.8rem 0.4rem 0.8rem;
+    color: white;
+    cursor: pointer;
+}
+
+.HomeContent {
+    display: flex;
+    width: 100%;
+}
+
+.LeftContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.WidgetContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+.WidgetContainerHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.WidgetContainerTitle {
+
+}
+
+.ViewMore {
+    font-size: 0.7rem;
+    color: #094D92;
+}
+
+.WidgetContainerContent {
+    background-color: #f6f6f6;
+    padding: 1rem;
+    border-top: 1px solid rgba(0,0,0,0.5);
+}
+
+.RightContent {
+    display: flex;
+    flex-direction: column;
 }
