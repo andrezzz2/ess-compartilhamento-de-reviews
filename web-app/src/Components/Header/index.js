@@ -1,23 +1,18 @@
 import './Styles.css';
-import MiniBanner from './MiniBanner.gif';
 
 function Header() {
     return (
         <div className="Header">
 
-            <div className='Logo'>
-                MyReviews
-            </div>
+            <span className='Logo'>
+                ReviewShare
+            </span>
 
-            <div className='MiniBanner'>
-                <img alt='mini banner' src={MiniBanner}></img>
-            </div>
-
-            <div className='Login-SignUp'>
-                <button className='HeaderButton HideAds'> Hide Ads </button>
+            <span className='Login-SignUp'>
                 <button className='HeaderButton Login'> Login </button>
                 <button className='HeaderButton SignUp'> Sign Up </button>
-            </div>
+            </span>
+
         </div>
     );
 }

@@ -1,25 +1,18 @@
 .Header {
     width: 100vw;
-    height: 3rem;
+    height: 4rem;
+    position: absolute;
+    background-color: #240047;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .Logo {
     margin: 0 2rem;
-    font-family: cursive;
-    font-size: 2rem;
-    font-weight: 800;
-    color: rgb(46,81,162);
-}
-
-.MiniBanner {
-    margin: 0 2rem;
-}
-.MiniBanner img{
-    width: 17.5rem;
-    height: 2.5rem;
+    font-family: Raleway;
+    font-size: 1.8rem;
+    color: white;
+    flex: 1;
 }
 
 .Login-SignUp {
@@ -34,7 +27,7 @@
     font-weight: bold;
     padding: 0.3rem 1.2rem;
     margin: 0 0.2rem;
-    border-radius: 0.1rem;
+    border-radius: 0.3rem;
     cursor: pointer;
     white-space: nowrap;
 }
@@ -43,20 +36,14 @@
     opacity: 0.7;
 }
 
-.HideAds {
-    background-color: rgb(235,79,0);
-    color: white;
-    border: 1px solid rgb(235,79,0);
-}
-
 .Login {
     background-color: white;
-    color: rgb(46,81,162);
-    border: 1px solid rgb(46,81,162);
+    color: #240047;
+    border: 1px solid #240047;
 }
 
 .SignUp {
-    background-color: rgb(46,81,162);
+    background-color: #5707a7;
     color: white;
-    border: 1px solid rgb(46,81,162);
+    border: 1px solid #5707a7;
 }
