@@ -4,14 +4,23 @@
     background-color: #240047;
     display: flex;
     align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 .Logo {
-    margin: 0 2rem;
-    font-family: Raleway;
+    /*font-family: Raleway;*/
     font-size: 1.8rem;
-    color: white;
+    margin: 0 2rem;
     flex: 1;
+}
+
+.Logo a{
+    color: white;
+    text-decoration: none;
+}
+
+.Logo a:visited{
+    color: white;
 }
 
 .Login-SignUp {
@@ -33,16 +42,44 @@
 
 .HeaderButton:hover {
     opacity: 0.7;
+    transition: 200ms;
 }
 
 .Login {
     background-color: white;
-    color: #240047;
     border: 1px solid #240047;
+}
+
+.Login a{
+    color: #240047;
+    text-decoration: none;
+}
+
+.Login a:visited{
+    color: #240047;
 }
 
 .SignUp {
     background-color: #5707a7;
-    color: white;
     border: 1px solid #5707a7;
+}
+
+.SignUp a{
+    color: white;
+    text-decoration: none;
+}
+
+.SignUp a:visited{
+    color: white;
+}
+
+.Login-SignUp img{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 1.25rem;
+}
+
+.Login-SignUp img:hover{
+    opacity: 0.8;
+    transition: 200ms;
 }

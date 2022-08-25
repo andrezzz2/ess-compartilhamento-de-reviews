@@ -1,8 +1,13 @@
 import './Styles.css';
+import Header from '../../Components/Header';
 
-function Login() {
+function Login({ User }) {
     return (
-        <div className="Login">
+        <div className="LoginPage">
+            <Header/>
+            <div className="LoginContainer">
+
+            </div>
         </div>
     );
 }
