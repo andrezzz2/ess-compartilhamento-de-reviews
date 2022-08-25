@@ -7,18 +7,33 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
 
-    //mock user logged in
+    //mock user
     const user = {
         uid: 123,
-        name: "André Luiz",
+        firstName: "André",
+        lastName: "Luiz",
         username: "@andrezzz",
+        email: "",
+        bio: "bwbiuovwenjogoivbiuewbbienwbionieonbwewiobneibneoinbeiwnbiewbnbolabiweb0enewionbe0wibnienfownewiunbienbew0bndiewenibneibn0dncmib0nermwmcisnibnrenb0wewni0wenciwdançomvbcmsoidnbornbwepnvw",
+        twitter: "",
+        photoURL: "https://lh3.googleusercontent.com/a/AItbvmlht4uK2tnQF_wtuIBUKQzUS8_ZzOGCtdeXYK8H=s83-c-mo",
         followers: "10k",
         following: "293",
-        bio: "bwbiuovwenjogoivbiuewbbienwbionieonbwewiobneibneoinbeiwnbiewbnbolabiweb0enewionbe0wibnienfownewiunbienbew0bndiewenibneibn0dncmib0nermwmcisnibnrenb0wewni0wenciwdançomvbcmsoidnbornbwepnvw",
-        photoURL: "https://lh3.googleusercontent.com/a/AItbvmlht4uK2tnQF_wtuIBUKQzUS8_ZzOGCtdeXYK8H=s83-c-mo"
+        lists: {
+            movies:[],
+            series:[],
+            books:[]
+        },
+        reviews: {
+            movies:[],
+            series:[],
+            books:[]
+        },
+        followersList: [],
+        followingList: []
     };
 
-    //mock user off
+    //mock none user
     //const user = null;
 
     return (
