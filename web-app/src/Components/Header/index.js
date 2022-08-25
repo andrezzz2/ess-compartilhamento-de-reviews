@@ -1,6 +1,10 @@
 import './Styles.css';
 
 function Header( {User} ) {
+
+    function LogOut() {
+
+    }
     return (
         <div className="Header">
 
@@ -11,11 +15,10 @@ function Header( {User} ) {
             <span className='Login-SignUp'>
                 {User?
                     <>
-                        <span className='Login-SignUp'>
-                            <a href={'http://localhost:3000/profile/'+User.uid}>
-                                <img alt='user profile' src={User.photoURL}/>
-                            </a>
-                        </span>
+                        <span className='LogOut' onClick={LogOut}>LogOut</span>
+                        <a href={'http://localhost:3000/profile/'+User.uid}>
+                            <img alt='user profile' src={User.photoURL}/>
+                        </a>
                     </>:<>
                         <button className='HeaderButton Login'>
                             <a href='http://localhost:3000/login'>Login</a> 

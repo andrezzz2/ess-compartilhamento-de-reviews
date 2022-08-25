@@ -24,7 +24,7 @@
 }
 
 .Login-SignUp {
-    margin: 0 2rem;
+    margin: 0 1rem;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -73,10 +73,27 @@
     color: white;
 }
 
+.LogOut {
+    position: relative;
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+.LogOut::after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+}
+
 .Login-SignUp img{
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 1.25rem;
+    margin: 0 0.5rem;
 }
 
 .Login-SignUp img:hover{
