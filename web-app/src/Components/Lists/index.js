@@ -1,7 +1,6 @@
 import './Styles.css';
 
 function Lists ( {requestedUser} ){
-
     function expandItem(event) {
         const el = event.target || event.srcElement;
         const items = el.parentNode.querySelectorAll('.HiddenItem');
@@ -36,7 +35,7 @@ function Lists ( {requestedUser} ){
 
                 <div className='List'>
 
-                    {requestedUser?.moviesList?.map(movie=>{
+                    {requestedUser?.moviesList.map(movie=>{
                         return (
                                 <article className='Item' key={movie.id}>
                                     <span className='CloseExpandItem HiddenItem' onClick={(e)=>closeExpandItem(e)}>
@@ -47,7 +46,7 @@ function Lists ( {requestedUser} ){
                                     <span className='ItemAttribute HiddenItem'>{movie.director}</span>
                                     <span className='ItemStatus' status={movie.status}>{movie.status}</span>
                                     <span className='ItemAttribute HiddenItem'>{movie.description}</span>
-                                    <span className='ItemAttribute HiddenItem' rate={movie.reviewRate}>
+                                    <span className='ItemAttribute HiddenItem' rate={movie.rate}>
                                         <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC'/>
                                         <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC'/>
                                         <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC'/>
@@ -58,7 +57,7 @@ function Lists ( {requestedUser} ){
                             )
                         })
                     }
-                    {requestedUser.booksList?<></>:<p>lista vazia!</p>}
+                    {requestedUser.moviesList.length>0?<></>:<p>lista vazia!</p>}
             
                 </div>
 
@@ -79,7 +78,7 @@ function Lists ( {requestedUser} ){
 
                 <div className='List'>
 
-                    {requestedUser?.seriesList?.map(serie=>{
+                    {requestedUser?.seriesList.map(serie=>{
                         return (
                                 <article className='Item' key={serie.id}>
                                     <span className='CloseExpandItem HiddenItem' onClick={(e)=>closeExpandItem(e)}>
@@ -89,7 +88,7 @@ function Lists ( {requestedUser} ){
                                     <span className='ItemTitle'>{serie.title}</span>
                                     <span className='ItemStatus'  status={serie.status}>{serie.status}</span>
                                     <span className='ItemAttribute HiddenItem'>{serie.description}</span>
-                                    <span className='ItemAttribute HiddenItem' rate={serie.reviewRate}>
+                                    <span className='ItemAttribute HiddenItem' rate={serie.rate}>
                                         <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC'/>
                                         <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC'/>
                                         <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC'/>
@@ -100,7 +99,7 @@ function Lists ( {requestedUser} ){
                             )
                         })
                     }
-                    {requestedUser.booksList?<></>:<p>lista vazia!</p>}
+                    {requestedUser.seriesList.length>0?<></>:<p>lista vazia!</p>}
 
                 </div>
 
@@ -120,7 +119,7 @@ function Lists ( {requestedUser} ){
 
                 <div className='List'>
 
-                    {requestedUser?.booksList?.map(book=>{
+                    {requestedUser?.booksList.map(book=>{
                         return (
                                 <article className='Item' key={book.id}>
                                     <span className='CloseExpandItem HiddenItem' onClick={(e)=>closeExpandItem(e)}>
@@ -131,7 +130,7 @@ function Lists ( {requestedUser} ){
                                     <span className='ItemAttribute HiddenItem'>{book.author}</span>
                                     <span className='ItemStatus'  status={book.status}>{book.status}</span>
                                     <span className='ItemAttribute HiddenItem'>{book.description}</span>
-                                    <span className='ItemAttribute HiddenItem' rate={book.reviewRate}>
+                                    <span className='ItemAttribute HiddenItem' rate={book.rate}>
                                         <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC'/>
                                         <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC'/>
                                         <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC'/>
@@ -142,7 +141,7 @@ function Lists ( {requestedUser} ){
                             )
                         })
                     }
-                    {requestedUser.booksList?<></>:<p>lista vazia!</p>}
+                    {requestedUser.booksList.length>0?<></>:<p>lista vazia!</p>}
 
                 </div>
 

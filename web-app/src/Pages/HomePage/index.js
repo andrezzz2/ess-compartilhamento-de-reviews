@@ -2,30 +2,6 @@ import './Styles.css';
 import Header from '../../Components/Header';
 
 function HomePage({ User }) {
-
-    /*
-    axios.post("http://localhost:8080/login").then((response)=>{
-        setResponse1(response.data);
-    })
-    axios.post("http://localhost:8080/signup").then((response)=>{
-        setResponse2(response.data);
-    })
-    axios.get("http://localhost:8080/user/getfriends/123").then((response)=>{
-        setResponse3(response.data);
-    })
-    axios.get("http://localhost:8080/user/getinfo/123").then((response)=>{
-        setResponse4(response.data);
-    })
-    axios.post("http://localhost:8080/user/update/123").then((response)=>{
-        setResponse5(response.data);
-    })
-    axios.put("http://localhost:8080/user/delete/123").then((response)=>{
-        setResponse6(response.data);
-    })
-    axios.get("http://localhost:8080/user/history/123").then((response)=>{
-        setResponse7(response.data);
-    })
-    */
    
     return (
         <div className="HomePage">
