@@ -9,7 +9,7 @@ function App() {
 
     //mock user
     const user = {
-        id: "123",
+        id: "1",
         firstName: "André",
         lastName: "Luiz",
         username: "@andrezzz",
@@ -43,6 +43,36 @@ function App() {
                 },{
                     type: "movie",
                     id: "3",
+                    title: "Thor: Amor e Trovão",
+                    photoURL: "https://lumiere-a.akamaihd.net/v1/images/56015l10_bigsal_brazil_intpayoff_4x5_d4019af6.jpeg",
+                    description: "“Thor: Amor e Trovão”, da Marvel Studios, encontra o Deus do Trovão numa jornada diferente de tudo o que já enfrentou – a procura pela paz interior. Mas a reforma de Thor é interrompida por um assassino galáctico conhecido como Gorr, o Carniceiro dos Deuses, que procura a extinção dos deuses. Para combater a ameaça, Thor pede a ajuda da Rei Valkiria, de Korg e da ex-namorada Jane Foster, que – para surpresa de Thor – empunha inexplicavelmente o seu martelo mágico, Mjolnir, e se intitula a Poderosa Thor. Juntos, eles embarcam numa angustiante aventura cósmica para descobrir o mistério da vingança do Carniceiro dos Deuses e detê-lo antes que seja tarde demais.",
+                    director: "Taika Waitili",
+                    reviewRate: "",
+                    reviewId: "",
+                    status: "abandoned"
+                },{
+                    type: "movie",
+                    id: "20",
+                    title: "Thor: Amor e Trovão",
+                    photoURL: "https://lumiere-a.akamaihd.net/v1/images/56015l10_bigsal_brazil_intpayoff_4x5_d4019af6.jpeg",
+                    description: "“Thor: Amor e Trovão”, da Marvel Studios, encontra o Deus do Trovão numa jornada diferente de tudo o que já enfrentou – a procura pela paz interior. Mas a reforma de Thor é interrompida por um assassino galáctico conhecido como Gorr, o Carniceiro dos Deuses, que procura a extinção dos deuses. Para combater a ameaça, Thor pede a ajuda da Rei Valkiria, de Korg e da ex-namorada Jane Foster, que – para surpresa de Thor – empunha inexplicavelmente o seu martelo mágico, Mjolnir, e se intitula a Poderosa Thor. Juntos, eles embarcam numa angustiante aventura cósmica para descobrir o mistério da vingança do Carniceiro dos Deuses e detê-lo antes que seja tarde demais.",
+                    director: "Taika Waitili",
+                    reviewRate: "",
+                    reviewId: "",
+                    status: "abandoned"
+                },{
+                    type: "movie",
+                    id: "21",
+                    title: "Thor: Amor e Trovão",
+                    photoURL: "https://lumiere-a.akamaihd.net/v1/images/56015l10_bigsal_brazil_intpayoff_4x5_d4019af6.jpeg",
+                    description: "“Thor: Amor e Trovão”, da Marvel Studios, encontra o Deus do Trovão numa jornada diferente de tudo o que já enfrentou – a procura pela paz interior. Mas a reforma de Thor é interrompida por um assassino galáctico conhecido como Gorr, o Carniceiro dos Deuses, que procura a extinção dos deuses. Para combater a ameaça, Thor pede a ajuda da Rei Valkiria, de Korg e da ex-namorada Jane Foster, que – para surpresa de Thor – empunha inexplicavelmente o seu martelo mágico, Mjolnir, e se intitula a Poderosa Thor. Juntos, eles embarcam numa angustiante aventura cósmica para descobrir o mistério da vingança do Carniceiro dos Deuses e detê-lo antes que seja tarde demais.",
+                    director: "Taika Waitili",
+                    reviewRate: "",
+                    reviewId: "",
+                    status: "abandoned"
+                },{
+                    type: "movie",
+                    id: "22",
                     title: "Thor: Amor e Trovão",
                     photoURL: "https://lumiere-a.akamaihd.net/v1/images/56015l10_bigsal_brazil_intpayoff_4x5_d4019af6.jpeg",
                     description: "“Thor: Amor e Trovão”, da Marvel Studios, encontra o Deus do Trovão numa jornada diferente de tudo o que já enfrentou – a procura pela paz interior. Mas a reforma de Thor é interrompida por um assassino galáctico conhecido como Gorr, o Carniceiro dos Deuses, que procura a extinção dos deuses. Para combater a ameaça, Thor pede a ajuda da Rei Valkiria, de Korg e da ex-namorada Jane Foster, que – para surpresa de Thor – empunha inexplicavelmente o seu martelo mágico, Mjolnir, e se intitula a Poderosa Thor. Juntos, eles embarcam numa angustiante aventura cósmica para descobrir o mistério da vingança do Carniceiro dos Deuses e detê-lo antes que seja tarde demais.",
@@ -119,11 +149,11 @@ function App() {
         ],
         reviews: [{
                     id: "5",
-                    ownerId: "123",
+                    ownerId: "1",
                     type: "book",
                     title: "Pior livro",
-                    bookId: "7",
-                    bookTitle: "Missão Romance",
+                    itemId: "7",
+                    itemTitle: "Missão Romance",
                     rate: "0",
                     text: "uma merda, blablablablablablablablablabalablaalbala",
                     date: "25-08-2022"

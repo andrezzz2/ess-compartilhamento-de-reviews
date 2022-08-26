@@ -16,7 +16,7 @@ function Header( {User} ) {
                 {User?
                     <>
                         <span className='LogOut' onClick={LogOut}>LogOut</span>
-                        <a href={'http://localhost:3000/profile/'+User.uid}>
+                        <a href={'http://localhost:3000/profile/'+User.id}>
                             <img alt='user profile' src={User.photoURL}/>
                         </a>
                     </>:<>

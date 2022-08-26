@@ -1,6 +1,6 @@
 import './Styles.css';
 
-function Reviews ( {User} ){
+function Reviews ( {requestedUser} ){
 
     return (
         <div className="Reviews">

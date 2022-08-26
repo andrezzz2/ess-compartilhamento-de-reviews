@@ -1,16 +1,20 @@
 .Lists {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
     background-color: #D5DBF0;
     margin-top: 1rem;
     box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    overflow-y: auto;
 }
 
 .ListContainer {
     display: flex;
+    flex: 1;
     flex-direction: column;
     background-color: white;
-    margin: 1rem;
+    margin: 0.8rem 0.8rem 0.4rem 0.8rem;
     border-radius: 0.2rem;
     box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
 }
@@ -19,6 +23,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: flex-end;
 }
 
 .ListTitle {
@@ -28,52 +33,104 @@
 }
 
 .AddToList {
-
-}
-
-.AddToList img{
+    width: 30px;
+    height: 30px;
+    margin-right: 1rem;
     cursor: pointer;
 }
 
 .List {
     display: flex;
+    align-items: flex-start;
     width: 100%;
     overflow-x: auto;
+    white-space: nowrap;
 }
 
-.List::-webkit-scrollbar {
-    width: 12px;
-}
-
-.List::-webkit-scrollbar-track {
-background: white;
-}
-
-.List::-webkit-scrollbar-thumb {
-background-color: #240047;
-border-radius: 20px;
-border: 5px solid white;
+.List p{
+    text-align: center;
 }
 
 .Item {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin: 0.8rem;
 }
 
-.Item img{
-    width: 7.5rem;
-    height: 10rem;
+.ItemImg{
+    width: 6rem;
+    height: 8rem;
     cursor: pointer;
     box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
 }
 
 .ItemTitle{
     font-size: 0.8rem;
+    font-weight: 500;
 }
 
 .ItemStatus{
     font-size: 0.7rem;
 }
+
+.ItemStatus[status="watched"] {
+    color: green;
+}
+
+.ItemStatus[status="watching"] {
+    color: blue;
+}
+
+.ItemStatus[status="abandoned"] {
+    color: red;
+}
+
+.ItemStatus[status="read"] {
+    color: green;
+}
+
+.ItemStatus[status="reading"] {
+    color: blue;
+}
+
+.ItemAttribute {
+    white-space: normal;
+    text-align: center;
+    font-size: 0.8rem;
+    width: 30rem;
+}
+
+.ItemAttribute[rate="1"] img:nth-child(n+1) {
+    visibility: hidden;
+}
+
+.ItemAttribute[rate="2"] img:nth-child(n+2) {
+    visibility: hidden;
+}
+
+.ItemAttribute[rate="3"] img:nth-child(n+3) {
+    visibility: hidden;
+}
+
+.ItemAttribute[rate="4"] img:nth-child(n+4) {
+    visibility: hidden;
+}
+
+.ItemAttribute[rate="5"] img:nth-child(n+5) {
+    visibility: hidden;
+}
+
+.CloseExpandItem {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.HiddenItem {
+    display: none;
+}
+
+
