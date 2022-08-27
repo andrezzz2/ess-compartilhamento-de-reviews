@@ -48,8 +48,13 @@
     white-space: nowrap;
 }
 
-.List p{
-    text-align: center;
+.EmptyList{
+    position: relative;
+    left: 45%;
+}
+
+.EmptyList p{
+    font-weight: 500;
 }
 
 .Item {

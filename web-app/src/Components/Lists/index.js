@@ -1,6 +1,7 @@
 import './Styles.css';
+import axios from 'axios';
 
-function Lists ( {requestedUser} ){
+function Lists ( {requestedUser, User, setUser} ){
     function expandItem(event) {
         const el = event.target || event.srcElement;
         const items = el.parentNode.querySelectorAll('.HiddenItem');
@@ -16,6 +17,16 @@ function Lists ( {requestedUser} ){
             item.classList.add('HiddenItem');
         });
         el.parentNode.classList.add('HiddenItem');
+    }
+
+    function IAmAlive() {
+        if(User){
+            axios.post("http://localhost:8080/user/alive", {username: User.username}).then((response)=>{
+                if(!response.data){
+                    setUser(null);
+                }
+            });
+        }
     }
 
     return (
@@ -38,10 +49,10 @@ function Lists ( {requestedUser} ){
                     {requestedUser?.moviesList.map(movie=>{
                         return (
                                 <article className='Item' key={movie.id}>
-                                    <span className='CloseExpandItem HiddenItem' onClick={(e)=>closeExpandItem(e)}>
+                                    <span className='CloseExpandItem HiddenItem' onClick={(e)=>{closeExpandItem(e); IAmAlive();}}>
                                         <img className='HiddenItem' alt='close icon'src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC"/>
                                     </span>
-                                    <img className='ItemImg' alt='' src={movie.photoURL} onClick={(e)=>{expandItem(e)}}></img>
+                                    <img className='ItemImg' alt='' src={movie.photoURL} onClick={(e)=>{expandItem(e); IAmAlive();}}></img>
                                     <span className='ItemTitle'>{movie.title}</span>
                                     <span className='ItemAttribute HiddenItem'>{movie.director}</span>
                                     <span className='ItemStatus' status={movie.status}>{movie.status}</span>
@@ -57,7 +68,7 @@ function Lists ( {requestedUser} ){
                             )
                         })
                     }
-                    {requestedUser.moviesList.length>0?<></>:<p>lista vazia!</p>}
+                    {requestedUser.moviesList.length>0?<></>:<div className="EmptyList"><p>Empty List!</p></div>}
             
                 </div>
 
@@ -81,10 +92,10 @@ function Lists ( {requestedUser} ){
                     {requestedUser?.seriesList.map(serie=>{
                         return (
                                 <article className='Item' key={serie.id}>
-                                    <span className='CloseExpandItem HiddenItem' onClick={(e)=>closeExpandItem(e)}>
+                                    <span className='CloseExpandItem HiddenItem' onClick={(e)=>{closeExpandItem(e); IAmAlive();}}>
                                         <img className='HiddenItem' alt='close icon'src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC"/>
                                     </span>
-                                    <img className='ItemImg' alt='' src={serie.photoURL} onClick={(e)=>{expandItem(e)}}></img>
+                                    <img className='ItemImg' alt='' src={serie.photoURL} onClick={(e)=>{expandItem(e); IAmAlive();}}></img>
                                     <span className='ItemTitle'>{serie.title}</span>
                                     <span className='ItemStatus'  status={serie.status}>{serie.status}</span>
                                     <span className='ItemAttribute HiddenItem'>{serie.description}</span>
@@ -99,7 +110,7 @@ function Lists ( {requestedUser} ){
                             )
                         })
                     }
-                    {requestedUser.seriesList.length>0?<></>:<p>lista vazia!</p>}
+                    {requestedUser.seriesList.length>0?<></>:<div className="EmptyList"><p>Empty List!</p></div>}
 
                 </div>
 
@@ -122,10 +133,10 @@ function Lists ( {requestedUser} ){
                     {requestedUser?.booksList.map(book=>{
                         return (
                                 <article className='Item' key={book.id}>
-                                    <span className='CloseExpandItem HiddenItem' onClick={(e)=>closeExpandItem(e)}>
+                                    <span className='CloseExpandItem HiddenItem' onClick={(e)=>{closeExpandItem(e); IAmAlive();}}>
                                         <img className='HiddenItem' alt='close icon'src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC"/>
                                     </span>
-                                    <img className='ItemImg' alt='' src={book.photoURL} onClick={(e)=>{expandItem(e)}}></img>
+                                    <img className='ItemImg' alt='' src={book.photoURL} onClick={(e)=>{expandItem(e); IAmAlive();}}></img>
                                     <span className='ItemTitle'>{book.title}</span>
                                     <span className='ItemAttribute HiddenItem'>{book.author}</span>
                                     <span className='ItemStatus'  status={book.status}>{book.status}</span>
@@ -141,7 +152,7 @@ function Lists ( {requestedUser} ){
                             )
                         })
                     }
-                    {requestedUser.booksList.length>0?<></>:<p>lista vazia!</p>}
+                    {requestedUser.booksList.length>0?<></>:<div className="EmptyList"><p>Empty List!</p></div>}
 
                 </div>
 

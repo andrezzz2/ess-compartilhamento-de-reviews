@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const Review = require('../models/Book');
+const Review = require('../models/Review');
 
 
 var recentActivityUsers = {};
@@ -11,11 +11,12 @@ userSession("andrezzz");
 async function userSession(username){
 
     loggedUsers[username] = true;
-    const limite = 30;  //30 contagems de 10s que é igual a 5 minutos até o esgotar o tempo
+    const limite = 300;  //30 contagems de 10s que é igual a 5 minutos até o esgotar o tempo
     let contador = 0;
     console.log("user", username , "started a session");
     const intervalId = setInterval(function(){
-
+        
+        console.log(username,"has",((limite-contador)),"seconds left");
         if(contador == limite){
 
             loggedUsers[username] = false;
@@ -34,7 +35,7 @@ async function userSession(username){
 
         }
 
-    }, 10*1000); //a cada 10s uma checagem
+    }, 1000); //a cada 10s uma checagem
 
 }
 
@@ -135,6 +136,17 @@ module.exports.history = function(req, res){
 }
 
 module.exports.alive = function(req, res){
-    refreshUserSession(req.body.username);
-    res.send("Ok");
+
+    if(loggedUsers[req.body.username]){
+        
+        console.log(req.body.username,"is telling it is alive");
+        refreshUserSession(req.body.username);
+        res.send(true);
+
+    } else {
+
+        res.send(false);
+
+    }
+
 }

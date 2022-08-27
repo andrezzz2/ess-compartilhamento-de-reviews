@@ -7,6 +7,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
+
 function App() {
 
     const [ user, setUser ] = useState(null);
@@ -21,10 +23,10 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/" element={<HomePage User={user}/>}/>
-                    <Route path="/login" element={<Login User={user}/>}/>
-                    <Route path="/signUp" element={<SignUp User={user}/>}/>
-                    <Route path="/profile/:slug" element={<Profile User={user}/>}/>
+                    <Route exact path="/" element={<HomePage User={user} setUser={setUser}/>}/>
+                    <Route path="/login" element={<Login User={user} setUser={setUser}/>}/>
+                    <Route path="/signUp" element={<SignUp User={user} setUser={setUser}/>}/>
+                    <Route path="/profile/:slug" element={<Profile User={user} setUser={setUser}/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

@@ -1,7 +1,7 @@
 import './Styles.css';
 import Header from '../../Components/Header';
 
-function SignUp({ User }) {
+function SignUp({ User, setUser }) {
     return (
         <div className="SignUpPage">
             <Header/>

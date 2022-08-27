@@ -12,7 +12,7 @@ router.get('/user/getinfo/:username', controller.getInfo);
 router.post('/user/update/:username', controller.updateUser);
 router.put('/user/delete/:username', controller.deleteUser);
 router.get('/user/history/:username', controller.history);
-router.post('/user/', controller.alive);
+router.post('/user/alive', controller.alive);
 
 
 module.exports = router;
