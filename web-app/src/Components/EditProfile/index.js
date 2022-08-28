@@ -1,6 +1,6 @@
 import './Styles.css';
 
-function EditProfile ( {requestedUser, User, setUser} ){
+function EditProfile ( {requestedUser, User} ){
 
     return (
         <div className="EditProfile">

@@ -1,10 +1,11 @@
 import './App.css';
+import Header from '../src/Components/Header';
 import HomePage from './Pages/HomePage';
 import Profile from './Pages/Profile';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
 
     return (
         <div className="App" onClick={IAmAlive}>
+            <Header User={user} setUser={setUser}/>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/" element={<HomePage User={user} setUser={setUser}/>}/>

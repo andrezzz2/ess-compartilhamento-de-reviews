@@ -1,7 +1,7 @@
 import './Styles.css';
 
-function Lists ( {requestedUser, User, setUser} ){
-    
+function Lists ( { requestedUser } ){
+
     function expandItem(event) {
         const el = event.target || event.srcElement;
         const items = el.parentNode.querySelectorAll('.HiddenItem');
@@ -36,7 +36,7 @@ function Lists ( {requestedUser, User, setUser} ){
 
                 <div className='List'>
 
-                    {requestedUser?.moviesList.map(movie=>{
+                    {requestedUser.moviesList.map(movie=>{
                         return (
                                 <article className='Item' key={movie.id}>
                                     <span className='CloseExpandItem HiddenItem' onClick={(e)=>{closeExpandItem(e)}}>
@@ -79,7 +79,7 @@ function Lists ( {requestedUser, User, setUser} ){
 
                 <div className='List'>
 
-                    {requestedUser?.seriesList.map(serie=>{
+                    {requestedUser.seriesList.map(serie=>{
                         return (
                                 <article className='Item' key={serie.id}>
                                     <span className='CloseExpandItem HiddenItem' onClick={(e)=>{closeExpandItem(e)}}>
@@ -120,7 +120,7 @@ function Lists ( {requestedUser, User, setUser} ){
 
                 <div className='List'>
 
-                    {requestedUser?.booksList.map(book=>{
+                    {requestedUser.booksList.map(book=>{
                         return (
                                 <article className='Item' key={book.id}>
                                     <span className='CloseExpandItem HiddenItem' onClick={(e)=>{closeExpandItem(e)}}>

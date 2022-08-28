@@ -1,5 +1,4 @@
 import './Styles.css';
-import Header from '../../Components/Header';
 import Lists from '../../Components/Lists';
 import Reviews from '../../Components/Reviews';
 import Followers from '../../Components/Followers';
@@ -10,38 +9,24 @@ import { ThreeBounce } from 'better-react-spinkit';
 import axios from 'axios';
 
 
-function Profile({ User, setUser }) {
+function Profile({ User }) {
 
     const [ requestedUser, setRequestedUser ] = useState(null);
     const [actualEl, setActualEl] = useState(<></>);
     const [alert, SetAlert] = useState(<div className="AlertProfilePage"><ThreeBounce size={20}/></div>);
 
-
     useEffect(()=>{
-
-        if(User){
-            //pegando o final da url
-            const userToRequest = window.location.href.split("profile/")[1];
-            //pegando as informaçoes do usuario da pagina solicitada
-            axios.get('http://localhost:8080/user/getinfo/'+userToRequest).then((response)=>{
-                setRequestedUser(response.data);
-                if(!response.data){
-                    SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
-                } 
-            });
-        } else {
-            SetAlert(<div className="AlertProfilePage">Você não tem acesso a esta página.</div>);
-        }
+        //pegando o final da URL
+        const userToRequest = window.location.href.split("profile/")[1];
+        //pegando as informações da página do usuário solicitado
+        axios.get('http://localhost:8080/user/getinfo/'+userToRequest).then((response)=>{
+            setRequestedUser(response.data);
+            if(!response.data){
+                SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
+            } 
+        });
 
     }, [User]);
-
-    useEffect(()=>{
-
-        if(requestedUser){
-            setActualEl(<Lists requestedUser={requestedUser}/>)
-        }
-
-    }, [requestedUser]);
 
     function activeEl(event) {
         const items = document.querySelectorAll('.ProfileBarOptions');
@@ -54,7 +39,6 @@ function Profile({ User, setUser }) {
     return (
 
         <div className="ProfilePage">
-            <Header User={User} setUser={setUser}/>
             {requestedUser?
                 <div className="ProfileContainer">
                     <div className='LeftProfileSide'>
@@ -72,28 +56,28 @@ function Profile({ User, setUser }) {
                         <div className='ProfileBar'>
 
                             <div className='ProfileBarOptions Active' onClick={(e)=>{
-                                setActualEl(<Lists requestedUser={requestedUser} User={User} setUser={setUser}/>);
+                                setActualEl(<Lists requestedUser={requestedUser}/>);
                                 activeEl(e);}}>
                                 Lists
                             </div>
                             <div className='ProfileBarOptions' onClick={(e)=>{
-                                setActualEl(<Reviews requestedUser={requestedUser} User={User} setUser={setUser}/>);
+                                setActualEl(<Reviews requestedUser={requestedUser} User={User}/>);
                                 activeEl(e);}}>
                                 Reviews
                             </div>
                             <div className='ProfileBarOptions' onClick={(e)=>{
-                                setActualEl(<Followers requestedUser={requestedUser} User={User} setUser={setUser}/>);
+                                setActualEl(<Followers requestedUser={requestedUser} User={User}/>);
                                 activeEl(e);}}>
                                 Followers
                             </div>
                             <div className='ProfileBarOptions' onClick={(e)=>{
-                                setActualEl(<Following requestedUser={requestedUser} User={User} setUser={setUser}/>);
+                                setActualEl(<Following requestedUser={requestedUser} User={User}/>);
                                 activeEl(e);}}>
                                 Following
                             </div>
                             {(requestedUser?.username===User?.username)?
                                 <div className='ProfileBarOptions' onClick={(e)=>{
-                                    setActualEl(<EditProfile requestedUser={requestedUser} User={User} setUser={setUser}/>);
+                                    setActualEl(<EditProfile requestedUser={requestedUser} User={User}/>);
                                     activeEl(e);}}>
                                     Edit Profile
                                 </div>

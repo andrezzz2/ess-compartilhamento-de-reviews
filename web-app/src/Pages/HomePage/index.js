@@ -1,11 +1,9 @@
 import './Styles.css';
-import Header from '../../Components/Header';
 
-function HomePage({ User, setUser }) {
+function HomePage() {
    
     return (
         <div className="HomePage">
-            <Header User={User} setUser={setUser}/>
             
             <div className='HomeContainer'>
                 <header>

@@ -1,6 +1,6 @@
 import './Styles.css';
 
-function Header( {User, setUser} ) {
+function Header( { User } ) {
 
     function LogOut() {
 
