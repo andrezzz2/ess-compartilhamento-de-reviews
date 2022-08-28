@@ -75,17 +75,28 @@
     border-top-left-radius: 0.8rem;
     border-top-right-radius: 0.8rem;
     background-color: #240047;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    /*box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    */
 }
 
 .ProfileBarOptions {
     position: relative;
-    padding: 0.4rem;
+    padding: 0.4rem 1rem 0.4rem 1rem;
+    border-top: 1px solid #240047;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
     color: white;
     cursor: pointer;
+    
+}
+
+.Active {
+    background-color: white;
+    color: #240047;
     transition: 200ms;
 }
 
+/*
 .Active::after {
     content: "";
     position: absolute;
@@ -96,6 +107,7 @@
     bottom: 0.3rem;
     transition: 200ms;
 }
+*/
 
 .AlertProfilePage {
     position: absolute;

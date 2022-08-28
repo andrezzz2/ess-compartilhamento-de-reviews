@@ -7,8 +7,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
-
 function App() {
 
     const [ user, setUser ] = useState(null);
@@ -19,8 +17,20 @@ function App() {
         });
     }, []);
 
+    function IAmAlive() {
+        if(user){
+            axios.post("http://localhost:8080/user/alive", {username: user.username}).then((response)=>{
+                if(!response.data){
+                    setUser(null);
+                    console.log("Your session has expired.")
+                    window.location.reload();
+                }
+            });
+        }
+    }
+
     return (
-        <div className="App">
+        <div className="App" onClick={IAmAlive}>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/" element={<HomePage User={user} setUser={setUser}/>}/>
