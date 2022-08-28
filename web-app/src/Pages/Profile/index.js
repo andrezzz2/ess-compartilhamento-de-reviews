@@ -28,6 +28,13 @@ function Profile({ User }) {
 
     }, [User]);
 
+    //logo após requestedUser ser definido, o componente de listas vai ser mostrado
+    useEffect(()=>{
+        if(requestedUser){
+            setActualEl(<Lists requestedUser={requestedUser}/>);
+        }
+    }, [requestedUser])
+
     function activeEl(event) {
         const items = document.querySelectorAll('.ProfileBarOptions');
         items.forEach((item) => item.classList.remove('Active'));
