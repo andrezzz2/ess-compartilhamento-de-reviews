@@ -43,6 +43,22 @@ function Profile({ User }) {
         el.classList.add('Active');
     }
 
+    function activeElFollowers() {
+        const items = document.querySelectorAll('.ProfileBarOptions');
+        items.forEach((item) => item.classList.remove('Active'));
+
+        const el = document.querySelector('.FollowersOption');
+        el.classList.add('Active');
+    }
+
+    function activeElFollowing() {
+        const items = document.querySelectorAll('.ProfileBarOptions');
+        items.forEach((item) => item.classList.remove('Active'));
+
+        const el = document.querySelector('.FollowingOption');
+        el.classList.add('Active');
+    }
+
     return (
 
         <div className="ProfilePage">
@@ -51,9 +67,19 @@ function Profile({ User }) {
                     <div className='LeftProfileSide'>
 
                         <img alt='User Profile Icon' src={requestedUser.photoURL}></img>
-                        <span className="ProfileUserName">{requestedUser.name}</span>
-                        <span>{requestedUser.username}</span>
-                        <span>{requestedUser.followers+" followers - "+requestedUser.following+" following"}</span>
+                        <span className="ProfileUserName">{requestedUser.firstName+" "+requestedUser.lastName}</span>
+                        <span className="ProfileUsername">{"@"+requestedUser.username}</span>
+                        <div className="ProfileFollowersFollowing">
+                            <div className='ProfileFollowersOrFollowing' onClick={()=>{setActualEl(<Followers requestedUser={requestedUser} User={User}/>); activeElFollowers();}}>
+                                {requestedUser.followers+" followers"}
+                            </div>
+                            <span>
+                                -
+                            </span>
+                            <div className='ProfileFollowersOrFollowing' onClick={()=>{ setActualEl(<Following requestedUser={requestedUser} User={User}/>); activeElFollowing();}}>
+                                {requestedUser.following+" following"}
+                            </div>
+                        </div>
                         <div className='ProfileBio'>
                             <p>{requestedUser.bio}</p>
                         </div>
@@ -72,12 +98,12 @@ function Profile({ User }) {
                                 activeEl(e);}}>
                                 Reviews
                             </div>
-                            <div className='ProfileBarOptions' onClick={(e)=>{
+                            <div className='ProfileBarOptions FollowersOption' onClick={(e)=>{
                                 setActualEl(<Followers requestedUser={requestedUser} User={User}/>);
                                 activeEl(e);}}>
                                 Followers
                             </div>
-                            <div className='ProfileBarOptions' onClick={(e)=>{
+                            <div className='ProfileBarOptions FollowingOption' onClick={(e)=>{
                                 setActualEl(<Following requestedUser={requestedUser} User={User}/>);
                                 activeEl(e);}}>
                                 Following

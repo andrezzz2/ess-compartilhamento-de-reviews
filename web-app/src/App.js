@@ -24,7 +24,9 @@ function App() {
             axios.post("http://localhost:8080/user/alive", {username: user.username}).then((response)=>{
                 if(!response.data){
                     setUser(null);
-                    console.log("Your session has expired.")
+                    console.log("Your session has expired.");
+                    //recarregar a página pra garantir que o usuário não permanecer com informação
+                    //que ele não tem mais acesso
                     window.location.reload();
                 }
             });
