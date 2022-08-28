@@ -4,6 +4,7 @@ import Reviews from '../../Components/Reviews';
 import Followers from '../../Components/Followers';
 import Following from '../../Components/Following';
 import EditProfile from '../../Components/EditProfile';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ThreeBounce } from 'better-react-spinkit';
 import axios from 'axios';
@@ -11,22 +12,21 @@ import axios from 'axios';
 
 function Profile({ User }) {
 
+    const { username } = useParams();
     const [ requestedUser, setRequestedUser ] = useState(null);
     const [actualEl, setActualEl] = useState(<></>);
     const [alert, SetAlert] = useState(<div className="AlertProfilePage"><ThreeBounce size={20}/></div>);
 
     useEffect(()=>{
-        //pegando o final da URL
-        const userToRequest = window.location.href.split("profile/")[1];
-        //pegando as informações da página do usuário solicitado
-        axios.get('http://localhost:8080/user/getinfo/'+userToRequest).then((response)=>{
+
+        axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
             setRequestedUser(response.data);
             if(!response.data){
                 SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
             } 
         });
 
-    }, [User]);
+    }, [User, username]);
 
     //logo após requestedUser ser definido, o componente de listas vai ser mostrado
     useEffect(()=>{

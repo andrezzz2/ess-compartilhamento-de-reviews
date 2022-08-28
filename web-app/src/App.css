@@ -21,3 +21,10 @@
   border-radius: 20px;
   border: 3px solid white;
 }
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('Raleway-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

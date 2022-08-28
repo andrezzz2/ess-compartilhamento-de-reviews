@@ -1,11 +1,12 @@
 import './App.css';
 import Header from '../src/Components/Header';
-import HomePage from './Pages/HomePage';
-import Profile from './Pages/Profile';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
+import HomePage from './Pages/HomePage';
+import Profile from './Pages/Profile';
+import NotFound from './Pages/NotFound';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function App() {
@@ -35,10 +36,11 @@ function App() {
             <Header User={user} setUser={setUser}/>
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/" element={<HomePage User={user} setUser={setUser}/>}/>
+                    <Route exact path="/" element={<HomePage User={user}/>}/>
                     <Route path="/login" element={<Login User={user} setUser={setUser}/>}/>
                     <Route path="/signUp" element={<SignUp User={user} setUser={setUser}/>}/>
-                    <Route path="/profile/:slug" element={<Profile User={user} setUser={setUser}/>}/>
+                    <Route path="/profile/:username" element={<Profile User={user}/>}/>
+                    <Route path="*" element={<NotFound/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
