@@ -58,7 +58,13 @@ function Lists ( { requestedUser } ){
                             )
                         })
                     }
-                    {requestedUser.moviesList.length>0?<></>:<div className="EmptyList"><p>Empty List</p></div>}
+                    {requestedUser.moviesList.length>0?
+                        <></>
+                        :
+                        <div className="EmptyList">
+                            <p>Empty List</p>
+                        </div>
+                    }
             
                 </div>
 
@@ -100,8 +106,13 @@ function Lists ( { requestedUser } ){
                             )
                         })
                     }
-                    {requestedUser.seriesList.length>0?<></>:<div className="EmptyList"><p>Empty List</p></div>}
-
+                    {requestedUser.seriesList.length>0?
+                        <></>
+                        :
+                        <div className="EmptyList">
+                            <p>Empty List</p>
+                        </div>
+                    }
                 </div>
 
             </div>
@@ -142,8 +153,13 @@ function Lists ( { requestedUser } ){
                             )
                         })
                     }
-                    {requestedUser.booksList.length>0?<></>:<div className="EmptyList"><p>Empty List</p></div>}
-
+                    {requestedUser.booksList.length>0?
+                        <></>
+                        :
+                        <div className="EmptyList">
+                            <p>Empty List</p>
+                        </div>
+                    }
                 </div>
 
             </div>
