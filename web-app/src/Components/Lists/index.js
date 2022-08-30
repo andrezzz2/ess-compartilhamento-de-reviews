@@ -93,6 +93,8 @@ function Lists ( { requestedUser } ){
                                     </span>
                                     <img className='ItemImg' alt='' src={serie.photoURL} onClick={(e)=>{expandItem(e)}}></img>
                                     <span className='ItemTitle'>{serie.title}</span>
+                                    <span className='ItemAttribute HiddenItem'>{"Season "+serie.season}</span>
+                                    <span className='ItemAttribute HiddenItem'>{"Where to Watch: "+serie.originalBroadcaster}</span>
                                     <span className='ItemStatus'  status={serie.status}>{serie.status}</span>
                                     <span className='ItemAttribute HiddenItem'>{serie.description}</span>
                                     <span className='ItemAttribute HiddenItem' rate={serie.rate}>

@@ -108,23 +108,19 @@
     width: 30rem;
 }
 
-.ItemAttribute[rate="1"] img:nth-child(n+1) {
+.ItemAttribute[rate="1"] img:nth-child(n+2) {
     visibility: hidden;
 }
 
-.ItemAttribute[rate="2"] img:nth-child(n+2) {
+.ItemAttribute[rate="2"] img:nth-child(n+3) {
     visibility: hidden;
 }
 
-.ItemAttribute[rate="3"] img:nth-child(n+3) {
+.ItemAttribute[rate="3"] img:nth-child(n+4) {
     visibility: hidden;
 }
 
-.ItemAttribute[rate="4"] img:nth-child(n+4) {
-    visibility: hidden;
-}
-
-.ItemAttribute[rate="5"] img:nth-child(n+5) {
+.ItemAttribute[rate="4"] img:nth-child(n+5) {
     visibility: hidden;
 }
 
