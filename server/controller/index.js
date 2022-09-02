@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const Review = require('../models/Review');
 
 
 var recentActivityUsers = {};
