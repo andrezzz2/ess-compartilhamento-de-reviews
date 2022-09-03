@@ -6,16 +6,18 @@ import Following from '../../Components/Following';
 import EditProfile from '../../Components/EditProfile';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { ThreeBounce } from 'better-react-spinkit';
+import {PacmanLoader} from 'react-spinners';
 import axios from 'axios';
 
 
 function Profile({ User }) {
 
     const { username } = useParams();
+    //pode ser também DotLoader
+    const [alert, SetAlert] = useState(<div className="AlertProfilePage"><PacmanLoader color={"#240047"} size={30} speedMultiplier={1}/></div>);
     const [ requestedUser, setRequestedUser ] = useState(null);
     const [actualEl, setActualEl] = useState(<></>);
-    const [alert, SetAlert] = useState(<div className="AlertProfilePage"><ThreeBounce size={20}/></div>);
+    
 
     useEffect(()=>{
 
@@ -122,7 +124,9 @@ function Profile({ User }) {
                         {actualEl}
                     </div>
                     
-                </div>:<>
+                </div>
+                :
+                <>
                     {alert}
                 </>
             }
