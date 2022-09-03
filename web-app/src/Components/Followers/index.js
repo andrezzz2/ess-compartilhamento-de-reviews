@@ -34,10 +34,11 @@ function Followers ( {requestedUser, User} ){
                     return( 
                     <>
                     <a href={"http://localhost:3000/profile/"+follower[0]}>
-                        <img alt="Friend Icon" src={follower[1]}/>
+                        <img id="friend-icon" alt="Friend Icon" src={follower[1]}/>
                     </a>
-                    
-                    <p>{follower[0]}</p>
+                    <a href={"http://localhost:3000/profile/"+follower[0]}>
+                        <p id="friend-nick">{follower[0]}</p>
+                    </a>
                     </>
                     )
                 })}

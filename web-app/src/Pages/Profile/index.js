@@ -16,7 +16,7 @@ function Profile({ User }) {
     const [ requestedUser, setRequestedUser ] = useState(null);
     const [actualEl, setActualEl] = useState(<></>);
     const [alert, SetAlert] = useState(<div className="AlertProfilePage"><ThreeBounce size={20}/></div>);
-
+   
     useEffect(()=>{
 
         axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
@@ -80,10 +80,11 @@ function Profile({ User }) {
                                 {requestedUser.following+" following"}
                             </div>
                         </div>
+                       
                         <div className='ProfileBio'>
                             <p>{requestedUser.bio}</p>
-                        </div>
-
+                    </div>
+                    
                     </div>
                     <div className='RightProfileSide'>
                         <div className='ProfileBar'>
@@ -115,7 +116,8 @@ function Profile({ User }) {
                                     Edit Profile
                                 </div>
                                 :
-                                <></>
+                                <>
+                                </>
                             }                   
 
                         </div>
