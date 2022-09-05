@@ -11,30 +11,62 @@ import axios from 'axios';
 
 function App() {
 
-    const [ user, setUser ] = useState(null);
-    
+    console.log("user", JSON.parse(localStorage.getItem('user')));
+    const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user')));
+   
     useEffect(()=>{
-        axios.post('http://localhost:8080/user/getmyinfo', {username: "andrezzz"}).then((response)=>{
-            setUser(response.data);
-        });
+
+        const sessionToken = String(localStorage.getItem('session-token'));
+        console.log("session token -", sessionToken);
+        if(sessionToken){
+            
+            axios.get('http://localhost:8080/user/getmyinfo', {headers: {"session-token": sessionToken}}).then((response)=>{
+            
+                console.log(response.data.message);
+
+                setUser(response.data.user);
+
+                if(response.data.auth) {
+                    //se está em sessão atualiza cache
+                    localStorage.setItem('user', JSON.stringify(response.data.user));
+
+                }else{
+                    //se não está em sessão, apagar cache
+                    localStorage.clear();
+
+                }
+
+            });
+
+        }
+
     }, []);
 
-    function IAmAlive() {
+
+    function refreshSession() {
+
         if(user){
-            axios.post("http://localhost:8080/user/alive", {username: user.username}).then((response)=>{
-                if(!response.data){
+
+            const sessionToken = String(localStorage.getItem('session-token'));
+            console.log("session token", sessionToken);
+            axios.get("http://localhost:8080/user/refreshsession", {headers: {"session-token": sessionToken}}).then((response)=>{
+                
+                console.log(response.data.message);
+                
+                if(!response.data.auth){
+                    //sessão foi esgotada, então limpar a cache
                     setUser(null);
-                    console.log("Your session has expired.");
-                    //recarregar a página pra garantir que o usuário não permanecer com informação
-                    //que ele não tem mais acesso
-                    window.location.reload();
+                    localStorage.clear();
                 }
+
             });
-        }
+            
+        } 
+
     }
 
     return (
-        <div className="App" onClick={IAmAlive}>
+        <div className="App" onClick={refreshSession}>
             <Header User={user} setUser={setUser}/>
             <BrowserRouter>
                 <Routes>

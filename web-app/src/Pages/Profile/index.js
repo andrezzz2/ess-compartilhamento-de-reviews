@@ -13,19 +13,22 @@ import axios from 'axios';
 function Profile({ User }) {
 
     const { username } = useParams();
-    //pode ser também DotLoader
-    const [alert, SetAlert] = useState(<div className="AlertProfilePage"><PacmanLoader color={"#240047"} size={30} speedMultiplier={1}/></div>);
+    const [ alert, SetAlert ] = useState(<div className="AlertProfilePage"><PacmanLoader color={"#240047"} size={30} speedMultiplier={1}/></div>);
     const [ requestedUser, setRequestedUser ] = useState(null);
-    const [actualEl, setActualEl] = useState(<></>);
+    const [ actualEl, setActualEl ] = useState(<></>);
     
 
     useEffect(()=>{
 
         axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
-            setRequestedUser(response.data);
-            if(!response.data){
+            
+            console.log(response.data.message);
+            setRequestedUser(response.data.user);
+
+            if(!response.data.user){
                 SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
             } 
+
         });
 
     }, [User, username]);
