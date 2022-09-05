@@ -11,13 +11,12 @@ import axios from 'axios';
 
 function App() {
 
-    console.log("user", JSON.parse(localStorage.getItem('user')));
     const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user')));
    
     useEffect(()=>{
 
-        const sessionToken = String(localStorage.getItem('session-token'));
-        console.log("session token -", sessionToken);
+        const sessionToken = localStorage.getItem('session-token');
+
         if(sessionToken){
             
             axios.get('http://localhost:8080/user/getmyinfo', {headers: {"session-token": sessionToken}}).then((response)=>{
@@ -27,11 +26,11 @@ function App() {
                 setUser(response.data.user);
 
                 if(response.data.auth) {
-                    //se está em sessão atualiza cache
+                    //se está em sessão atualiza token e cache do usuário
                     localStorage.setItem('user', JSON.stringify(response.data.user));
 
                 }else{
-                    //se não está em sessão, apagar cache
+                    //se não está em sessão, anular token e cache do usuário
                     localStorage.clear();
 
                 }
@@ -47,14 +46,14 @@ function App() {
 
         if(user){
 
-            const sessionToken = String(localStorage.getItem('session-token'));
-            console.log("session token", sessionToken);
+            const sessionToken = localStorage.getItem('session-token');
+
             axios.get("http://localhost:8080/user/refreshsession", {headers: {"session-token": sessionToken}}).then((response)=>{
                 
                 console.log(response.data.message);
                 
                 if(!response.data.auth){
-                    //sessão foi esgotada, então limpar a cache
+                    //sessão foi esgotada, então anular token e cache do usuário
                     setUser(null);
                     localStorage.clear();
                 }

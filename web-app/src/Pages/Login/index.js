@@ -12,11 +12,8 @@ function Login({ User, setUser }) {
                 console.log(response.data.message);
 
                 if(response.data.user){
-                    console.log(response.data);
-                    localStorage.setItem("session-token", String(response.data.sessionToken));
+                    localStorage.setItem("session-token", response.data.sessionToken);
                     localStorage.setItem("user", JSON.stringify(response.data.user));
-                    console.log("session-token", localStorage.getItem('session-token'));
-                    console.log("user", JSON.parse(localStorage.getItem('user')));
                     setUser(response.data.user);
                 }
                 

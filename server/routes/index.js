@@ -14,8 +14,7 @@ router.get('/user/refreshsession', verifyJWT, controller.refreshSession);  //pri
 
 
 function verifyJWT(req, res, next){
-
-    console.log("token recebido no verify", req.headers['session-token']);
+    
     const token = req.headers['session-token'];
 
     if (!token) 

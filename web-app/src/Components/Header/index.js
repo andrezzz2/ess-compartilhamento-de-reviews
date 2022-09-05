@@ -1,8 +1,11 @@
 import './Styles.css';
 
-function Header( { User } ) {
+function Header( { User, setUser } ) {
 
     function LogOut() {
+
+        setUser(null);
+        localStorage.clear();
 
     }
 

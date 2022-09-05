@@ -1,6 +1,52 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+
+
+
+
+
+var recentActivityOfSession = {};
+var ActiveSession = {};
+
+function refreshSession(token) {
+    recentActivityOfSession[token] = true;
+}
+
+async function userSession(token){
+
+    ActiveSession[token] = true;
+
+    const limite = 48;  //48 contagens de 1 hora, 2 dias sem mexer a sessão encerra
+    let contador = 0;
+
+    console.log("session", token , "has started");
+    const intervalId = setInterval(function(){
+        
+        if(contador <= limite){
+
+            if (recentActivityOfSession[token] == true){
+
+                contador = 0;
+                recentActivityOfSession[token] = false;
+                console.log("session", token ," has been refreshed");
     
+            } else contador += 1;
+        
+        } else {
+
+            ActiveSession[token] = false;
+            console.log("session", token , "has expired");
+            clearInterval(intervalId);
+
+        }   
+
+    }, 3600000); //a cada 1 hora
+
+}
+
+
+
+
 
 
 module.exports.login = function(req, res){
@@ -13,8 +59,7 @@ module.exports.login = function(req, res){
 
     const token = String(sessionToken);
 
-    if(!inSession[token])
-        userSession(token);
+    userSession(token);
 
     User.findOne({ username: req.body.username}, (err, user)=>{
 
@@ -34,10 +79,27 @@ module.exports.signUp = function(req, res){
     res.send("Ok");
 }
 
+//public info
+module.exports.getInfo = function(req, res){
+
+    User.findOne({ username: req.params.username}, (err, user)=>{
+
+        if(err)
+            res.send({user: null, message: err});
+        else if(user)
+            res.send({user: user, message: "Busca realizada com sucesso."});
+        else
+            res.send({user: null, message: "Usuário não encontrado."});
+
+    });
+}
+
+//private info
 module.exports.getMyInfo = function(req, res){
 
     const token = String(req.headers["session-token"]);
-    if(inSession[token]){
+
+    if(ActiveSession[token]){
         User.findOne({ username: req.body.username}, (err, user)=>{
 
             if(err)
@@ -54,21 +116,6 @@ module.exports.getMyInfo = function(req, res){
         res.send({auth: false, user: null, message: "Sessão esgotada."});
     }
     
-}
-
-//public info
-module.exports.getInfo = function(req, res){
-
-    User.findOne({ username: req.params.username}, (err, user)=>{
-
-        if(err)
-            res.send({user: null, message: err});
-        else if(user)
-            res.send({user: user, message: "Busca realizada com sucesso."});
-        else
-            res.send({user: null, message: "Usuário não encontrado."});
-
-    });
 }
 
 module.exports.updateUser = function(req, res){
@@ -98,8 +145,8 @@ module.exports.deleteUser = function(req, res){
 module.exports.refreshSession = function(req, res){
 
     const token = String(req.headers['session-token']);
-    console.log("token recebido no refreshSession", token);
-    if(inSession[token]){
+
+    if(ActiveSession[token]){
 
         refreshSession(token);
         res.send({auth: true, message: "Sessão renovada."});
@@ -111,47 +158,3 @@ module.exports.refreshSession = function(req, res){
     }
 
 }
-
-
-
-
-
-var recentActivityOfSession = {};
-var inSession = {};
-
-function refreshSession(token) {
-    recentActivityOfSession[token] = true;
-}
-
-async function userSession(token){
-
-    inSession[token] = true;
-
-    const limite = 48;  //48 contagens de 1 hora, 2 dias sem mexer a sessão encerra
-    let contador = 0;
-
-    console.log("session", token , "has started");
-    const intervalId = setInterval(function(){
-        
-        if(contador <= limite){
-
-            if (recentActivityOfSession[token] == true){
-
-                contador = 0;
-                recentActivityOfSession[token] = false;
-                console.log("session", token ," has been refreshed");
-    
-            } else contador += 1;
-        
-        } else {
-
-            inSession[token] = false;
-            console.log("session", token , "has expired");
-            clearInterval(intervalId);
-
-        }   
-
-    }, 3600000); //a cada 1 hora
-
-}
-
