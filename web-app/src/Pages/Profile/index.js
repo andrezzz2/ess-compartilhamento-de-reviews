@@ -6,24 +6,29 @@ import Following from '../../Components/Following';
 import EditProfile from '../../Components/EditProfile';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { ThreeBounce } from 'better-react-spinkit';
+import {PacmanLoader} from 'react-spinners';
 import axios from 'axios';
 
 
 function Profile({ User }) {
 
     const { username } = useParams();
+    const [ alert, SetAlert ] = useState(<div className="AlertProfilePage"><PacmanLoader color={"#240047"} size={30} speedMultiplier={1}/></div>);
     const [ requestedUser, setRequestedUser ] = useState(null);
-    const [actualEl, setActualEl] = useState(<></>);
-    const [alert, SetAlert] = useState(<div className="AlertProfilePage"><ThreeBounce size={20}/></div>);
-   
+    const [ actualEl, setActualEl ] = useState(<></>);
+    
+
     useEffect(()=>{
 
         axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
-            setRequestedUser(response.data);
-            if(!response.data){
+            
+            console.log(response.data.message);
+            setRequestedUser(response.data.user);
+
+            if(!response.data.user){
                 SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
             } 
+
         });
 
     }, [User, username]);
@@ -124,7 +129,9 @@ function Profile({ User }) {
                         {actualEl}
                     </div>
                     
-                </div>:<>
+                </div>
+                :
+                <>
                     {alert}
                 </>
             }

@@ -1,53 +1,48 @@
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 
-var recentActivityUsers = {};
-var loggedUsers = {};
-userSession("andrezzz");
 
 
-//long polling
-async function userSession(username){
 
-    loggedUsers[username] = true;
-    const limite = 300;  //30 contagems de 10s que é igual a 5 minutos até o esgotar o tempo
+var recentActivityOfSession = {};
+var ActiveSession = {};
+
+function refreshSession(token) {
+    recentActivityOfSession[token] = true;
+}
+
+async function userSession(token){
+
+    ActiveSession[token] = true;
+
+    const limite = 48;  //48 contagens de 1 hora, 2 dias sem mexer a sessão encerra
     let contador = 0;
-    console.log("user", username , "started a session");
+
+    console.log("session", token , "has started");
     const intervalId = setInterval(function(){
         
-        console.log(username,"has",((limite-contador)),"seconds left");
-        if(contador == limite){
+        if(contador <= limite){
 
-            loggedUsers[username] = false;
-            console.log("user", username , "session expired");
-            clearInterval(intervalId);
+            if (recentActivityOfSession[token] == true){
 
-        } else if(recentActivityUsers[username] == true){
-
-            contador = 0;
-            recentActivityUsers[username] = false;
-            console.log("user", username ," session refreshed");
-
+                contador = 0;
+                recentActivityOfSession[token] = false;
+                console.log("session", token ," has been refreshed");
+    
+            } else contador += 1;
+        
         } else {
 
-            contador += 1;
+            ActiveSession[token] = false;
+            console.log("session", token , "has expired");
+            clearInterval(intervalId);
 
-        }
+        }   
 
-    }, 1000); //a cada 10s uma checagem
+    }, 3600000); //a cada 1 hora
 
 }
-
-function refreshUserSession(username) {
-    recentActivityUsers[username] = true;
-}
-
-function isLoggedIn(username) {
-    if(loggedUsers[username]) return true;
-    else return false;
-}
-    
-
 
 
 
@@ -55,56 +50,72 @@ function isLoggedIn(username) {
 
 
 module.exports.login = function(req, res){
-    userSession(req.body.username);
-    res.send("Ok");
+
+    //antes do login checar se header não possui token
+
+    const sessionToken = jwt.sign({ username: req.body.username }, process.env.SECRET, {
+        expiresIn: 604800 // expires in one week
+    });
+
+    const token = String(sessionToken);
+
+    userSession(token);
+
+    User.findOne({ username: req.body.username}, (err, user)=>{
+
+        if(err)
+            res.send({sessionToken: null, user: null, message: err});
+
+        if(user)
+            res.send({sessionToken: token, user: user, message: "Busca realizada com sucesso."});
+        else
+            res.send({sessionToken: token, user: null, message: "Usuário não encontrado."});
+
+    });
+
 }
 
 module.exports.signUp = function(req, res){
     res.send("Ok");
 }
 
-module.exports.getFollowers = function(req, res){
-    res.send("Ok");
-}
-
-module.exports.getFollowing = function(req, res){
-    res.send("Ok");
-}
-
-module.exports.getMyInfo = function(req, res){
-
-    if(isLoggedIn(req.body.username)){
-        User.findOne({ username: req.body.username}, (err, user)=>{
-
-            if(err)
-                res.send(null);
-            if(user)
-                res.send(user);
-            else
-                //usuário não encontrado
-                res.send(null);
-    
-        });
-    } else {
-        //não está logado, não pode acessar essa rota
-        res.send(null);
-    }
-    
-}
-
+//public info
 module.exports.getInfo = function(req, res){
 
     User.findOne({ username: req.params.username}, (err, user)=>{
 
         if(err)
-            res.send(null);
+            res.send({user: null, message: err});
         else if(user)
-            res.send(user);
+            res.send({user: user, message: "Busca realizada com sucesso."});
         else
-            //usuário não encontrado
-            res.send(null);
+            res.send({user: null, message: "Usuário não encontrado."});
 
     });
+}
+
+//private info
+module.exports.getMyInfo = function(req, res){
+
+    const token = String(req.headers["session-token"]);
+
+    if(ActiveSession[token]){
+        User.findOne({ username: req.body.username}, (err, user)=>{
+
+            if(err)
+                res.send({auth: true, user: null, message: err});
+
+            if(user)
+                res.send({auth: true, user: user, message: "Busca realizada com sucesso."});
+            else
+                res.send({auth: true, user: null, message: "Usuário não encontrado."});
+    
+        });
+    } else {
+        //não está logado, não pode acessar essa rota
+        res.send({auth: false, user: null, message: "Sessão esgotada."});
+    }
+    
 }
 
 module.exports.updateUser = function(req, res){
@@ -130,21 +141,19 @@ module.exports.deleteUser = function(req, res){
     res.send("Ok");
 }
 
-module.exports.history = function(req, res){
-    res.send("Ok");
-}
 
-module.exports.alive = function(req, res){
+module.exports.refreshSession = function(req, res){
 
-    if(loggedUsers[req.body.username]){
-        
-        console.log(req.body.username,"is telling it is alive");
-        refreshUserSession(req.body.username);
-        res.send(true);
+    const token = String(req.headers['session-token']);
+
+    if(ActiveSession[token]){
+
+        refreshSession(token);
+        res.send({auth: true, message: "Sessão renovada."});
 
     } else {
 
-        res.send(false);
+        res.send({auth: false, message: "Sessão não existe."});
 
     }
 

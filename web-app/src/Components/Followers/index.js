@@ -12,10 +12,11 @@ function Followers ( {requestedUser, User} ){
         if(lista.length === 0){
             requestedUser.followersList.forEach((follower)=> {
                 axios.get('http://localhost:8080/user/getinfo/'+follower).then((response)=>{
-                    updateLista( arr => [...arr, response.data.photoURL]);
+                    updateLista( arr => [...arr, response.data.user.photoURL]);
                 });
             });
         }
+        console.log("lista de fotos:",lista);
     },[]);
 
     useEffect (()=>{
@@ -24,22 +25,21 @@ function Followers ( {requestedUser, User} ){
                 updateTupla( arr => [...arr, [requestedUser.followersList[i], lista[i]]]);
             }
         }
+        console.log("tupla de usuario",tupla);
     },[lista]);
-    console.log("lista de fotos:",lista);
-    console.log("tupla de usuario",tupla);
+    
     return (
         <div className="Followers">
             <div className="Followers-container">
                 {tupla?.map((follower) =>{
                     return( 
-                    <>
-                    <a href={"http://localhost:3000/profile/"+follower[0]}>
-                        <img id="friend-icon" alt="Friend Icon" src={follower[1]}/>
-                    </a>
-                    <a href={"http://localhost:3000/profile/"+follower[0]}>
-                        <p id="friend-nick">{follower[0]}</p>
-                    </a>
-                    </>
+                        <div key={follower[0]}>
+                            <a href={"http://localhost:3000/profile/"+follower[0]}>
+                                <img alt="Friend Icon" src={follower[1]}/>
+                            </a>
+                            
+                            <p>{follower[0]}</p>
+                        </div>
                     )
                 })}
                 
