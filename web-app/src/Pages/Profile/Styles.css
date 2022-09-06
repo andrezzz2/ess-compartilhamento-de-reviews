@@ -142,3 +142,42 @@
     position: absolute;
     top: 50vh;
 }
+
+
+.Follow-button{
+    color: #D5DBF0;
+    background-color: #240047;
+    height: 30px;
+    font-weight: bold;
+    width: 100px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    cursor: pointer;
+}
+
+.Unfollow-button{
+    color: #f52804;
+    font-weight: bold;
+    background-color: #fff;
+    height: 30px;
+    width: 100px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    cursor: pointer;
+}
+
+.Follow-button:hover{
+    color: #240047;
+    background-color: #fff;
+}
+
+.Unfollow-button:hover{
+    background-color:#f52804;
+    color: #fff;
+}
+
+
