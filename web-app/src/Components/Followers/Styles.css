@@ -9,7 +9,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 10px;
+    border-radius: 10px;
+}
 
+.Followers-div{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 #friend-icon{
@@ -20,5 +27,10 @@
 }
 
 #friend-nick{
-    padding-right: 10rem;
+    padding-right: 2.9rem;
+}
+
+.Followers-container a{
+    text-decoration: none;
+    color: black;
 }
