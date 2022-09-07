@@ -71,6 +71,13 @@ function Profile({ User }) {
         el.classList.add('Active');
     }
 
+    function FollowUnfollow(){
+        if(User.followingList.includes(requestedUser.username))
+            return (<button className='Unfollow-button'>Unfollow</button>)
+        else
+            return (<button className='Follow-button'>Follow</button>)
+    }
+
     return (
 
         <div className="ProfilePage">
@@ -92,10 +99,23 @@ function Profile({ User }) {
                                 {requestedUser.following+" following"}
                             </div>
                         </div>
-                        <div className='ProfileBio'>
-                            <p>{requestedUser.bio}</p>
+
+                        <div>
+                        {(requestedUser?.username===User?.username)?    
+                            <>
+                            </>
+                            :
+                            <>
+
+                                {<FollowUnfollow/>}
+                            </>
+                        }
                         </div>
 
+                        <div className='ProfileBio'>
+                            <p>{requestedUser.bio}</p>
+                    </div>
+                    
                     </div>
                     <div className='RightProfileSide'>
                         <div className='ProfileBar'>
@@ -127,7 +147,8 @@ function Profile({ User }) {
                                     Edit Profile
                                 </div>
                                 :
-                                <></>
+                                <>
+                                </>
                             }                   
 
                         </div>

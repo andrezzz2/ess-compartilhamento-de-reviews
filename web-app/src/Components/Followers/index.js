@@ -30,19 +30,20 @@ function Followers ( {requestedUser, User} ){
     
     return (
         <div className="Followers">
-            <div className="Followers-container">
+            <div className="Followers-div">
                 {tupla?.map((follower) =>{
                     return( 
-                        <div key={follower[0]}>
+                        <div key={follower[0]} className="Followers-container">
                             <a href={"http://localhost:3000/profile/"+follower[0]}>
-                                <img alt="Friend Icon" src={follower[1]}/>
+                                <img id='friend-icon' alt="Friend Icon" src={follower[1]}/>
                             </a>
                             
-                            <p>{follower[0]}</p>
+                            <a href={"http://localhost:3000/profile/"+follower[0]}>
+                                <p id='friend-nick'>{follower[0]}</p>
+                            </a>
                         </div>
                     )
                 })}
-                
             </div>
         </div>
     )
