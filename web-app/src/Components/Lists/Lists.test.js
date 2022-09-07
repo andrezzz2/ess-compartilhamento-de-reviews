@@ -19,6 +19,7 @@ describe('Usuário com todas as listas preenchidas sem expandir os itens', () =>
 
     test('lista de filmes com itens não expandidos', () => {
 
+        //aplicando css no DOM
         const { container } = render(<Lists requestedUser={mockUser}/>);
         const style = document.createElement('style')
         style.type = 'text/css';
@@ -29,12 +30,8 @@ describe('Usuário com todas as listas preenchidas sem expandir os itens', () =>
         const emptyList = screen.queryByTestId('EmptyMoviesListMessage');
         expect(emptyList).toBeNull();
 
-        const list = screen.getByTestId('MoviesList');
-        //cada item da lista deve ter 7 elementos filho
-        list.childNodes.forEach((item)=>{
-            expect(item.childNodes.length).toBe(7);
-        });
         //cada elemento filho da lista que tem as classes CloseExpandItem ou HiddenAttribute nao esteja visivel
+        const list = screen.getByTestId('MoviesList');
         list.childNodes.forEach((item)=>{
             item.childNodes.forEach((child)=>{
                 if(child.classList.contains("CloseExpandItem"))
@@ -48,6 +45,7 @@ describe('Usuário com todas as listas preenchidas sem expandir os itens', () =>
 
     test('lista de series com itens não expandidos', () => {
 
+        //aplicando css no DOM
         const { container } = render(<Lists requestedUser={mockUser}/>);
         const style = document.createElement('style')
         style.type = 'text/css';
@@ -58,12 +56,8 @@ describe('Usuário com todas as listas preenchidas sem expandir os itens', () =>
         const emptyList = screen.queryByTestId('EmptySeriesListMessage');
         expect(emptyList).toBeNull();
 
-        const list = screen.getByTestId('SeriesList');
-        //cada item da lista deve ter 8 elementos filho
-        list.childNodes.forEach((item)=>{
-            expect(item.childNodes.length).toBe(8);
-        });
         //cada elemento filho da lista que tem as classes CloseExpandItem ou HiddenAttribute nao esteja visivel
+        const list = screen.getByTestId('SeriesList');
         list.childNodes.forEach((item)=>{
             item.childNodes.forEach((child)=>{
                 if(child.classList.contains("CloseExpandItem"))
@@ -77,6 +71,7 @@ describe('Usuário com todas as listas preenchidas sem expandir os itens', () =>
 
     test('lista de livros com itens não expandidos', () => {
 
+        //aplicando css no DOM
         const { container } = render(<Lists requestedUser={mockUser}/>);
         const style = document.createElement('style')
         style.type = 'text/css';
@@ -87,12 +82,8 @@ describe('Usuário com todas as listas preenchidas sem expandir os itens', () =>
         const emptyList = screen.queryByTestId('EmptyBooksListMessage');
         expect(emptyList).toBeNull();
 
-        const list = screen.getByTestId('BooksList');
-        //cada item da lista deve ter 7 elementos filhos
-        list.childNodes.forEach((item)=>{
-            expect(item.childNodes.length).toBe(7);
-        });
         //cada elemento filho da lista que tem as classes CloseExpandItem ou HiddenAttribute nao esteja visivel
+        const list = screen.getByTestId('BooksList');
         list.childNodes.forEach((item)=>{
             item.childNodes.forEach((child)=>{
                 if(child.classList.contains("CloseExpandItem"))
@@ -110,6 +101,7 @@ describe('Usuário com todas as listas preenchidas expandindo seus itens', () =>
 
     test('lista de filmes com itens expandidos', () => {
 
+        //aplicando css no DOM
         const { container } = render(<Lists requestedUser={mockUser}/>);
         const style = document.createElement('style')
         style.type = 'text/css';
@@ -120,12 +112,9 @@ describe('Usuário com todas as listas preenchidas expandindo seus itens', () =>
         const emptyList = screen.queryByTestId('EmptyMoviesListMessage');
         expect(emptyList).toBeNull();
 
-        const list = screen.getByTestId('MoviesList');
-       
 
+        const list = screen.getByTestId('MoviesList');
         list.childNodes.forEach((item)=>{
-             //cada item da lista de 7 elementos filho
-            expect(item.childNodes.length).toBe(7);
 
             //Olhando os filhos de cada item e clicando na imagem deles
             item.childNodes.forEach((child)=>{
@@ -145,6 +134,7 @@ describe('Usuário com todas as listas preenchidas expandindo seus itens', () =>
 
     test('lista de series com itens expandidos', () => {
 
+        //aplicando css no DOM
         const { container } = render(<Lists requestedUser={mockUser}/>);
         const style = document.createElement('style')
         style.type = 'text/css';
@@ -155,11 +145,9 @@ describe('Usuário com todas as listas preenchidas expandindo seus itens', () =>
         const emptyList = screen.queryByTestId('EmptySeriesListMessage');
         expect(emptyList).toBeNull();
 
+
         const list = screen.getByTestId('SeriesList');
-        
         list.childNodes.forEach((item)=>{
-            //cada item da lista deve ter 7 elementos filho
-            expect(item.childNodes.length).toBe(8);
 
             //Olhando os filhos de cada item e clicando na imagem deles
             item.childNodes.forEach((child)=>{
@@ -180,6 +168,7 @@ describe('Usuário com todas as listas preenchidas expandindo seus itens', () =>
 
     test('lista de livros com itens expandidos', () => {
 
+        //aplicando css no DOM
         const { container } = render(<Lists requestedUser={mockUser}/>);
         const style = document.createElement('style')
         style.type = 'text/css';
@@ -190,11 +179,9 @@ describe('Usuário com todas as listas preenchidas expandindo seus itens', () =>
         const emptyList = screen.queryByTestId('EmptyBooksListMessage');
         expect(emptyList).toBeNull();
 
+
         const list = screen.getByTestId('BooksList');
-        
         list.childNodes.forEach((item)=>{
-            //cada item da lista deve ter 7 elementos filho
-            expect(item.childNodes.length).toBe(7);
 
             //Olhando os filhos de cada item e clicando na imagem deles
             item.childNodes.forEach((child)=>{
@@ -219,6 +206,7 @@ describe('lista de filmes, series e livros vazias', () => {
 
     test('lista de filmes vazia', () => {
 
+        //aplicando css no DOM
         const { container } = render(<Lists requestedUser={mockUser2}/>);
         const style = document.createElement('style')
         style.type = 'text/css';
@@ -237,6 +225,7 @@ describe('lista de filmes, series e livros vazias', () => {
 
     test('lista de series vazia', () => {
 
+        //aplicando css no DOM
         const { container } = render(<Lists requestedUser={mockUser2}/>);
         const style = document.createElement('style')
         style.type = 'text/css';
@@ -255,6 +244,7 @@ describe('lista de filmes, series e livros vazias', () => {
 
     test('lista de livros vazia', () => {
 
+        //aplicando css no DOM
         const { container } = render(<Lists requestedUser={mockUser2}/>);
         const style = document.createElement('style')
         style.type = 'text/css';

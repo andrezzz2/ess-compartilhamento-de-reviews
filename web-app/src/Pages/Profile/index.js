@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import {PacmanLoader} from 'react-spinners';
 import axios from 'axios';
 
+let notSending = true;
 
 function Profile({ User }) {
 
@@ -20,16 +21,22 @@ function Profile({ User }) {
 
     useEffect(()=>{
 
-        axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
+        if(notSending){
+
+            notSending = false;
+
+            axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
+                
+                console.log(response.data.message);
+                setRequestedUser(response.data.user);
+
+                if(!response.data.user){
+                    SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
+                } 
+
+            });
             
-            console.log(response.data.message);
-            setRequestedUser(response.data.user);
-
-            if(!response.data.user){
-                SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
-            } 
-
-        });
+        }
 
     }, [User, username]);
 
