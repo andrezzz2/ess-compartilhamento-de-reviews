@@ -9,7 +9,6 @@ import { useState, useEffect } from 'react';
 import {PacmanLoader} from 'react-spinners';
 import axios from 'axios';
 
-let notSending = true;
 
 function Profile({ User }) {
 
@@ -21,22 +20,16 @@ function Profile({ User }) {
 
     useEffect(()=>{
 
-        if(notSending){
-
-            notSending = false;
-
-            axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
-                
-                console.log(response.data.message);
-                setRequestedUser(response.data.user);
-
-                if(!response.data.user){
-                    SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
-                } 
-
-            });
+        axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
             
-        }
+            console.log(response.data.message);
+            setRequestedUser(response.data.user);
+
+            if(!response.data.user){
+                SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
+            } 
+
+        });
 
     }, [User, username]);
 
@@ -72,7 +65,7 @@ function Profile({ User }) {
     }
 
     function FollowUnfollow(){
-        if(User.followingList.includes(requestedUser.username))
+        if(User?.followingList.includes(requestedUser.username))
             return (<button className='Unfollow-button'>Unfollow</button>)
         else
             return (<button className='Follow-button'>Follow</button>)

@@ -9,18 +9,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-let notSending = true;
-
 function App() {
 
     const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user')));
    
     useEffect(()=>{
 
-        if(notSending){
-            notSending = false;
-            fetchUserData();
-        }
+        fetchUserData();
 
     }, []);
 

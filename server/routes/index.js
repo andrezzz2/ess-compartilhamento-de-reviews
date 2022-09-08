@@ -108,6 +108,7 @@ router.put('/user/delete/:username', verifyJWT, deleteUser = function(req, res){
 
 function verifyJWT(req, res, next){
     
+    console.log(allowList);
     const accessToken = req.headers['x-access-token'];
     const refreshToken = req.headers['x-refresh-token'];
 
@@ -117,34 +118,43 @@ function verifyJWT(req, res, next){
     jwt.verify(accessToken, process.env.SECRET, function(err, decoded) {
 
         if (err){
+            
+            if(allowList[String(refreshToken)]==="invalidated"){
 
-            //tentar atualizar o token de acesso pelo refreshToken
-            jwt.verify(refreshToken, process.env.SECRET, function(err, decoded) {
+                return res.send({auth: false, message: 'Token has been invalidated'});
 
-                if (err){
+            } else {    
 
-                    return res.send({auth: false, refresh: false, message: 'Invalid refresh token or it has expired, try logging in again.'});
+                //tentar atualizar o token de acesso pelo refreshToken
+                jwt.verify(refreshToken, process.env.SECRET, function(err, decoded) {
 
-                } else if (allowList[String(refreshToken)]===String(accessToken)) {
+                    if (err){
 
-                    //gerar novo token
-                    const newAccessToken = jwt.sign({ username: decoded.username }, process.env.SECRET, {
-                        expiresIn: 10 // expires in 2 minutes
-                    });
+                        return res.send({auth: false, refresh: false, message: 'Invalid refresh token or it has expired, try logging in again.'});
 
-                    //atualiza a permissão pra usar refresh token apenas para quem tem o access token correto
-                    allowList[String(refreshToken)] = String(newAccessToken);
-                    return res.send({auth: false, refresh:true,  newAccessToken:newAccessToken, message: 'Session has expired. New Access Token provided.'});
+                    } else if (allowList[String(refreshToken)]===String(accessToken)) {
 
-                } else {
+                        //gerar novo token
+                        const newAccessToken = jwt.sign({ username: decoded.username }, process.env.SECRET, {
+                            expiresIn: 10 // expires in 2 minutes
+                        });
 
-                    //mao esta na lista de permitidos, alguem tentou roubar a sessão
-                    allowList[String(refreshToken)] = "f3902nf323f9b92c93b4m"; //valores aleatórios para o hacker não conseguir dar match
-                    return res.send({auth: false, refresh: false, message: 'Session hijacking, try logging in again'});
+                        //atualiza a permissão pra usar refresh token apenas para quem tem o access token correto
+                        allowList[String(refreshToken)] = String(newAccessToken);
+                        return res.send({auth: false, refresh:true,  newAccessToken:newAccessToken, message: 'Session has expired. New Access Token provided.'});
 
-                }
+                    } else {
 
-            });
+                        //nao esta na lista de permitidos, alguem tentou roubar a sessão
+                        allowList[String(refreshToken)] = "invalidated"; //invalidando refreshToken
+                        return res.send({auth: false, refresh: false, message: 'Session hijacking, try logging in again'});
+
+                    }
+
+                });
+
+            }   
+            
 
         } else {
 
