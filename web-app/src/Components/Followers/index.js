@@ -3,7 +3,7 @@ import './Styles.css';
 import {useState,useEffect} from 'react';
 
 
-function Followers ( {requestedUser, User} ){
+function Followers ( {requestedUser} ){
 
     const [lista, updateLista] = useState([]);
     const [tupla, updateTupla] = useState([]);

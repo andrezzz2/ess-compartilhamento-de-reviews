@@ -3,11 +3,11 @@ import './Styles.css';
 import { useEffect } from 'react';
 
 
-function Login({ User, setUser }) {
+function Login({ User }) {
 
     useEffect(()=>{
-        //fake login
-        if(!User){
+        //can't duplicate login
+        if(!User.current){
 
             axios.post('http://localhost:8080/login', {username: "andrezzz"}).then((response)=>{
                 
@@ -16,12 +16,11 @@ function Login({ User, setUser }) {
                 if(response.data.user){
                     localStorage.setItem("x-access-token", response.data.accessToken);
                     localStorage.setItem("x-refresh-token", response.data.refreshToken);
-                    localStorage.setItem("user", JSON.stringify(response.data.user));
-                    setUser(response.data.user);
+                    User.current = response.data.user;
                 }
                 
             });
-            
+
         }
 
     }, []);

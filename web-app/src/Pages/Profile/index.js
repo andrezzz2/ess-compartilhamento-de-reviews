@@ -65,7 +65,7 @@ function Profile({ User }) {
     }
 
     function FollowUnfollow(){
-        if(User?.followingList.includes(requestedUser.username))
+        if(User.current?.followingList.includes(requestedUser.username))
             return (<button className='Unfollow-button'>Unfollow</button>)
         else
             return (<button className='Follow-button'>Follow</button>)
@@ -94,7 +94,7 @@ function Profile({ User }) {
                         </div>
 
                         <div>
-                        {(requestedUser?.username===User?.username)?    
+                        {(requestedUser?.username===User.current?.username)?    
                             <>
                             </>
                             :
@@ -133,7 +133,7 @@ function Profile({ User }) {
                                 activeEl(e);}}>
                                 Following
                             </div>
-                            {(requestedUser?.username===User?.username)?
+                            {(requestedUser?.username===User.current?.username)?
                                 <div className='ProfileBarOptions' onClick={(e)=>{
                                     setActualEl(<EditProfile requestedUser={requestedUser} User={User}/>);
                                     activeEl(e);}}>

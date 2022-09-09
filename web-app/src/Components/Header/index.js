@@ -1,10 +1,10 @@
 import './Styles.css';
 
-function Header( { User, setUser } ) {
+function Header( { User } ) {
 
     function LogOut() {
 
-        setUser(null);
+        User.current = null;
         localStorage.clear();
 
     }
@@ -17,11 +17,11 @@ function Header( { User, setUser } ) {
             </span>
             
             <span className='Login-SignUp'>
-                {User?
+                {User.current?
                     <>
                         <span className='LogOut' onClick={LogOut}>LogOut</span>
-                        <a href={'http://localhost:3000/profile/'+User?.username}>
-                            <img alt='user profile' src={User?.photoURL}/>
+                        <a href={'http://localhost:3000/profile/'+User.current?.username}>
+                            <img alt='user profile' src={User.current?.photoURL}/>
                         </a>
                     </>
                     :

@@ -6,12 +6,14 @@ import HomePage from './Pages/HomePage';
 import Profile from './Pages/Profile';
 import NotFound from './Pages/NotFound';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import axios from 'axios';
 
 function App() {
 
-    const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user')));
+    const user = useRef(null);
+
+    console.log(user.current);
    
     useEffect(()=>{
 
@@ -33,8 +35,7 @@ function App() {
 
                 if(response.data.auth){
                     //accessToken ativo
-                    setUser(response.data.user);
-                    localStorage.setItem('user', JSON.stringify(response.data.user));
+                    user.current = response.data.user;
 
                 } else if (response.data.refresh){
                     //accessToken expirou mas refreshToken conseguiu atualizar ele
@@ -43,7 +44,6 @@ function App() {
 
                 } else {
                     //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
-                    setUser(null);
                     localStorage.clear();
                 }
 
@@ -52,7 +52,6 @@ function App() {
         } else {
 
             //garantir que não tenha lixo de outras sessões aqui
-            setUser(null);
             localStorage.clear();
 
         }
@@ -62,12 +61,12 @@ function App() {
 
     return (
         <div className="App">
-            <Header User={user} setUser={setUser}/>
+            <Header User={user}/>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/" element={<HomePage User={user}/>}/>
-                    <Route path="/login" element={<Login User={user} setUser={setUser}/>}/>
-                    <Route path="/signUp" element={<SignUp User={user} setUser={setUser}/>}/>
+                    <Route path="/login" element={<Login User={user}/>}/>
+                    <Route path="/signUp" element={<SignUp User={user}/>}/>
                     <Route path="/profile/:username" element={<Profile User={user}/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
