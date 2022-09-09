@@ -1,36 +1,73 @@
-/* eslint-disable testing-library/no-container */
-/* eslint-disable jest/valid-expect */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable jest/no-conditional-expect */
-import {render, screen, cleanup, fireEvent} from '@testing-library/react';
+import {render, screen, cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom';
-import {useState} from 'react';
 import Header from './';
-import fs from 'fs';
-import path from 'path';
-
 afterEach(cleanup);
 
-const cssFile = fs.readFileSync(
-    path.resolve(__dirname, './Styles.css'),
-    'utf8'
-)
+describe('Usuário deslogado', () => {
 
-test('Sem usuário logado', () => {
-    const [mockUser, setMockUser] = useState(null);
-    //aplicando css no DOM
-    //const { container } = render(<Lists requestedUser={mockUser}/>);
-    //const style = document.createElement('style')
-    //style.type = 'text/css';
-    //style.innerHTML = cssFile;
-    //container.append(style);
-   
+    test('Estado dos elementos', () => {
+
+        const mockUser = null;
+        render(<Header User={mockUser}/>);
+
+        expect(screen.getByText('ReviewShare')).toBeVisible();
+        expect(screen.queryByTestId('HeaderLogOut')).toBeNull();
+        expect(screen.queryByTestId('HeaderUserIcon')).toBeNull();
+        expect(screen.getByTestId('HeaderLoginButton')).toBeInTheDocument();
+        expect(screen.getByTestId('HeaderSignUpButton')).toBeInTheDocument();
+    
+    });
+
+    it('deve ter ancora para página de login no botão Login', () => {
+
+        const mockUser = null;
+        render(<Header User={mockUser}/>);
+        
+        expect(screen.getByTestId('HeaderLoginButton')).toBeInTheDocument();
+        expect(screen.getByText('Login')).toHaveAttribute('href', 'http://localhost:3000/login');
+
+    });
+
+    it('deve ter ancora para página de sign up no botão Sign Up', () => {
+
+        const mockUser = null;
+        render(<Header User={mockUser}/>);
+        
+        expect(screen.getByTestId('HeaderSignUpButton')).toBeInTheDocument();
+        expect(screen.getByText('Sign Up')).toHaveAttribute('href', 'http://localhost:3000/signUp');
+
+    });
+
 });
 
-test('Com usuário logado', () => {
+describe('Usuário logado', () => {
 
-    const [mockUser, setMockUser] = useState({  username: "andrezzz",
-                                                photoURL: " "
-                                            });
+    test("Estado dos elementos", () => {
 
+        const mockUser = {  username: "andrezzz",
+                            photoURL: " "
+                         };
+        render(<Header User={mockUser}/>);
+        
+        expect(screen.getByText('ReviewShare')).toBeVisible();
+        expect(screen.getByTestId('HeaderLogOut')).toBeInTheDocument();
+        expect(screen.getByTestId('HeaderUserIcon')).toBeInTheDocument();
+        expect(screen.queryByTestId('HeaderLoginButton')).toBeNull();
+        expect(screen.queryByTestId('HeaderSignUpButton')).toBeNull();
+
+    });
+    
+    it('deve ter ancora para página de profile do usuário no icone do usuário', () => {
+
+        const mockUser = {  username: "andrezzz",
+                            photoURL: " "
+                         };
+        render(<Header User={mockUser}/>);
+        
+        expect(screen.getByTestId('HeaderUserIcon')).toBeInTheDocument();
+        expect(screen.getByTestId('HeaderUserIcon')).toHaveAttribute('href', 'http://localhost:3000/profile/andrezzz');
+
+    });
+    
 });
+

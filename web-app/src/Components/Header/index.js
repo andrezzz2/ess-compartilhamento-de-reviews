@@ -19,17 +19,17 @@ function Header( { User, setUser } ) {
             <span className='Login-SignUp'>
                 {User?
                     <>
-                        <span className='LogOut' onClick={LogOut}>LogOut</span>
-                        <a href={'http://localhost:3000/profile/'+User?.username}>
+                        <span className='LogOut' onClick={LogOut} data-testid="HeaderLogOut">LogOut</span>
+                        <a href={'http://localhost:3000/profile/'+User?.username} data-testid="HeaderUserIcon">
                             <img alt='user profile' src={User?.photoURL}/>
                         </a>
                     </>
                     :
                     <>
-                        <button className='HeaderButton Login'>
+                        <button className='HeaderButton Login' data-testid="HeaderLoginButton">
                             <a href='http://localhost:3000/login'>Login</a> 
                         </button>
-                        <button className='HeaderButton SignUp'>
+                        <button className='HeaderButton SignUp' data-testid="HeaderSignUpButton">
                             <a href='http://localhost:3000/signUp'>Sign Up</a> 
                         </button>
                     </>
