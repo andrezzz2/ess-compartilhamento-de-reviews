@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-var allowList = {};
+var allowList = { "testRefreshToken": "testAccessToken" };
 
 
 router.post('/login', function(req, res){
@@ -48,11 +48,11 @@ router.get('/user/getinfo/:username', function(req, res){
     User.findOne({ username: req.params.username}, (err, user)=>{
 
         if(err)
-            res.send({user: null, message: err});
+            res.status(500).send({user: null, message: err});
         else if(user)
-            res.send({user: user, message: "Busca de informações de usuário realizada com sucesso."});
+            res.status(200).send({user: user, message: "Busca de informações de usuário realizada com sucesso."});
         else
-            res.send({user: null, message: "Usuário não encontrado."});
+            res.status(404).send({user: null, message: "Usuário não encontrado."});
 
     });
 
@@ -89,7 +89,6 @@ router.post('/user/update/:username', verifyJWT, function(req, res){
 
     }).catch(error=>{
 
-        console.error(error);
         res.send(error);
 
     });
@@ -108,7 +107,6 @@ router.put('/user/delete/:username', verifyJWT, deleteUser = function(req, res){
 
 function verifyJWT(req, res, next){
     
-    console.log(allowList);
     const accessToken = req.headers['x-access-token'];
     const refreshToken = req.headers['x-refresh-token'];
 
