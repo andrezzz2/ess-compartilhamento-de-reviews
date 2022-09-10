@@ -4,13 +4,6 @@ const app = require('../app');
 const mongodb = require('../mongodb');
 const { BeforeAll } = require('cucumber');
 
-/*
-const someDocument = undefined;
-afterEach(async () => {     
-    Document.deleteMany({_id: someDocument._id});
-});
-*/
-
 beforeAll(() => {
     mongodb.connect();
 })
