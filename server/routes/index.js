@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-var allowList = { "testRefreshToken": "testAccessToken" };
+var allowList = {};
 
 
 router.post('/login', function(req, res){
@@ -11,7 +11,7 @@ router.post('/login', function(req, res){
     //fazer a checagem da senha antes
 
     const accessToken = jwt.sign({ username: req.body.username }, process.env.SECRET, {
-        expiresIn: 10 // expires in 2 minutes
+        expiresIn: 120 // expires in 2 minutes
     });
 
     const refreshToken = jwt.sign({ username: req.body.username }, process.env.SECRET, {
@@ -65,12 +65,12 @@ router.get('/user/getmyinfo', verifyJWT, function(req, res){
     User.findOne({ username: req.body.username}, (err, user)=>{
 
         if(err)
-            res.send({auth: true, user: null, message: err});
+            res.status(500).send({auth: true, user: null, message: err});
 
         if(user)
-            res.send({auth: true, user: user, message: "Busca de próprias informações realizada com sucesso."});
+            res.status(200).send({auth: true, user: user, message: "Busca de próprias informações realizada com sucesso."});
         else
-            res.send({auth: true, user: null, message: "Usuário não encontrado."});
+            res.status(404).send({auth: true, user: null, message: "Usuário não encontrado."});
     });
     
 });  
@@ -134,7 +134,7 @@ function verifyJWT(req, res, next){
 
                         //gerar novo token
                         const newAccessToken = jwt.sign({ username: decoded.username }, process.env.SECRET, {
-                            expiresIn: 10 // expires in 2 minutes
+                            expiresIn: 120 // expires in 2 minutes
                         });
 
                         //atualiza a permissão pra usar refresh token apenas para quem tem o access token correto

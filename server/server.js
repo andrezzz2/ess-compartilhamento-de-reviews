@@ -1,5 +1,4 @@
-require('dotenv/config');
-const mongodb = require('./mongodb');
+const database = require('./database');
 
 // Create the express app
 const app = require('./app');
@@ -16,7 +15,7 @@ app.listen(port, host,  function (err) {
     } else {
 
         console.log(`server running on "${host}:${port}"`);
-        mongodb.connect();
+        database.connect();
     }
 
 });

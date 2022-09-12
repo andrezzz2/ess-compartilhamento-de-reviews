@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../../../models/User');
 
 //depois dos testes vai ter que apagar o usuario criado no fim
 afterAll(() => {
@@ -16,26 +16,6 @@ describe(('Login'), () => {
 });
 
 describe(('SignUp'), () => {
-
-    it((''), () => {
-
-    });
-    test((''), () => {
-
-    });
-});
-
-describe(('Edit Profile'), () => {
-
-    it((''), () => {
-
-    });
-    test((''), () => {
-
-    });
-});
-
-describe(('Remove User'), () => {
 
     it((''), () => {
 

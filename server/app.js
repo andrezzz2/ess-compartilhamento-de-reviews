@@ -26,11 +26,6 @@ class AppController {
 
     }
 
-    db() {
-
-    }
-
-
 }
 
 module.exports = new AppController().express;
