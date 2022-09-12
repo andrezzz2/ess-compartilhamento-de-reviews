@@ -1,7 +1,7 @@
-const database = require('./database');
+const database = require('./_database');
 
 // Create the express app
-const app = require('./app');
+const app = require('./_app');
 
 // Start server
 const port = 8080;

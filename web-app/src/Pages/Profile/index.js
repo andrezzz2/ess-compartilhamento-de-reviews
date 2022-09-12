@@ -20,18 +20,22 @@ function Profile({ User }) {
 
     useEffect(()=>{
 
-        axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
-            
-            console.log(response.data.message);
-            setRequestedUser(response.data.user);
+        if(username){
 
-            if(!response.data.user){
-                SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
-            } 
+            axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
+                
+                console.log(response.data.message);
+                setRequestedUser(response.data.user);
 
-        });
+                if(!response.data.user){
+                    SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
+                } 
 
-    }, [User, username]);
+            });
+
+        }
+
+    }, [username]);
 
     //logo após requestedUser ser definido, o componente de listas vai ser mostrado
     useEffect(()=>{
