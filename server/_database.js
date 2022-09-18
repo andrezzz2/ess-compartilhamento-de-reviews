@@ -1,43 +1,58 @@
 const mongoose = require('mongoose');
-require('dotenv/config');
-
 
 class Database {
 
-    constructor () {
+    constructor (username, password, cluster, dbName) {
 
-        this.username = process.env.DB_USERNAME;
-        this.password = process.env.DB_PASSWORD;
-        this.cluster = process.env.DB_CLUSTER;
-        this.dbName = process.env.DB_NAME;
+        this.username = username;
+        this.password = password;
+        this.cluster = cluster;
+        this.dbName = dbName;
+        this.conn = new mongoose.Connection();
         
     }
 
-    connect () {
+    async connect () {
+        
+        const response = {message: "initialState"};
 
-        mongoose.connect(`mongodb+srv://${this.username}:${this.password}@${this.cluster}.mongodb.net/${this.dbName}?retryWrites=true&w=majority`, { 
-            authSource: "admin",
-            useNewUrlParser : true,
-            useUnifiedTopology: true },
-            err => {
+        try {
 
-                if(err)
-                    console.log(err);
+            //desconectado ou não inicializado
+            if(this.conn.readyState === 0 || this.conn.readyState === 99){
 
-                else 
-                    console.log('Connected to the database');
+                this.conn = await mongoose.createConnection(`mongodb+srv://${this.username}:${this.password}@${this.cluster}.mongodb.net/${this.dbName}?retryWrites=true&w=majority`, { 
+                    authSource: "admin",
+                    useNewUrlParser : true,
+                    useUnifiedTopology: true }
+                ).asPromise();
 
+                response.message = "Connected to the database."
             }
-        );
+
+        } catch(err) {
+
+            response.message = String(err);
+
+        }
+
+        return response;
 
     }
 
     disconnect () {
 
-        mongoose.connection.close();
+        this.conn.close();
         
+    }
+
+    isConnected() {
+
+        if (this.conn.readyState === 1) return true;
+        else return false;
+
     }
     
 }
 
-module.exports = new Database();
+module.exports = Database;

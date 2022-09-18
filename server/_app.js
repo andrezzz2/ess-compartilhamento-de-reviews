@@ -1,31 +1,32 @@
-const express = require("express");
-const cors = require('cors');
-require('dotenv/config');
+module.exports = database => {
 
-class AppController {
+    const express = require("express");
+    const cors = require('cors');
+    class AppController {
 
-    constructor() {
+        constructor(database) {
 
-        this.express = express();
-        this.middlewares();
-        this.routes();
+            this.express = express();
+            this.middlewares();
+            this.routes(database);
+        }
+
+        middlewares() {
+
+            this.express.use(express.json()); // for parsing application/json
+            this.express.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+            this.express.use(cors());
+
+        }
+
+        routes(database) {
+
+            this.express.use('/', require('./routes')(database));
+
+        }
 
     }
 
-    middlewares() {
-
-        this.express.use(express.json()); // for parsing application/json
-        this.express.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-        this.express.use(cors());
-
-    }
-
-    routes() {
-
-        this.express.use('/', require('./routes'));
-
-    }
-
+    return new AppController(database).express;
 }
-
-module.exports = new AppController().express;
+    

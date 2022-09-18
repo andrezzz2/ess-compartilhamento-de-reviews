@@ -1,12 +1,7 @@
-const app = require('../../_app');
-const database = require('../../_database');
+require('dotenv/config');
 const session = require('../../_session');
 const request = require('supertest');
 
-//depois dos testes vai ter que apagar o usuario criado no fim
-afterAll(() => {
-
-});
 
 describe(('Login'), () => {
 

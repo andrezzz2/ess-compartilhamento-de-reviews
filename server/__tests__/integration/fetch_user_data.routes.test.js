@@ -1,19 +1,17 @@
-const app = require('../../_app');
-const database = require('../../_database');
-const session = require('../../_session'); //só para pegar funçao de criar token de acesso
+require('dotenv/config');
+const session = require('../../_session');
 const request = require('supertest');
 
-beforeAll(() => {
-    database.connect();
-});
-
-afterAll(() => {
-    database.disconnect();
-});
 
 describe(('Fetch any user data'), () => {
 
     it(('deve retornar todas as informações do usuário e mensagem de sucesso quando feita a busca por um usuário existente'), async () => {
+        
+        const Database = require('../../_database');
+        const database = new Database(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
+
+        await database.connect();
+        const app = require('../../_app')(database);
 
         const response = await request(app).get('/user/getinfo/andrezzz').send();
         expect(response.status).toBe(200);
@@ -22,6 +20,12 @@ describe(('Fetch any user data'), () => {
 
     });
     it(('deve retornar mensagem de erro e objeto de usuário nulo quando feita a busca por um usuário não existente'), async () => {
+
+        const Database = require('../../_database');
+        const database = new Database(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
+
+        await database.connect();
+        const app = require('../../_app')(database);
 
         const response = await request(app).get('/user/getinfo/andrezzz2').send();
         expect(response.status).toBe(404);
@@ -44,6 +48,12 @@ describe(('Fetch my own data'), () => {
 
     it(('deve retornar todas as informações do usuário e mensagem de sucesso se usuário existir'), async () => {
 
+        const Database = require('../../_database');
+        const database = new Database(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
+
+        await database.connect();
+        const app = require('../../_app')(database);
+
         const accessToken = session.createAccessToken("andrezzz");
         const refreshToken = session.createRefreshToken("andrezzz");
 
@@ -57,6 +67,12 @@ describe(('Fetch my own data'), () => {
     });
 
     it(('deve retornar mensagem de erro e objeto de usuário nulo se usuário não existir'), async () => {
+
+        const Database = require('../../_database');
+        const database = new Database(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
+
+        await database.connect();
+        const app = require('../../_app')(database);
         
         const accessToken = session.createAccessToken("andrezzz2");
         const refreshToken = session.createRefreshToken("andrezzz2");
