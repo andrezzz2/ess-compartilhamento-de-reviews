@@ -93,6 +93,47 @@ module.exports = database => {
     
     });
 
+    
+    //private route
+    router.post('/user/addfollower/:username',(req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+        const filter = { username: req.body.username };
+        const filter2 = {username: req.params.username};
+        const updateFollowing = req.body.followingList;
+        const updateFollower = req.body.followersList;
+
+        updateFollowing.push(req.params.username);
+        updateFollower.push(req.body.username);
+
+        User.findOneAndUpdate(filter, {$set: { followingList: updateFollowing}}).then(doc=>{
+            //this param doc is the document before update
+            User.findOneAndUpdate(filter2, {$set: {followersList: updateFollower}}).then(doc=>{
+                //this param doc is the document before update
+    
+                res.send({message: "seguidor adicionado :)"});
+        
+            }).catch(error=>{
+        
+                res.send(error);
+        
+            });
+    
+        }).catch(error=>{
+    
+            res.send(error);
+    
+        });
+
+        
+
+    });
+
+
+    //private route
+    router.post('user/removefollower/:username',(req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+        
+    });
+
+
     return router;
 
 }
