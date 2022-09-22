@@ -72,7 +72,23 @@ function Profile({ User }) {
         if(User?.followingList.includes(requestedUser.username))
             return (<button className='Unfollow-button'>Unfollow</button>)
         else
-            return (<button className='Follow-button'>Follow</button>)
+            return (<button className='Follow-button' onClick={followUser}>Follow</button>)
+    }
+
+    function followUser(){
+        
+        const accessToken = localStorage.getItem('x-access-token');
+        const refreshToken = localStorage.getItem('x-refresh-token');
+
+        if(accessToken){
+            const followingList = User.followingList;
+            const followersList = requestedUser.followersList;
+
+            axios.post('http://localhost:8080/user/addfollower/'+requestedUser.username,{followingList: followingList, followersList: followersList},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}} ).then((response)=>{
+                console.log(response.data.message);
+
+                });
+        }        
     }
 
     return (
