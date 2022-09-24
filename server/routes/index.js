@@ -129,8 +129,41 @@ module.exports = database => {
 
 
     //private route
-    router.post('user/removefollower/:username',(req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+    router.post('/user/removefollower/:username',(req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+        const filter = { username: req.body.username};
+        const filter2 = {username: req.params.username};
+        const updateFollower = req.body.followersList;
+        const updateFollowing = req.body.followingList;
+
+        if(updateFollowing.includes(req.params.username)){
+            updateFollowing.splice(updateFollowing.indexOf(req.params.username),1);
+            updateFollower.splice(updateFollower.indexOf(req.body.username),1);
+
+            User.findOneAndUpdate(filter, {$set: { followingList: updateFollowing}}).then(doc=>{
+                //this param doc is the document before update
+                User.findOneAndUpdate(filter2, {$set: {followersList: updateFollower}}).then(doc=>{
+                    //this param doc is the document before update
         
+                    res.send({message: "seguidor removido :("});
+            
+                }).catch(error=>{
+            
+                    res.send(error);
+            
+                });
+        
+            }).catch(error=>{
+        
+                res.send(error);
+        
+            });
+        }
+
+        else{
+            console.log("Usuário não consta na lista de seguindo!")
+        }
+        
+
     });
 
 
