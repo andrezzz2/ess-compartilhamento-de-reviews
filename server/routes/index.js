@@ -144,7 +144,7 @@ module.exports = database => {
                 User.findOneAndUpdate(filter2, {$set: {followersList: updateFollower}}).then(doc=>{
                     //this param doc is the document before update
         
-                    res.send({message: "seguidor removido :("});
+                    res.send({message: "seguidor removido!"});
             
                 }).catch(error=>{
             
