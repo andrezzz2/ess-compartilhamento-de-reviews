@@ -6,5 +6,47 @@
 }
 
 .LoginContainer {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #240047;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.4rem;
+}
 
+.LoginTitle {
+    font-size: 1.2rem;
+    color: white;
+    margin: 2rem 0 4rem 0;
+}
+
+.LoginField {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 0.1rem;
+}
+
+#loginUsernameField {
+    margin: 0 5rem 1rem 5rem;
+    padding: 0.2rem;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+#loginUsernameField:focus {
+    border: 1px solid #5707A7;
+    outline: 1px solid white;
+}
+
+#loginPasswordField {
+    margin: 0 5rem 1rem 5rem;
+    padding: 0.2rem;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+#loginPasswordField:focus {
+    border: 1px solid #5707A7;
+    outline: 1px solid white;
 }

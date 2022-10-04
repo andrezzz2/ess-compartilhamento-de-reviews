@@ -29,7 +29,11 @@ function Login({ User, setUser }) {
     return (
         <div className="LoginPage">
             <div className="LoginContainer">
-
+                <div className="LoginTitle">Login</div>
+                <label className="LoginField" for="loginUsernameField">Username</label>
+                <input id="loginUsernameField"/>
+                <label className="LoginField" for="loginPasswordField">Password</label>
+                <input id="loginPasswordField"/>
             </div>
         </div>
     );
