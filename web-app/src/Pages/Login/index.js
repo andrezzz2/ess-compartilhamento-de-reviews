@@ -1,17 +1,24 @@
 import axios from 'axios';
 import './Styles.css';
-import { useEffect } from 'react';
+import { useRef, useState } from 'react';
 
 
 function Login({ User, setUser }) {
 
-    useEffect(()=>{
-        //fake login
+    const usernameInput = useRef();
+    const passwordInput = useRef();
+    const [serverResponse, setServerResponse] = useState("");
+
+    if(User) {
+        window.location.href = "http://localhost:3000";
+    }
+
+    function login(){
         if(!User){
 
-            axios.post('http://localhost:8080/login', {username: "andrezzz"}).then((response)=>{
+            axios.post('http://localhost:8080/login', {username: usernameInput.current.value, password: passwordInput.current.value}).then((response)=>{
                 
-                console.log(response.data.message);
+                setServerResponse(response.data.message);
 
                 if(response.data.user){
                     localStorage.setItem("x-access-token", response.data.accessToken);
@@ -22,19 +29,39 @@ function Login({ User, setUser }) {
                 
             });
             
+        } else {
+            window.location.href = "http://localhost:3000";
         }
 
-    }, []);
+    };
+
+    function spanAnimation(event) {
+        const el = event.target || event.srcElement;
+        const el2 = el.nextSibling;
+        el2.style.cssText = "font-size: 0.9rem;" +
+                      "top: -4rem;" +
+                      "left: -10rem;" +
+                      "color: #240047;";
+    }
 
     return (
         <div className="LoginPage">
             <div className="LoginContainer">
                 <div className="LoginTitle">Login</div>
-                <label className="LoginField" for="loginUsernameField">Username</label>
-                <input id="loginUsernameField"/>
-                <label className="LoginField" for="loginPasswordField">Password</label>
-                <input id="loginPasswordField"/>
-                <button id="loginButton">Login</button>
+                <input className="loginField" 
+                       type="text" 
+                       ref={usernameInput} 
+                       onFocus={event=>spanAnimation(event)}
+                />
+                <span className="loginSpan"> Username </span>
+                <input className="loginField" 
+                       type="password" 
+                       ref={passwordInput} 
+                       onFocus={event=>spanAnimation(event)}
+                />
+                <span className="loginSpan"> Password </span>
+                <p>{serverResponse}</p>
+                <button id="loginButton" onClick={login}>Login</button>
                 <a href="/signUp">Sign up</a>
             </div>
         </div>

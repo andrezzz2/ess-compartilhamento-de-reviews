@@ -7,18 +7,18 @@ module.exports = database => {
 
     router.post('/login', function(req, res){
 
-        //fazer a checagem da senha antes
-    
-        const {accessToken, refreshToken} = session.init(req.body.username);
-    
-        User.findOne({ username: req.body.username}, (err, user)=>{
-    
-            if(err)
-                res.send({user: null, message: err});
-            if(user)
+        User.findOne({ username: req.body.username, password: req.body.password}, (err, user)=>{
+            
+            if(err){
+                console.log(err);
+                res.send({user: null, message: "Erro ao buscar usuário, tente novamente mais tarde."});
+            }
+            if(user){
+                const {accessToken, refreshToken} = session.init(req.body.username);
                 res.send({user: user, accessToken: accessToken, refreshToken: refreshToken, message: "Login realizado com sucesso."});
+            }
             else
-                res.send({user: null, message: "Usuário não encontrado."});
+                res.send({user: null, message: "Usuário ou senha incorretos."});
     
         });
     
