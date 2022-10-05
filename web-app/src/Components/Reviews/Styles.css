@@ -1,4 +1,63 @@
 .Reviews {
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
+}
+
+.ReviewBoxContainer {
+    background-color: #D5DBF0;
+    padding: 2%;
+    /* border-radius: 2%; */
+}
+
+.ImageContainer img {
+    height: 190px;
+    width: 160px;
+}
+
+.ImageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 5%;
+    /* flex: 1; */
+}
+
+.ImageContainer button {
+    width: 100%;
+    height: .5in;
+    margin-top: 5%;
+    background-color: #D5DBF0;
+    border: none;
+    font-weight: 500;
+}
+
+.WhiteBox {
+    background-color: white;
+    display: flex;
+    width: 94%;
+    padding: 3%;
+    /* margin-left: auto; */
+}
+
+.ReviewContainerContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.TitleRateContainer {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 2%;
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.ReviewContainer {
+    background-color: #D5DBF0;
+    padding: 1% 1% 10% 1%;
+    flex: 1;
+    margin-right: 2%;
+    /* font-weight: 500; */
 }
