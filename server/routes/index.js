@@ -11,14 +11,14 @@ module.exports = database => {
             
             if(err){
                 console.log(err);
-                res.send({user: null, message: "Erro ao buscar usuário, tente novamente mais tarde."});
+                res.status(502).send({user: null, message: "Erro ao buscar usuário, tente novamente mais tarde."});
             }
             if(user){
                 const {accessToken, refreshToken} = session.init(req.body.username);
-                res.send({user: user, accessToken: accessToken, refreshToken: refreshToken, message: "Login realizado com sucesso."});
+                res.status(201).send({user: user, accessToken: accessToken, refreshToken: refreshToken, message: "Login realizado com sucesso."});
             }
             else
-                res.send({user: null, message: "Usuário ou senha incorretos."});
+                res.status(406).send({user: null, message: "Usuário ou senha incorretos."}); //not acceptable
     
         });
     
@@ -26,8 +26,21 @@ module.exports = database => {
     
     
     router.post('/signup', function(req, res){
+        
+        const newUser = new User(req.body);
+        newUser.save().then(Result=>{
+
+            const result = Result.toObject();
+            //usuário foi cadastrado
+            if(result){
+                console.log(result);
+                res.status(201).send({message: "Perfil criado com sucesso."});
+            } else res.status(500).send({message: "Erro desconhecido"});
     
-        res.send("Ok");
+        }).catch(error=>{
+            console.error(error);
+            res.status(502).send({message:"Erro ao criar novo perfil de usuário."});
+        });
     
     });
     
@@ -38,7 +51,7 @@ module.exports = database => {
         User.findOne({ username: req.params.username}, (err, user)=>{
     
             if(err)
-                res.status(500).send({user: null, message: err});
+                res.status(502).send({user: null, message: err});
             else if(user)
                 res.status(200).send({user: user, message: "Busca de informações de usuário realizada com sucesso."});
             else
@@ -55,7 +68,7 @@ module.exports = database => {
         User.findOne({ username: req.body.username}, (err, user)=>{
     
             if(err)
-                res.status(500).send({auth: true, user: null, message: err});
+                res.status(502).send({auth: true, user: null, message: err});
     
             if(user)
                 res.status(200).send({auth: true, user: user, message: "Busca de próprias informações realizada com sucesso."});
@@ -67,19 +80,19 @@ module.exports = database => {
     
     
     //private route
-    router.post('/user/update/:username', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+    router.post('/user/updateProfile', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
     
         const filter = { username: req.body.username };
+        //update deve ser um objeto contendo as informações alteradas
+        const update = req.body.update;
     
-        const update = req.body;
-    
-        User.findOneAndUpdate(filter, update).then(doc=>{
-            //this param doc is the document before update
-            res.send("Profile's saved");
+        User.findOneAndUpdate(filter, {$set: update}).then(doc=>{
+            //adicionar status 
+            res.status(200).send({message: "Perfil atualizado com sucesso."});
     
         }).catch(error=>{
-    
-            res.send(error);
+            console.log(error);
+            res.status(502).send({message: "Erro ao tentar atualizar perfil do usuário."});
     
         });
     
@@ -87,10 +100,16 @@ module.exports = database => {
     
     
     //private route
-    router.put('/user/delete/:username', (req, res, next) => session.verifyJWT(req, res, next), deleteUser = function(req, res){
-    
-        res.send("Ok");
-    
+    router.put('/user/deleteAccount', (req, res, next) => session.verifyJWT(req, res, next), deleteUser = function(req, res){
+        
+        User.deleteOne({ username: req.body.username }).then(function(){
+            console.log("User",req.body.username,"deleted"); // Success
+            res.status(200).send({message: "Conta excluída do sistema."});
+        }).catch(function(error){
+            console.log(error); // Failure
+            res.status(502).send({message: "Erro ao excluir conta."});
+        });
+
     });
 
     
