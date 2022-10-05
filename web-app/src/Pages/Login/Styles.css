@@ -16,22 +16,27 @@
 }
 
 .LoginTitle {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
+    font-weight: 400;
     color: white;
     margin: 2rem 0 4rem 0;
 }
 
 .LoginField {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    font-weight: 300;
     color: white;
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.4rem;
 }
 
 #loginUsernameField {
-    margin: 0 5rem 1rem 5rem;
-    padding: 0.2rem;
+    margin: 0 8rem 1rem 8rem;
+    padding-left: 0.5rem;
+    font-size: 1rem;
+    width: 25rem;
+    height: 2rem;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
 }
 
 #loginUsernameField:focus {
@@ -40,13 +45,43 @@
 }
 
 #loginPasswordField {
-    margin: 0 5rem 1rem 5rem;
-    padding: 0.2rem;
+    margin: 0 8rem 1rem 8rem;
+    padding-left: 0.5rem;
+    font-size: 1rem;
+    width: 25rem;
+    height: 2rem;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
 }
 
 #loginPasswordField:focus {
     border: 1px solid #5707A7;
     outline: 1px solid white;
+}
+
+#loginButton {
+    box-sizing: border-box;
+    color: #240047;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: white;
+    height: 2.5rem;
+    width: 7.5rem;
+    margin-top: 2rem;
+    border-radius: 0.4rem;
+    margin-bottom: 12rem;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.LoginContainer a{
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+.LoginContainer a:visited{
+    color: white;
 }

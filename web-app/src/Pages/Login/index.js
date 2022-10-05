@@ -34,6 +34,8 @@ function Login({ User, setUser }) {
                 <input id="loginUsernameField"/>
                 <label className="LoginField" for="loginPasswordField">Password</label>
                 <input id="loginPasswordField"/>
+                <button id="loginButton">Login</button>
+                <a href="/signUp">Sign up</a>
             </div>
         </div>
     );
