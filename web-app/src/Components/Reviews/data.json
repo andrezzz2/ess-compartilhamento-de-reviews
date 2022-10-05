@@ -1,0 +1,133 @@
+{
+    "_id": {
+        "$oid": "6309209a913c5ab839661b01"
+    },
+    "firstName": "André",
+    "bio": "bwbiuovwenjogoivbiuewbbienwbionieonbwewiobneibneoinbeiwnbiewbnbolabiweb0enewionbe0wibnienfownewiunbienbew0bndiewenibneibn0dncmib0nermwmcisnibnrenb0wewni0wenciwdançomvbcmsoidnbornbwepnvw",
+    "followers": "2",
+    "following": "2",
+    "lastName": "Luiz",
+    "moviesList": [
+        {
+            "type": "movie",
+            "id": "1",
+            "title": "Thor: Amor e Trovão",
+            "photoURL": "https://lumiere-a.akamaihd.net/v1/images/56015l10_bigsal_brazil_intpayoff_4x5_d4019af6.jpeg",
+            "description": "“Thor: Amor e Trovão”, da Marvel Studios, encontra o Deus do Trovão numa jornada diferente de tudo o que já enfrentou – a procura pela paz interior. Mas a reforma de Thor é interrompida por um assassino galáctico conhecido como Gorr, o Carniceiro dos Deuses, que procura a extinção dos deuses. Para combater a ameaça, Thor pede a ajuda da Rei Valkiria, de Korg e da ex-namorada Jane Foster, que – para surpresa de Thor – empunha inexplicavelmente o seu martelo mágico, Mjolnir, e se intitula a Poderosa Thor. Juntos, eles embarcam numa angustiante aventura cósmica para descobrir o mistério da vingança do Carniceiro dos Deuses e detê-lo antes que seja tarde demais.",
+            "director": "Taika Waitili",
+            "rate": "3",
+            "reviewId": "1",
+            "status": "watched"
+        }
+    ],
+    "photoURL": "https://akamai.sscdn.co/uploadfile/letras/fotos/a/3/9/5/a39539d6394c7df4bbe3e54b03f22bcf.jpg",
+    "username": "andrezzz",
+    "reviews": [
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        },
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        },
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        },
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        },
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        },
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        },
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        },
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        },
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        }
+    ],
+    "followersList": [
+        "mmag2",
+        "tatuzão_piranhão"
+    ],
+    "followingList": [
+        "mmag2"
+    ],
+    "seriesList": [
+        {
+            "type": "serie",
+            "id": "1",
+            "title": "Stranger Things",
+            "photoURL": "https://m.media-amazon.com/images/I/91NNuqAp73L._AC_SL1500_.jpg",
+            "description": "A quarta temporada da série de terror de ficção científica estadunidense Stranger Things foi lançada no serviço de streaming Netflix em dois volumes. O primeiro volume de sete episódios foi lançado em 27 de maio de 2022, enquanto o segundo volume de dois episódios foi lançado em 1º de julho de 2022.",
+            "season": "4",
+            "originalBroadcaster": "netflix",
+            "rate": "5",
+            "reviewId": "2",
+            "status": "watching"
+        }
+    ],
+    "booksList": [
+        {
+            "type": "book",
+            "id": "1",
+            "title": "Clean Code",
+            "photoURL": "https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg",
+            "description": "Even bad code can function. But if code isn’t clean, it can bring a development organization to its knees. Every year, countless hours and significant resources are lost because of poorly written code. But it doesn’t have to be that way.\nNoted software expert Robert C. Martin presents a revolutionary paradigm with Clean Code: A Handbook of Agile Software Craftsmanship. Martin has teamed up with his colleagues from Object Mentor to distill their best agile practice of cleaning code “on the fly” into a book that will instill within you the values of a software craftsman and make you a better programmer—but only if you work at it.\nWhat kind of work will you be doing? You’ll be reading code—lots of code. And you will be challenged to think about what’s right about that code, and what’s wrong with it. More importantly, you will be challenged to reassess your professional values and your commitment to your craft.\nClean Code is divided into three parts. The first describes the principles, patterns, and practices of writing clean code. The second part consists of several case studies of increasing complexity. Each case study is an exercise in cleaning up code—of transforming a code base that has some problems into one that is sound and efficient. The third part is the payoff: a single chapter containing a list of heuristics and “smells” gathered while creating the case studies. The result is a knowledge base that describes the way we think when we write, read, and clean code.",
+            "author": "Robert C. Martin",
+            "rate": "5",
+            "status": "abandoned"
+        }
+    ],
+    "password": "senha123"
+}
