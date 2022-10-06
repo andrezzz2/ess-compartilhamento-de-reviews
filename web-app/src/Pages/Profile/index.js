@@ -93,7 +93,6 @@ function Profile({ User }) {
     }
 
     function unfollowUser(){
-        console.log("batata");
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
 
