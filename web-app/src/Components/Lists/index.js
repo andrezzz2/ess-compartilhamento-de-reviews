@@ -1,6 +1,10 @@
 import './Styles.css';
+import {useState} from 'react';
+
 
 function Lists ( { requestedUser } ){
+
+    const [searchedItems, setSearchedItems] = useState([]);
 
     function expandItem(event) {
         const el = event.target || event.srcElement;
@@ -19,8 +23,33 @@ function Lists ( { requestedUser } ){
         el.parentNode.classList.add('Hidden');
     }
 
+    function createSearchContainer(type){
+        console.log("creating");
+        const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
+        SearchContainer.setAttribute("type", type);
+        SearchContainer.setAttribute("visible", "true");
+    }
+
     return (
         <div className="Lists">
+
+            <div className="SearchContainer" visible="false"> 
+
+                <div className="SearchContainerBar">
+                    <input className="SearchContainerInput"/>
+                    <div className="SearchContainerIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L486.6 441.4 509.3 464 464 509.3l-22.6-22.6L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg>
+                    </div>
+                </div>
+                
+                <div className="SearchContainerItems">
+                    {
+                        searchedItems.map((searchedItem)=>{
+                            return <article>{Object.keys(searchedItem).map(key=><div>{key}:{searchedItem[key]}</div>)}</article>
+                        })
+                    }       
+                </div>
+            </div>
             
             <div className='ListContainer'>
 
@@ -28,7 +57,7 @@ function Lists ( { requestedUser } ){
 
                     <span className='ListTitle'> Movies </span>
 
-                    <div className='AddToList'>
+                    <div className='AddToList' onClick={()=>{createSearchContainer("movie")}}>
                         <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
                     </div>
 

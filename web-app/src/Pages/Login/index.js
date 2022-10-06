@@ -47,13 +47,13 @@ function Login({ User, setUser }) {
     useEffect(()=>{
         usernameInput.current.addEventListener('keyup', function(e){
             let key = e.which || e.keyCode;
-            if (key === 9) { // codigo da tecla enter
+            if (key === 13) { // codigo da tecla enter
               login();
             }
         });
         passwordInput.current.addEventListener('keyup', function(e){
             let key = e.which || e.keyCode;
-            if (key === 9) { // codigo da tecla enter
+            if (key === 13) { // codigo da tecla enter
               login();
             }
         });

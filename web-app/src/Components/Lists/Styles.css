@@ -137,4 +137,57 @@
     visibility: hidden;
 }
 
+.SearchContainer{
+    margin: auto;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    width: 50vw;
+    height: 50vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    border-radius: 0.2rem;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.SearchContainer[visible="false"]{
+    display: none;
+}
+
+.SearchContainer[visible="true"]{
+    display: flex;
+    z-index: 999999;
+}
+
+.SearchContainerBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.SearchContainerInput {
+    margin-right: 0.8rem;
+}
+
+.SearchContainerInput:focus {
+    outline: none;
+}
+
+.SearchContainerIcon {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+}
+
+.SearchContainerItems {
+    margin: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+}
