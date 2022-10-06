@@ -1,6 +1,6 @@
 import axios from 'axios';
 import './Styles.css';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 
 function Login({ User, setUser }) {
@@ -43,6 +43,21 @@ function Login({ User, setUser }) {
                       "left: -10rem;" +
                       "color: #240047;";
     }
+
+    useEffect(()=>{
+        usernameInput.current.addEventListener('keyup', function(e){
+            let key = e.which || e.keyCode;
+            if (key === 9) { // codigo da tecla enter
+              login();
+            }
+        });
+        passwordInput.current.addEventListener('keyup', function(e){
+            let key = e.which || e.keyCode;
+            if (key === 9) { // codigo da tecla enter
+              login();
+            }
+        });
+    }, []);
 
     return (
         <div className="LoginPage">
