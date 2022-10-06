@@ -8,7 +8,7 @@
   "main": "_server.js",
   "scripts": {
     "start": "node _server.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -1,18 +1,18 @@
 require('dotenv/config');
 
 //Create and connect to the database
-const Database = require('./_database');
-const database = new Database(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
+const DatabaseController = require('./_database');
+const databaseController = new DatabaseController(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
 
 console.log("Trying to connect to the database");
 
-database.connect().then(response => {
+databaseController.connect().then(response => {
 
     console.log(response.message);
     if(response.message==="Connected to the database."){
 
         // Create the express app
-        const app = require('./_app')(database);
+        const app = require('./_app')(databaseController);
         // Start server
         const port = 8080;
         const host = "localhost";

@@ -1,9 +1,9 @@
-module.exports = database => {
+module.exports = databaseController => {
 
     const router = require('express').Router();
     const session = require('../_session');
     const UserSchema = require('../models/User');
-    const User = database.conn.model('User', UserSchema);
+    const User = databaseController.conn.model('User', UserSchema);
 
     router.post('/login', function(req, res){
 

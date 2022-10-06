@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-class Database {
+class DatabaseController {
 
     constructor (username, password, cluster, dbName) {
 
@@ -55,4 +55,4 @@ class Database {
     
 }
 
-module.exports = Database;
+module.exports = DatabaseController;
