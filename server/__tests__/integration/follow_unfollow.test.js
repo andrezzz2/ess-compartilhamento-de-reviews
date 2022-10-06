@@ -62,3 +62,43 @@ describe(('Follow a user'), () => {
     });
 });
 
+describe(('Unfollow a user you arent following'), () => {
+
+    it(('deve gerar uma mensagem de erro avisando que o usuário não está na lista de following'), async() => {
+       
+        const response = await request(app).get('/user/getinfo/andrezzz');
+        expect(response.body.user.followingList.includes("joaozinho222")).toBeFalsy();
+
+        const response2 = await request(app).post('/user/removefollower/joaozinho222').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({followingList: response.body.user.followingList, followersList: ["jjpp2"]});
+        expect (response2.body.message).toBe("Usuário não consta na lista de seguindo!");
+    
+    });
+});
+
+describe(('follow a user you are following'), () => {
+
+    it(('deve gerar uma mensagem de erro avisando que o usuário está na lista de following'), async() => {
+       
+        const response = await request(app).get('/user/getinfo/andrezzz');
+        expect(response.body.user.followingList.includes("mmag2")).toBeTruthy();
+
+        const response2 = await request(app).get('/user/getinfo/mmag2');
+
+        const response3 = await request(app).post('/user/addfollower/mmag2').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({followingList: response.body.user.followingList, followersList: response2.body.user.followersList});
+        expect (response3.body.message).toBe("usuário já está na lista de seguindo!");
+    
+    });
+});
+
+
+describe(('follow a user that doesnt exist'), () => {
+
+    it(('deve gerar uma mensagem de erro avisando que o usuário que está tentando seguir não existe'), async() => {
+       
+        const response = await request(app).get('/user/getinfo/andrezzz');
+        expect(response.body.user.followingList.includes("joaozinho222")).toBeFalsy();
+
+        const response2 = await request(app).get('/user/getinfo/joaozinho222');
+        expect (response2.body.message).toBe("Usuário não encontrado.");
+    });
+});

@@ -120,28 +120,33 @@ module.exports = databaseController => {
         const updateFollowing = req.body.followingList;
         const updateFollower = req.body.followersList;
 
-        updateFollowing.push(req.params.username);
-        updateFollower.push(req.body.username);
 
-        User.findOneAndUpdate(filter, {$set: { followingList: updateFollowing}}).then(doc=>{
-            //this param doc is the document before update
-            User.findOneAndUpdate(filter2, {$set: {followersList: updateFollower}}).then(doc=>{
+        if(updateFollowing.includes(req.params.username)){
+            res.send({message: "usuário já está na lista de seguindo!"});
+        }
+        else{
+            updateFollowing.push(req.params.username);
+            updateFollower.push(req.body.username);
+
+            User.findOneAndUpdate(filter, {$set: { followingList: updateFollowing}}).then(doc=>{
                 //this param doc is the document before update
-    
-                res.send({message: "seguidor adicionado :)"});
+                User.findOneAndUpdate(filter2, {$set: {followersList: updateFollower}}).then(doc=>{
+                    //this param doc is the document before update
+        
+                    res.send({message: "seguidor adicionado :)"});
+            
+                }).catch(error=>{
+            
+                    res.send(error);
+            
+                });
         
             }).catch(error=>{
         
                 res.send(error);
         
             });
-    
-        }).catch(error=>{
-    
-            res.send(error);
-    
-        });
-
+        }
         
 
     });
@@ -179,7 +184,7 @@ module.exports = databaseController => {
         }
 
         else{
-            console.log("Usuário não consta na lista de seguindo!")
+            res.send({message:"Usuário não consta na lista de seguindo!"});
         }
         
 
