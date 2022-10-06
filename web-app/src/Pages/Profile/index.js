@@ -87,11 +87,13 @@ function Profile({ User }) {
             axios.post('http://localhost:8080/user/addfollower/'+requestedUser.username,{followingList: followingList, followersList: followersList},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}} ).then((response)=>{
                 console.log(response.data.message);
 
+                window.location.reload();
                 });
         }        
     }
 
     function unfollowUser(){
+        console.log("batata");
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
 
@@ -101,7 +103,8 @@ function Profile({ User }) {
 
             axios.post('http://localhost:8080/user/removefollower/'+requestedUser.username,{followingList: followingList, followersList: followersList},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}} ).then((response)=>{
                 console.log(response.data.message);
-
+                
+                window.location.reload();
                 });
         }
     }
@@ -118,13 +121,13 @@ function Profile({ User }) {
                         <span className="ProfileUsername">{"@"+requestedUser.username}</span>
                         <div className="ProfileFollowersFollowing">
                             <div className='ProfileFollowersOrFollowing' onClick={()=>{setActualEl(<Followers requestedUser={requestedUser} User={User}/>); activeElFollowers();}}>
-                                {requestedUser.followers+" followers"}
+                                {requestedUser.followersList.length+" followers"}
                             </div>
                             <span>
                                 -
                             </span>
                             <div className='ProfileFollowersOrFollowing' onClick={()=>{ setActualEl(<Following requestedUser={requestedUser} User={User}/>); activeElFollowing();}}>
-                                {requestedUser.following+" following"}
+                                {requestedUser.followingList.length+" following"}
                             </div>
                         </div>
 
