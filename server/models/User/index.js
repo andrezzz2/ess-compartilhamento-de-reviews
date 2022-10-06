@@ -35,14 +35,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    followers: {
-        type: String,
-        required: false,
-    },
-    following: {
-        type: String,
-        required: false,
-    },
     moviesList: {
         type: Array,
         required: false,
