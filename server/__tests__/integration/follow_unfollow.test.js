@@ -1,19 +1,33 @@
 require('dotenv/config');
 const request = require('supertest');
 
+
+var app;
+var databaseController;
+var accessToken;
+var refreshToken;
+
+//conecta com db, cria app, faz login e salva accessToken e refreshToken para serem usados nos testes
+beforeAll(async ()=>{
+    const DatabaseController = require('../../_database');
+    databaseController = new DatabaseController(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
+    await databaseController.connect();
+
+    app = require('../../_app')(databaseController);
+    const response0 = await request(app).post('/login').send({username: "andrezzz", password: "senha123"});
+
+    accessToken = response0.body.accessToken;
+    refreshToken = response0.body.refreshToken;
+});
+
+afterAll(async ()=>{
+    databaseController.disconnect();
+});
+
 describe(('Unfollow a user'), () => {
 
     it(('deve remover o usuário do perfil que está sendo visitado da lista de seguindo do usuário da sessão e remover o usuário da sessão da lista de seguidores do usuário do perfil visitado'), async() => {
-        const Database = require('../../_database');
-        const database = new Database(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
-        await database.connect();
-
-        const app = require('../../_app')(database);
-
-        const response0 = await request(app).post('/login').send({username: "andrezzz", password: "senha123"});
-        const accessToken = response0.body.accessToken;
-        const refreshToken = response0.body.refreshToken;
-
+       
         const response = await request(app).get('/user/getinfo/andrezzz');
         expect(response.body.user.followingList.includes("mmag2")).toBeTruthy();
 
@@ -24,8 +38,7 @@ describe(('Unfollow a user'), () => {
         
         const response4 = await request(app).get('/user/getinfo/andrezzz');
         expect(response4.body.user.followingList.includes("mmag2")).toBeFalsy();
-        
-        database.disconnect();
+    
     });
 });
 
@@ -34,17 +47,7 @@ describe(('Unfollow a user'), () => {
 describe(('Follow a user'), () => {
 
     it(('deve adicionar o usuário do perfil que está sendo visitado à lista de seguindo do usuário da sessão e adicionar o usuário da sessão à lista de seguidores do usuário do perfil que está sendo visitado'), async() => {
-        const Database = require('../../_database');
-        const database = new Database(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
-        await database.connect();
-
-        const app = require('../../_app')(database);
-
-        const response0 = await request(app).post('/login').send({username: "andrezzz", password: "senha123"});
-        const accessToken = response0.body.accessToken;
-        const refreshToken = response0.body.refreshToken;
-
-
+        
         const response = await request(app).get('/user/getinfo/andrezzz');
         expect(response.body.user.followingList.includes("mmag2")).toBeFalsy();
 
@@ -56,7 +59,6 @@ describe(('Follow a user'), () => {
         const response4 = await request(app).get('/user/getinfo/andrezzz');
         expect(response4.body.user.followingList.includes("mmag2")).toBeTruthy();
         
-        database.disconnect();
     });
 });
 
