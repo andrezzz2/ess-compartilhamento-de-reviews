@@ -35,6 +35,7 @@ describe(('Unfollow a user'), () => {
 
         const response3 = await request(app).post('/user/removefollower/mmag2').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({followingList: response.body.user.followingList, followersList: response2.body.user.followersList});
         expect (response3.body.message).toBe("seguidor removido!");
+        expect(response3.status).toBe(201);
         
         const response4 = await request(app).get('/user/getinfo/andrezzz');
         expect(response4.body.user.followingList.includes("mmag2")).toBeFalsy();
@@ -55,6 +56,7 @@ describe(('Follow a user'), () => {
 
         const response3 = await request(app).post('/user/addfollower/mmag2').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({followingList: response.body.user.followingList, followersList: response2.body.user.followersList});
         expect(response3.body.message).toBe("seguidor adicionado :)");
+        expect(response3.status).toBe(201);
 
         const response4 = await request(app).get('/user/getinfo/andrezzz');
         expect(response4.body.user.followingList.includes("mmag2")).toBeTruthy();
@@ -71,6 +73,7 @@ describe(('Unfollow a user you arent following'), () => {
 
         const response2 = await request(app).post('/user/removefollower/joaozinho222').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({followingList: response.body.user.followingList, followersList: ["jjpp2"]});
         expect (response2.body.message).toBe("Usuário não consta na lista de seguindo!");
+        expect(response2.status).toBe(404);
     
     });
 });
@@ -86,6 +89,7 @@ describe(('follow a user you are following'), () => {
 
         const response3 = await request(app).post('/user/addfollower/mmag2').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({followingList: response.body.user.followingList, followersList: response2.body.user.followersList});
         expect (response3.body.message).toBe("usuário já está na lista de seguindo!");
+        expect (response3.status).toBe(409);
     
     });
 });
@@ -100,5 +104,6 @@ describe(('follow a user that doesnt exist'), () => {
 
         const response2 = await request(app).get('/user/getinfo/joaozinho222');
         expect (response2.body.message).toBe("Usuário não encontrado.");
+        expect(response2.status).toBe(404);
     });
 });

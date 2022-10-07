@@ -122,7 +122,7 @@ module.exports = databaseController => {
 
 
         if(updateFollowing.includes(req.params.username)){
-            res.send({message: "usuário já está na lista de seguindo!"});
+            res.status(409).send({message: "usuário já está na lista de seguindo!"});
         }
         else{
             updateFollowing.push(req.params.username);
@@ -133,7 +133,7 @@ module.exports = databaseController => {
                 User.findOneAndUpdate(filter2, {$set: {followersList: updateFollower}}).then(doc=>{
                     //this param doc is the document before update
         
-                    res.send({message: "seguidor adicionado :)"});
+                    res.status(201).send({message: "seguidor adicionado :)"});
             
                 }).catch(error=>{
             
@@ -168,7 +168,7 @@ module.exports = databaseController => {
                 User.findOneAndUpdate(filter2, {$set: {followersList: updateFollower}}).then(doc=>{
                     //this param doc is the document before update
         
-                    res.send({message: "seguidor removido!"});
+                    res.status(201).send({message: "seguidor removido!"});
             
                 }).catch(error=>{
             
@@ -184,7 +184,7 @@ module.exports = databaseController => {
         }
 
         else{
-            res.send({message:"Usuário não consta na lista de seguindo!"});
+            res.status(404).send({message:"Usuário não consta na lista de seguindo!"});
         }
         
 
