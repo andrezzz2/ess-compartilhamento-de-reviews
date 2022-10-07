@@ -1,9 +1,10 @@
 .Header {
     width: 100vw;
-    height: 6vh;
     background-color: #240047;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
@@ -24,7 +25,7 @@
 }
 
 .Login-SignUp {
-    margin: 0 1rem;
+    margin: 1rem 1rem;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -101,3 +102,10 @@
     transition: 200ms;
 }
 
+@media (max-width: 700px) { 
+    
+    .Logo {
+        flex: none;
+    }
+
+}

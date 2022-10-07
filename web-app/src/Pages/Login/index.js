@@ -39,9 +39,10 @@ function Login({ User, setUser }) {
         const el = event.target || event.srcElement;
         const el2 = el.nextSibling;
         el2.style.cssText = "font-size: 0.9rem;" +
-                      "top: -4rem;" +
-                      "left: -10rem;" +
-                      "color: #240047;";
+                            "top: -3.5rem;" +
+                            "left: -6.1rem;" +
+                            "color: #240047;"+
+                            "background-color: white;";
     }
 
     useEffect(()=>{
