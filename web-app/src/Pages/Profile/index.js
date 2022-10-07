@@ -40,7 +40,7 @@ function Profile({ User }) {
     //logo após requestedUser ser definido, o componente de listas vai ser mostrado
     useEffect(()=>{
         if(requestedUser){
-            setActualEl(<Lists requestedUser={requestedUser}/>);
+            setActualEl(<Lists User={User} requestedUser={requestedUser}/>);
         }
     }, [requestedUser])
 

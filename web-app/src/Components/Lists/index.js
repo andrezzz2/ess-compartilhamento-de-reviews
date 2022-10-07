@@ -1,6 +1,6 @@
 import './Styles.css';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 
 function Lists({ requestedUser, User }) {
@@ -24,13 +24,16 @@ function Lists({ requestedUser, User }) {
         el.parentNode.classList.add('Hidden');
     }
 
-    function createSearchContainer(type) {
-        if(User.username === requestedUser.username){
-            const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
-            SearchContainer.setAttribute("type", type);
-            SearchContainer.setAttribute("visible", "true");
+    const createSearchContainer = useCallback((type)=>{
+        if(User && requestedUser){
+            if(User.username === requestedUser.username){
+                const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
+                SearchContainer.setAttribute("type", type);
+                SearchContainer.setAttribute("visible", "true");
+            }
         }
-    }
+    }, [User, requestedUser]);
+
 
     function searchTitles() {
         const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
@@ -57,6 +60,23 @@ function Lists({ requestedUser, User }) {
                 console.error(error);
             });
 
+        } else if (type === "book"){
+
+            const options = {
+                method: 'GET',
+                url: 'https://hapi-books.p.rapidapi.com/search/'+query.replace(" ", "+"),
+                headers: {
+                  'X-RapidAPI-Key': '34bd30d120msh4cd613dd1b1ddf4p11c364jsn217a2947db5f',
+                  'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
+                }
+            };
+              
+            axios.request(options).then(function (response) {
+                setSearchedItems(response.data);
+            }).catch(function (error) {
+                console.error(error);
+            });
+            
         }
     }
 
@@ -68,12 +88,16 @@ function Lists({ requestedUser, User }) {
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
 
-        if (type === "movie") {
+        let status;
+        let rate;
+        let item;
 
-            let status = prompt("Put its status (watched | watching | abandoned)");
-            let rate = prompt("Put its rate (0-5)");
+        if (type === "movie" || type === "tvSeries") {
 
-            const item = {
+            status = prompt("Put its status (watched | watching | abandoned)");
+            rate = prompt("Put its rate (0-5)");
+
+            item = {
                 id: searchedItem.id,
                 title: searchedItem.title,
                 imageURL: searchedItem.image.url,
@@ -82,52 +106,36 @@ function Lists({ requestedUser, User }) {
                 status: status,
                 rate: rate
             }
-            axios.post('http://localhost:8080/user/addToMoviesList', item, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                
-                console.log(response.data);
-                
-                if(response.data.refresh){
-                    localStorage.setItem('x-access-token', response.data.newAccessToken);
-                    axios.post('http://localhost:8080/user/addToMoviesList', item, {headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                        console.log(response.data);
-                        window.location.reload();
-                    });
-                } else window.location.reload();
-                
-            });
-        } else if (type === "tvSeries"){
-
-            let status = prompt("Put its status (watched | watching | abandoned)");
-            let rate = prompt("Put its rate (0-5)");
-
-            const item = {
-                id: searchedItem.id,
-                title: searchedItem.title,
-                imageURL: searchedItem.image.url,
-                type: searchedItem.titleType,
-                year: searchedItem.year,
-                status: status,
-                rate: rate
-            }
-            axios.post('http://localhost:8080/user/addToSeriesList', item, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                
-                console.log(response.data);
-
-                if(response.data.refresh){
-                    localStorage.setItem('x-access-token', response.data.newAccessToken);
-                    axios.post('http://localhost:8080/user/addToSeriesList', item, {headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                        console.log(response.data);
-                        window.location.reload();
-                    });
-                } else window.location.reload();
-                
-            });
         } else if (type === "book"){
 
             let status = prompt("Put its status (read | reading | abandoned)");
             let rate = prompt("Put its rate (0-5)");
 
+            item = {
+                id: searchedItem.book_id,
+                title: searchedItem.name,
+                imageURL: searchedItem.cover,
+                type: "book",
+                year: searchedItem.year,
+                status: status,
+                rate: rate
+            }
         }
+
+        axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                
+            console.log(response.data.message);
+            
+            if(response.data.refresh){
+                localStorage.setItem('x-access-token', response.data.newAccessToken);
+                axios.post('http://localhost:8080/user/addToMoviesList', item, {headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                    console.log(response.data.message);
+                    window.location.reload();
+                });
+            } else window.location.reload();
+            
+        });
+
     }
 
     return (
@@ -146,8 +154,8 @@ function Lists({ requestedUser, User }) {
                     {
                         searchedItems?.map((searchedItem) => {
                             return <article className="SearchContainerItem" onClick={()=>addTitleToList(searchedItem)}>
-                                        <p>{searchedItem?.title}</p>
-                                        <img src={searchedItem?.image?.url} alt="movie"></img>
+                                        <p>{searchedItem?.title || searchedItem?.name}</p>
+                                        <img src={searchedItem?.image?.url ||searchedItem?.cover} alt="movie"></img>
                                    </article>
                         })
                     }
@@ -268,11 +276,10 @@ function Lists({ requestedUser, User }) {
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>
-                                <img className='ItemImg' alt='' src={book.photoURL} onClick={(e) => { expandItem(e) }}></img>
+                                <img className='ItemImg' alt='' src={book.imageURL} onClick={(e) => { expandItem(e) }}></img>
                                 <span className='ItemTitle'>{book.title}</span>
-                                <span className='HiddenAttribute Hidden'>{book.author}</span>
+                                <span className='HiddenAttribute Hidden'>{book.year}</span>
                                 <span className='ItemStatus' status={book.status}>{book.status}</span>
-                                <span className='HiddenAttribute Hidden'>{book.description}</span>
                                 <span className='HiddenAttribute Hidden' rate={book.rate}>
                                     <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC' />
                                     <img alt='star' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABd0lEQVRIid2Wv0rEQBCHPw/UK9RTG7G4Qo5DrAXBQsRCEUEUDkXU2uJewNrOV/ABVLhGfILzARS0thG0EsRU/sE7Y5ENF+NekpnEgP5gIGRnft/Ostks/EH1mchdF0Azb+gE8Am4QEVjUFCCN4Ee81xTeqh0hdetC1zmBa0EoH5UpSaapd6yvNtQ+Ih1w8+Or38bOmmB+jElMUq61EVgBNiNyNk2OUXJBBaAR8Che0dpwzGMeeh0fA+8ACXJbIUqGcaDbaAh6EAa58Bo1Mz2gPcMgR/APp2TLlLTwG0G0DtgNgkwqCHgNAX0DG+Xq1XHWy7J0tbTAH2NAW0BuA2Mx5kmOUDWE+YFPVezAK8JoGlqvmkAeEW+sd7wNmdXxXW8gv3sbQEHJlqW8X5gOcY7UifYv825QM4M9m/+WAvtBZ5DZg1g2JI7CByFch2U19+lkMlOgpoa8BSoW9SAD01xEygL6sqmxjUeYlXxfvyae1nB1Iovgf9XX4TJ0rmAd6kJAAAAAElFTkSuQmCC' />

@@ -192,7 +192,7 @@ module.exports = databaseController => {
     });
 
     //private route
-    router.post('/user/addToMoviesList', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+    router.post('/user/add/movie', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
         
         User.findOne({ username: req.body.username}, (err, user)=>{
     
@@ -201,22 +201,26 @@ module.exports = databaseController => {
             else if(user){
                 const moviesList = user.moviesList;
 
+                let notInList = true;
                 moviesList.forEach((movie)=>{
-                    if(movie.id===req.body.id)
-                        res.status(200).send({message: "Filme já na lista"});
+                    if(movie.id===req.body.id) notInList = false;
                 });
 
-                moviesList.push(req.body);
+                if(notInList){  
+                    moviesList.push(req.body);
 
-                User.findOneAndUpdate({username: req.body.username}, {$set: {moviesList: moviesList}}).then(doc=>{
-                    //this param doc is the document before update
-                    res.status(201).send({message: "Filme adicionado a lista!"});
-            
-                }).catch(error=>{
-            
-                    res.send(error);
-            
-                });
+                    User.findOneAndUpdate({username: req.body.username}, {$set: {moviesList: moviesList}}).then(doc=>{
+                        //this param doc is the document before update
+                        res.status(201).send({message: "Livro adicionado a lista!"});
+                
+                    }).catch(error=>{
+                
+                        res.send(error);
+                
+                    });
+                } else {
+                    res.status(202).send({message: "Livro já na lista"});
+                }
             }
             else
                 res.status(404).send({user: null, message: "Usuário não encontrado."});
@@ -226,7 +230,7 @@ module.exports = databaseController => {
     });
 
     //private route
-    router.post('/user/addToSeriesList', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+    router.post('/user/add/tvSeries', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
         
         User.findOne({ username: req.body.username}, (err, user)=>{
     
@@ -235,22 +239,64 @@ module.exports = databaseController => {
             else if(user){
                 const seriesList = user.seriesList;
 
+                let notInList = true;
                 seriesList.forEach((serie)=>{
-                    if(serie.id===req.body.id)
-                        res.status(200).send({message: "Série já na lista"});
+                    if(serie.id===req.body.id) notInList = false;
                 });
 
-                seriesList.push(req.body);
+                if(notInList){  
+                    seriesList.push(req.body);
 
-                User.findOneAndUpdate({username: req.body.username}, {$set: {seriesList: seriesList}}).then(doc=>{
-                    //this param doc is the document before update
-                    res.status(201).send({message: "Série adicionada a lista!"});
-            
-                }).catch(error=>{
-            
-                    res.send(error);
-            
+                    User.findOneAndUpdate({username: req.body.username}, {$set: {seriesList: seriesList}}).then(doc=>{
+                        //this param doc is the document before update
+                        res.status(201).send({message: "Livro adicionado a lista!"});
+                
+                    }).catch(error=>{
+                
+                        res.send(error);
+                
+                    });
+                } else {
+                    res.status(202).send({message: "Livro já na lista"});
+                }
+            }
+            else
+                res.status(404).send({user: null, message: "Usuário não encontrado."});
+    
+        });
+
+    });
+
+    //private route
+    router.post('/user/add/book', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+        
+        User.findOne({ username: req.body.username}, (err, user)=>{
+    
+            if(err)
+                res.status(502).send({user: null, message: err});
+            else if(user){
+                const booksList = user.booksList;
+
+                let notInList = true;
+                booksList.forEach((book)=>{
+                    if(book.id===req.body.id) notInList = false;
                 });
+
+                if(notInList){  
+                    booksList.push(req.body);
+
+                    User.findOneAndUpdate({username: req.body.username}, {$set: {booksList: booksList}}).then(doc=>{
+                        //this param doc is the document before update
+                        res.status(201).send({message: "Livro adicionado a lista!"});
+                
+                    }).catch(error=>{
+                
+                        res.send(error);
+                
+                    });
+                } else {
+                    res.status(202).send({message: "Livro já na lista"});
+                }
             }
             else
                 res.status(404).send({user: null, message: "Usuário não encontrado."});
