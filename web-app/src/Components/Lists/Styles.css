@@ -172,6 +172,9 @@
 
 .SearchContainerInput {
     margin-right: 0.8rem;
+    border: 1px solid black;
+    border-radius: 0.4rem;
+    padding: 0.2rem;
 }
 
 .SearchContainerInput:focus {
@@ -186,7 +189,7 @@
 
 .SearchContainerItems {
     margin: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(0, 0, 0, 0.24);
     width: 90%;
     display: flex;
     flex-wrap: wrap;

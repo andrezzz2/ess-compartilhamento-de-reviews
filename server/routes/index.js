@@ -47,8 +47,9 @@ module.exports = databaseController => {
     
     //public info
     router.get('/user/getinfo/:username', function(req, res){
-    
-        User.findOne({ username: req.params.username}, (err, user)=>{
+        
+        //vai dar todas as informações menos a senha
+        User.findOne({ username: req.params.username}, '-password', (err, user)=>{
     
             if(err)
                 res.status(502).send({user: null, message: err});

@@ -6,7 +6,7 @@
 
 .Followers-div{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column-reverse;
     width: 100%;
 }
 
@@ -21,10 +21,6 @@
 .friend-info{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    white-space:nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     margin-right: 10px;
 }
 
@@ -53,6 +49,10 @@ a{
 
 #friend-bio{
     margin:0.25rem;
-    max-width: 50vw;
+    white-space: normal;
+    word-break: break-word;
+    /*white-space: normal;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
 }
 
