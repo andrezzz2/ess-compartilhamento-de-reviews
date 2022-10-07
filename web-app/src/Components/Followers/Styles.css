@@ -4,6 +4,12 @@
     background-color: #D5DBF0;
 }
 
+.Followers-div{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
 .Followers-container{
     background-color: #fff;
     display: flex;
@@ -12,25 +18,41 @@
     margin: 10px;
     border-radius: 10px;
 }
-
-.Followers-div{
+.friend-info{
     display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+}
+
+a{
+    text-decoration: none;
+    color:black;
 }
 
 #friend-icon{
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    padding: 20px 10px 0 10px;
+    margin-top: 1rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 2.5rem;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#friend-name{
+    margin: 0.1rem;
+    font-weight: bold;
 }
 
 #friend-nick{
-    padding-right: 2.9rem;
+    margin: 0.1rem;
 }
 
-.Followers-container a{
-    text-decoration: none;
-    color: black;
+#friend-bio{
+    margin:0.25rem;
+    max-width: 50vw;
 }
+
