@@ -151,7 +151,7 @@ function Profile({ User }) {
                         <div className='ProfileBar'>
 
                             <div className='ProfileBarOptions Active' onClick={(e)=>{
-                                setActualEl(<Lists requestedUser={requestedUser}/>);
+                                setActualEl(<Lists requestedUser={requestedUser} User={User}/>);
                                 activeEl(e);}}>
                                 Lists
                             </div>

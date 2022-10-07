@@ -101,7 +101,7 @@ module.exports = databaseController => {
     
     
     //private route
-    router.put('/user/deleteAccount', (req, res, next) => session.verifyJWT(req, res, next), deleteUser = function(req, res){
+    router.put('/user/deleteAccount', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
         
         User.deleteOne({ username: req.body.username }).then(function(){
             console.log("User",req.body.username,"deleted"); // Success
@@ -155,7 +155,7 @@ module.exports = databaseController => {
 
     //private route
     router.post('/user/removefollower/:username',(req, res, next) => session.verifyJWT(req, res, next), function(req, res){
-        const filter = { username: req.body.username};
+        const filter = {username: req.body.username};
         const filter2 = {username: req.params.username};
         const updateFollower = req.body.followersList;
         const updateFollowing = req.body.followingList;
@@ -188,6 +188,74 @@ module.exports = databaseController => {
             res.status(404).send({message:"Usuário não consta na lista de seguindo!"});
         }
         
+
+    });
+
+    //private route
+    router.post('/user/addToMoviesList', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+        
+        User.findOne({ username: req.body.username}, (err, user)=>{
+    
+            if(err)
+                res.status(502).send({user: null, message: err});
+            else if(user){
+                const moviesList = user.moviesList;
+
+                moviesList.forEach((movie)=>{
+                    if(movie.id===req.body.id)
+                        res.status(200).send({message: "Filme já na lista"});
+                });
+
+                moviesList.push(req.body);
+
+                User.findOneAndUpdate({username: req.body.username}, {$set: {moviesList: moviesList}}).then(doc=>{
+                    //this param doc is the document before update
+                    res.status(201).send({message: "Filme adicionado a lista!"});
+            
+                }).catch(error=>{
+            
+                    res.send(error);
+            
+                });
+            }
+            else
+                res.status(404).send({user: null, message: "Usuário não encontrado."});
+    
+        });
+
+    });
+
+    //private route
+    router.post('/user/addToSeriesList', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+        
+        User.findOne({ username: req.body.username}, (err, user)=>{
+    
+            if(err)
+                res.status(502).send({user: null, message: err});
+            else if(user){
+                const seriesList = user.seriesList;
+
+                seriesList.forEach((serie)=>{
+                    if(serie.id===req.body.id)
+                        res.status(200).send({message: "Série já na lista"});
+                });
+
+                seriesList.push(req.body);
+
+                User.findOneAndUpdate({username: req.body.username}, {$set: {seriesList: seriesList}}).then(doc=>{
+                    //this param doc is the document before update
+                    res.status(201).send({message: "Série adicionada a lista!"});
+            
+                }).catch(error=>{
+            
+                    res.send(error);
+            
+                });
+            }
+            else
+                res.status(404).send({user: null, message: "Usuário não encontrado."});
+    
+        });
 
     });
 

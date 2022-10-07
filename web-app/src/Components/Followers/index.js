@@ -13,7 +13,6 @@ function Followers({requestedUser}) {
         if(followersInfo.length === 0 && requestedUser.followersList.length>0){
             requestedUser.followersList.forEach((follower) => {
                 axios.get('http://localhost:8080/user/getinfo/' + follower).then((response) => {
-                    console.log(response.data.user.password);
                     updateFollowersInfo(arr => [...arr, [follower, response.data.user.photoURL, (response.data.user.firstName + " " + response.data.user.lastName),response.data.user.bio]]);
                 });
             });
