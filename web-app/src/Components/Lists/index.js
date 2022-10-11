@@ -128,11 +128,14 @@ function Lists({ requestedUser, User }) {
             
             if(response.data.refresh){
                 localStorage.setItem('x-access-token', response.data.newAccessToken);
-                axios.post('http://localhost:8080/user/addToMoviesList', item, {headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                    console.log(response.data.message);
+                axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                    if(!response.data.accepted) alert(response.data.message);
                     window.location.reload();
                 });
-            } else window.location.reload();
+            } else{
+                if(!response.data.accepted) alert(response.data.message);
+                window.location.reload();
+            } 
             
         });
 
@@ -152,8 +155,8 @@ function Lists({ requestedUser, User }) {
 
                 <div className="SearchContainerItems">
                     {
-                        searchedItems?.map((searchedItem) => {
-                            return <article className="SearchContainerItem" onClick={()=>addTitleToList(searchedItem)}>
+                        searchedItems?.map((searchedItem, index) => {
+                            return <article key={index} className="SearchContainerItem" onClick={()=>addTitleToList(searchedItem)}>
                                         <p>{searchedItem?.title || searchedItem?.name}</p>
                                         <img src={searchedItem?.image?.url ||searchedItem?.cover} alt="movie"></img>
                                    </article>

@@ -211,7 +211,7 @@ module.exports = databaseController => {
 
                     User.findOneAndUpdate({username: req.body.username}, {$set: {moviesList: moviesList}}).then(doc=>{
                         //this param doc is the document before update
-                        res.status(201).send({message: "Livro adicionado a lista!"});
+                        res.status(201).send({message: "Livro adicionado a lista!", accepted: true});
                 
                     }).catch(error=>{
                 
@@ -219,7 +219,7 @@ module.exports = databaseController => {
                 
                     });
                 } else {
-                    res.status(202).send({message: "Livro já na lista"});
+                    res.status(202).send({message: "Livro já na lista", accepted: false});
                 }
             }
             else
@@ -249,7 +249,7 @@ module.exports = databaseController => {
 
                     User.findOneAndUpdate({username: req.body.username}, {$set: {seriesList: seriesList}}).then(doc=>{
                         //this param doc is the document before update
-                        res.status(201).send({message: "Livro adicionado a lista!"});
+                        res.status(201).send({message: "Série adicionada a lista!", accepted: true});
                 
                     }).catch(error=>{
                 
@@ -257,7 +257,7 @@ module.exports = databaseController => {
                 
                     });
                 } else {
-                    res.status(202).send({message: "Livro já na lista"});
+                    res.status(202).send({message: "Série já na lista", accepted: false});
                 }
             }
             else
@@ -287,7 +287,7 @@ module.exports = databaseController => {
 
                     User.findOneAndUpdate({username: req.body.username}, {$set: {booksList: booksList}}).then(doc=>{
                         //this param doc is the document before update
-                        res.status(201).send({message: "Livro adicionado a lista!"});
+                        res.status(201).send({message: "Livro adicionado a lista!", accepted: false});
                 
                     }).catch(error=>{
                 
@@ -295,7 +295,7 @@ module.exports = databaseController => {
                 
                     });
                 } else {
-                    res.status(202).send({message: "Livro já na lista"});
+                    res.status(202).send({message: "Livro já na lista", accepted: false});
                 }
             }
             else
