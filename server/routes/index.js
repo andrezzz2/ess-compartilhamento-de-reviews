@@ -307,7 +307,25 @@ module.exports = databaseController => {
 
     });
 
+    router.post('/user/changePassword', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+        const filter = { username: req.body.username };
+        //update deve ser um objeto contendo as informações alteradas
+        //const pessoa = {pessoa: req.body.pessoa};
+        const password = req.body.password;
+       
+        User.findOneAndUpdate(filter, {$set: {password: password}}).then(doc=>{
+            //adicionar status 
+            res.status(200).send({message: "Senha alterada!"});
+    
+        }).catch(error=>{
+            console.log(error);
+            res.status(502).send({message: "Erro ao tentar alterar a senha do usuário."});
+    
+        });
 
+    
+    });   
+    
     return router;
 
 }
