@@ -84,18 +84,21 @@ module.exports = databaseController => {
     router.post('/user/updateProfile', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
     
         const filter = { username: req.body.username };
+        
         //update deve ser um objeto contendo as informações alteradas
-        const update = req.body.update;
-    
-        User.findOneAndUpdate(filter, {$set: update}).then(doc=>{
-            //adicionar status 
-            res.status(200).send({message: "Perfil atualizado com sucesso."});
-    
-        }).catch(error=>{
-            console.log(error);
-            res.status(502).send({message: "Erro ao tentar atualizar perfil do usuário."});
-    
-        });
+        const pessoa = req.body.pessoa;
+        
+        if(pessoa.username.value!=null){
+            User.findOneAndUpdate(filter, {$set: {username: pessoa.username.value}}).then(doc=>{
+                //adicionar status 
+                res.status(200).send({message: "Perfil atualizado com sucesso."});
+        
+            }).catch(error=>{
+                console.log(error);
+                res.status(502).send({message: "Erro ao tentar atualizar perfil do usuário."});
+        
+            });
+        }
     
     });   
     
