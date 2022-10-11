@@ -15,8 +15,9 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 10px;
+    margin: 5px 10px 5px 10px;
     border-radius: 10px;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
 }
 .friend-info{
     display: flex;
@@ -36,23 +37,27 @@ a{
     border-radius: 2.5rem;
     cursor: pointer;
     margin: 10px;
+    
 }
 
 #friend-name{
-    margin: 0.1rem;
+    margin: 0rem;
     font-weight: bold;
 }
 
 #friend-nick{
-    margin: 0.1rem;
+    margin: 0rem;
+    font-size: 12px;
+    color: gray;
 }
 
 #friend-bio{
     margin:0.25rem;
+    margin-left: 0;
     white-space: normal;
     word-break: break-word;
-    /*white-space: normal;*/
-    /*overflow: hidden;*/
-    /*text-overflow: ellipsis;*/
+    font-size: 13px;
+    color: rgb(43, 40, 40);
+    
 }
 
