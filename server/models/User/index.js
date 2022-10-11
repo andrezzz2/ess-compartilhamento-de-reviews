@@ -27,10 +27,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    twitter: {
-        type: String,
-        required: false,
-    },
     photoURL: {
         type: String,
         required: false,

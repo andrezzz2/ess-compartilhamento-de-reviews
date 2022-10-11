@@ -82,12 +82,13 @@ module.exports = databaseController => {
     
     //private route
     router.post('/user/updateProfile', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
-    
         const filter = { username: req.body.username };
+        
         //update deve ser um objeto contendo as informações alteradas
-        const update = req.body.update;
-    
-        User.findOneAndUpdate(filter, {$set: update}).then(doc=>{
+        //const pessoa = {pessoa: req.body.pessoa};
+        
+       
+        User.findOneAndUpdate(filter, {$set: req.body.pessoa}).then(doc=>{
             //adicionar status 
             res.status(200).send({message: "Perfil atualizado com sucesso."});
     
@@ -96,6 +97,7 @@ module.exports = databaseController => {
             res.status(502).send({message: "Erro ao tentar atualizar perfil do usuário."});
     
         });
+
     
     });   
     

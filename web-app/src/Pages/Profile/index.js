@@ -172,7 +172,7 @@ function Profile({ User }) {
                             </div>
                             {(requestedUser?.username===User?.username)?
                                 <div className='ProfileBarOptions' onClick={(e)=>{
-                                    setActualEl(<EditProfile requestedUser={requestedUser} User={User}/>);
+                                    setActualEl(<EditProfile User={User}/>);
                                     activeEl(e);}}>
                                     Edit Profile
                                 </div>
