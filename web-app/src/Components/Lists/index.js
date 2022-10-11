@@ -7,23 +7,6 @@ function Lists({ requestedUser, User }) {
 
     const [searchedItems, setSearchedItems] = useState([]);
 
-    function expandItem(event) {
-        const el = event.target || event.srcElement;
-        const items = el.parentNode.querySelectorAll('.Hidden');
-        items.forEach(item => {
-            item.classList.remove('Hidden');
-        });
-    }
-
-    function closeExpandItem(event) {
-        const el = event.target || event.srcElement;
-        const items = el.parentNode.parentNode.querySelectorAll('.HiddenAttribute');
-        items.forEach(item => {
-            item.classList.add('Hidden');
-        });
-        el.parentNode.classList.add('Hidden');
-    }
-
     const createSearchContainer = useCallback((type)=>{
         if(User && requestedUser){
             if(User.username === requestedUser.username){
@@ -94,8 +77,11 @@ function Lists({ requestedUser, User }) {
 
         if (type === "movie" || type === "tvSeries") {
 
-            status = prompt("Put its status (watched | watching | abandoned)");
-            rate = prompt("Put its rate (0-5)");
+            while(status!="watched" && status!="watching" && status!="abandoned")
+                status = prompt("Put its status (watched | watching | abandoned)");
+            
+            while(rate!="1" && rate!="2" && rate!="3" && rate!="4" && rate!="5")
+                rate = prompt("Put its rate (1-5)");
 
             item = {
                 id: searchedItem.id,
@@ -108,8 +94,11 @@ function Lists({ requestedUser, User }) {
             }
         } else if (type === "book"){
 
-            let status = prompt("Put its status (read | reading | abandoned)");
-            let rate = prompt("Put its rate (0-5)");
+            while(status!="read" && status!="reading" && status!="abandoned")
+                status = prompt("Put its status (read | reading | abandoned)");
+            
+            while(rate!="1" && rate!="2" && rate!="3" && rate!="4" && rate!="5")
+                rate = prompt("Put its rate (1-5)");
 
             item = {
                 id: searchedItem.book_id,
@@ -141,6 +130,23 @@ function Lists({ requestedUser, User }) {
 
     }
 
+    function expandItem(event) {
+        const el = event.target || event.srcElement;
+        const items = el.parentNode.querySelectorAll('.Hidden');
+        items.forEach(item => {
+            item.classList.remove('Hidden');
+        });
+    }
+
+    function closeExpandItem(event) {
+        const el = event.target || event.srcElement;
+        const items = el.parentNode.parentNode.querySelectorAll('.HiddenAttribute');
+        items.forEach(item => {
+            item.classList.add('Hidden');
+        });
+        el.parentNode.classList.add('Hidden');
+    }
+
     return (
         <div className="Lists">
 
@@ -165,7 +171,7 @@ function Lists({ requestedUser, User }) {
                 </div>
             </div>
 
-            <div className='ListContainer'>
+            <div className='ListContainer' type="movie">
 
                 <div className='ListOptions'>
 
@@ -213,7 +219,7 @@ function Lists({ requestedUser, User }) {
             </div>
 
 
-            <div className='ListContainer'>
+            <div className='ListContainer' type="tvSeries">
 
                 <div className='ListOptions'>
 
@@ -259,7 +265,7 @@ function Lists({ requestedUser, User }) {
 
             </div>
 
-            <div className='ListContainer'>
+            <div className='ListContainer' type="book">
 
                 <div className='ListOptions'>
 
