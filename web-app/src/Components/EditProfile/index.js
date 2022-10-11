@@ -47,6 +47,46 @@ function EditProfile ( {User} ){
         }
     }
 
+    function alterarSenha(){
+        let text;
+        let atualPW = prompt("Digite a senha atual:");
+        const accessToken = localStorage.getItem('x-access-token');
+        const refreshToken = localStorage.getItem('x-refresh-token');
+        if(User.password == atualPW){
+            let newPW = prompt("Digite a nova senha:");
+            if(newPW == null || newPW == "" || newPW.length<8){
+                alert("Erro ao redefinir senha! A senha deve ter pelo menos 8 caracteres");
+            }
+            else{
+                axios.post('http://localhost:8080/user/changePassword',{password:newPW},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                        console.log(response.data.message);
+
+                        if(response.data.refresh){
+                            localStorage.setItem('x-access-token', response.data.newAccessToken);
+                            axios.post('http://localhost:8080/user/changePassword',{password:newPW},{headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                                console.log(response.data.message);
+                            
+                            alert(response.data.message);
+                            window.location.reload();
+                            });
+                        }
+                        else{
+                            alert(response.data.message);
+                            window.location.reload();
+                        }
+                
+                });
+                 
+            }
+        }
+        else{
+            alert("A senha digitada não corresponde com a senha atual do usuário!")
+        }
+        
+    
+
+    }
+
     return (
         <div className="EditProfile">
             <div className='EditContainer'>
@@ -66,7 +106,7 @@ function EditProfile ( {User} ){
                         <br/>
                     </form>
                     <button onClick={alterarDados}>alterar</button>
-                    <button>alterar senha</button>
+                    <button onClick={alterarSenha}>alterar senha</button>
                 </div>
             </div>
         </div>
