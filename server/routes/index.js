@@ -283,35 +283,56 @@ module.exports = databaseController => {
         
         User.findOne({ username: req.body.username}, (err, user)=>{
     
-            if(err)
-                res.status(502).send({user: null, message: err});
-            else if(user){
-                const moviesList = user.moviesList;
+            if(err){
+                
+                console.error(err);
+                req.body.responseObject.accepted = false;
+                req.body.responseObject.message = "Erro ao buscar usuário no BD.";
+                res.status(502).send({responseObject: req.body.responseObject});
 
+            } else if (user){  //achou usuário
+
+                //checando se filme já não está na lista
+                const moviesList = user.moviesList;
                 let notInList = true;
                 moviesList.forEach((movie)=>{
                     if(movie.id===req.body.id) notInList = false;
                 });
 
                 if(notInList){  
+
                     moviesList.push(req.body);
 
-                    User.findOneAndUpdate({username: req.body.username}, {$set: {moviesList: moviesList}}).then(doc=>{
-                        //this param doc is the document before update
-                        res.status(201).send({message: "Livro adicionado a lista!", accepted: true});
+                    User.findOneAndUpdate({username: req.body.username}, {$set: {moviesList: moviesList}}).then(doc=>{  //atualizando usuário
+
+                        req.body.responseObject.accepted = true;
+                        req.body.responseObject.message = "Filme adicionado a lista!";
+                        res.status(201).send({responseObject: req.body.responseObject});
                 
-                    }).catch(error=>{
-                
-                        res.send(error);
+                    }).catch(error=>{  //erro ao tentar atualizar usuário
+                        
+                        console.error(error);
+                        req.body.responseObject.accepted = false;
+                        req.body.responseObject.message = "Erro ao buscar ou atualizar lista do usuário.";
+                        res.status(502).send({responseObject: req.body.responseObject});
                 
                     });
-                } else {
-                    res.status(202).send({message: "Livro já na lista", accepted: false});
+
+                } else {  //já está na lista
+
+                    req.body.responseObject.accepted = false;
+                    req.body.responseObject.message = "Filme já está na lista.";
+                    res.status(202).send({responseObject: req.body.responseObject});
+
                 }
+            } else { //não encontrou usuário no BD
+
+                req.body.responseObject.accepted = false;
+                req.body.responseObject.message = "Usuário não encontrado.";
+                res.status(404).send({responseObject: req.body.responseObject});
+
             }
-            else
-                res.status(404).send({user: null, message: "Usuário não encontrado."});
-    
+
         });
 
     });
@@ -321,35 +342,56 @@ module.exports = databaseController => {
         
         User.findOne({ username: req.body.username}, (err, user)=>{
     
-            if(err)
-                res.status(502).send({user: null, message: err});
-            else if(user){
-                const seriesList = user.seriesList;
+            if(err){
+                
+                console.error(err);
+                req.body.responseObject.accepted = false;
+                req.body.responseObject.message = "Erro ao buscar usuário no BD.";
+                res.status(502).send({responseObject: req.body.responseObject});
 
+            } else if (user){  //achou usuário
+
+                //checando se filme já não está na lista
+                const seriesList = user.seriesList;
                 let notInList = true;
                 seriesList.forEach((serie)=>{
                     if(serie.id===req.body.id) notInList = false;
                 });
 
                 if(notInList){  
+
                     seriesList.push(req.body);
 
-                    User.findOneAndUpdate({username: req.body.username}, {$set: {seriesList: seriesList}}).then(doc=>{
-                        //this param doc is the document before update
-                        res.status(201).send({message: "Série adicionada a lista!", accepted: true});
+                    User.findOneAndUpdate({username: req.body.username}, {$set: {seriesList: seriesList}}).then(doc=>{  //atualizando usuário
+
+                        req.body.responseObject.accepted = true;
+                        req.body.responseObject.message = "Série adicionada a lista!";
+                        res.status(201).send({responseObject: req.body.responseObject});
                 
-                    }).catch(error=>{
-                
-                        res.send(error);
+                    }).catch(error=>{  //erro ao tentar atualizar usuário
+                        
+                        console.error(error);
+                        req.body.responseObject.accepted = false;
+                        req.body.responseObject.message = "Erro ao buscar ou atualizar lista do usuário.";
+                        res.status(502).send({responseObject: req.body.responseObject});
                 
                     });
-                } else {
-                    res.status(202).send({message: "Série já na lista", accepted: false});
+
+                } else {  //já está na lista
+
+                    req.body.responseObject.accepted = false;
+                    req.body.responseObject.message = "Série já está na lista.";
+                    res.status(202).send({responseObject: req.body.responseObject});
+
                 }
+            } else { //não encontrou usuário no BD
+
+                req.body.responseObject.accepted = false;
+                req.body.responseObject.message = "Usuário não encontrado.";
+                res.status(404).send({responseObject: req.body.responseObject});
+
             }
-            else
-                res.status(404).send({user: null, message: "Usuário não encontrado."});
-    
+
         });
 
     });
@@ -359,52 +401,75 @@ module.exports = databaseController => {
         
         User.findOne({ username: req.body.username}, (err, user)=>{
     
-            if(err)
-                res.status(502).send({user: null, message: err});
-            else if(user){
-                const booksList = user.booksList;
+            if(err){
+                
+                console.error(err);
+                req.body.responseObject.accepted = false;
+                req.body.responseObject.message = "Erro ao buscar usuário no BD.";
+                res.status(502).send({responseObject: req.body.responseObject});
 
+            } else if (user){  //achou usuário
+
+                //checando se filme já não está na lista
+                const booksList = user.booksList;
                 let notInList = true;
                 booksList.forEach((book)=>{
                     if(book.id===req.body.id) notInList = false;
                 });
 
                 if(notInList){  
+
                     booksList.push(req.body);
 
-                    User.findOneAndUpdate({username: req.body.username}, {$set: {booksList: booksList}}).then(doc=>{
-                        //this param doc is the document before update
-                        res.status(201).send({message: "Livro adicionado a lista!", accepted: false});
+                    User.findOneAndUpdate({username: req.body.username}, {$set: {booksList: booksList}}).then(doc=>{  //atualizando usuário
+
+                        req.body.responseObject.accepted = true;
+                        req.body.responseObject.message = "Livro adicionado a lista!";
+                        res.status(201).send({responseObject: req.body.responseObject});
                 
-                    }).catch(error=>{
-                
-                        res.send(error);
+                    }).catch(error=>{  //erro ao tentar atualizar usuário
+                        
+                        console.error(error);
+                        req.body.responseObject.accepted = false;
+                        req.body.responseObject.message = "Erro ao buscar ou atualizar lista do usuário.";
+                        res.status(502).send({responseObject: req.body.responseObject});
                 
                     });
-                } else {
-                    res.status(202).send({message: "Livro já na lista", accepted: false});
+
+                } else {  //já está na lista
+
+                    req.body.responseObject.accepted = false;
+                    req.body.responseObject.message = "Livro já está na lista.";
+                    res.status(202).send({responseObject: req.body.responseObject});
+
                 }
+            } else { //não encontrou usuário no BD
+
+                req.body.responseObject.accepted = false;
+                req.body.responseObject.message = "Usuário não encontrado.";
+                res.status(404).send({responseObject: req.body.responseObject});
+
             }
-            else
-                res.status(404).send({user: null, message: "Usuário não encontrado."});
-    
+
         });
 
     });
 
     router.post('/user/changePassword', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
+        
         const filter = { username: req.body.username };
-        //update deve ser um objeto contendo as informações alteradas
-        //const pessoa = {pessoa: req.body.pessoa};
         const password = req.body.password;
        
         User.findOneAndUpdate(filter, {$set: {password: password}}).then(doc=>{
-            //adicionar status 
-            res.status(200).send({message: "Senha alterada!"});
+             
+            req.body.responseObject.message = "Senha alterada!";
+            res.status(200).send({responseObject: req.body.responseObject});
     
         }).catch(error=>{
+
             console.log(error);
-            res.status(502).send({message: "Erro ao tentar alterar a senha do usuário."});
+            req.body.responseObject.message = "Erro ao tentar alterar a senha do usuário.";
+            res.status(502).send({responseObject: req.body.responseObject});
     
         });
 

@@ -1,6 +1,6 @@
 import './Styles.css';
 
-function Following ( {requestedUser, User} ){
+function Following ( {requestedUser, User, setUser} ){
 
     return (
         <div className="Following">

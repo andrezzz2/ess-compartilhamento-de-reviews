@@ -9,29 +9,24 @@ function Login({ User, setUser }) {
     const passwordInput = useRef();
     const [serverResponse, setServerResponse] = useState("");
 
-    if(User) {
-        window.location.href = "http://localhost:3000";
-    }
+    if(User) window.location.href = "http://localhost:3000";
 
     function login(){
-        if(!User){
 
-            axios.post('http://localhost:8080/login', {username: usernameInput.current.value, password: passwordInput.current.value}).then((response)=>{
-                
-                setServerResponse(response.data.message);
-
-                if(response.data.user){
-                    localStorage.setItem("x-access-token", response.data.accessToken);
-                    localStorage.setItem("x-refresh-token", response.data.refreshToken);
-                    localStorage.setItem("user", JSON.stringify(response.data.user));
-                    setUser(response.data.user);
-                }
-                
-            });
+        axios.post('http://localhost:8080/login', {username: usernameInput.current.value, password: passwordInput.current.value}).then((response)=>{
             
-        } else {
-            window.location.href = "http://localhost:3000";
-        }
+            setServerResponse(response.data.responseObject.message);
+
+            if(response.data.responseObject.user){  //operação de login deu certo
+
+                localStorage.setItem("x-access-token", response.data.responseObject.accessToken);
+                localStorage.setItem("x-refresh-token", response.data.responseObject.refreshToken);
+                localStorage.setItem("user", JSON.stringify(response.data.responseObject.user));
+                setUser(response.data.responseObject.user);
+
+            }
+            
+        });
 
     };
 

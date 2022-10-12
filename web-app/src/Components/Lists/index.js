@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 
-function Lists({ requestedUser, User }) {
+function Lists({ requestedUser, User, setUser }) {
 
     const [searchedItems, setSearchedItems] = useState([]);
 

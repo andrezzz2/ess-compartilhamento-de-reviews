@@ -2,7 +2,7 @@ import './Styles.css';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-function EditProfile ( {User} ){
+function EditProfile ( {User, setUser} ){
 
     useEffect(()=>{
         if(User)
@@ -37,7 +37,11 @@ function EditProfile ( {User} ){
                         localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                     }
                     console.log(response.data.responseObject.message);
-                } 
+                } else {
+                    //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
+                    setUser(null);
+                    localStorage.clear();
+                }
 
             });
         }

@@ -70,7 +70,8 @@ class SessionController {
     
         const accessToken = req.headers['x-access-token'];
         const refreshToken = req.headers['x-refresh-token'];
-    
+        req.body.responseObject = {};
+        
         if (!accessToken || !refreshToken){
             req.body.responseObject.auth = false;
             req.body.responseObject.authMessage = 'No tokens provided.';
