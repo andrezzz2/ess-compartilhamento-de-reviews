@@ -42,7 +42,7 @@ function Profile({ User, setUser }) {
         if(requestedUser){
             setActualEl(<Lists User={User} requestedUser={requestedUser}/>);
         }
-    }, [requestedUser])
+    }, [requestedUser, User]);
 
     function activeEl(event) {
         const items = document.querySelectorAll('.ProfileBarOptions');
@@ -161,12 +161,12 @@ function Profile({ User, setUser }) {
                                 Reviews
                             </div>
                             <div className='ProfileBarOptions FollowersOption' onClick={(e)=>{
-                                setActualEl(<Followers requestedUser={requestedUser} User={User} setUser={setUser}/>);
+                                setActualEl(<Followers requestedUser={requestedUser}/>);
                                 activeEl(e);}}>
                                 Followers
                             </div>
                             <div className='ProfileBarOptions FollowingOption' onClick={(e)=>{
-                                setActualEl(<Following requestedUser={requestedUser} User={User} setUser={setUser}/>);
+                                setActualEl(<Following requestedUser={requestedUser}/>);
                                 activeEl(e);}}>
                                 Following
                             </div>
