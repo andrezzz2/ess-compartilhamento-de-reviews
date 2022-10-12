@@ -11,64 +11,51 @@ import axios from 'axios';
 
 function App() {
 
-    const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user')));
+    const [ User, setUser ] = useState(JSON.parse(localStorage.getItem('user')));
    
     useEffect(()=>{
 
-        fetchUserData();
+        console.log("App mounted.");
+        if(localStorage.getItem('user')) fetchUserData();
 
     }, []);
 
 
-    function fetchUserData (newAccessToken) {
+    function fetchUserData () {
 
-        const accessToken = newAccessToken || localStorage.getItem('x-access-token');
+        const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
-
-        if(accessToken){
             
-            axios.get('http://localhost:8080/user/getmyinfo', {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-            
-                console.log(response.data.message);
+        axios.get('http://localhost:8080/user/getmyinfo', {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+        
+            console.log(response.data.responseObject.authMessage);
 
-                if(response.data.auth){
-                    //accessToken ativo
-                    setUser(response.data.user);
-                    localStorage.setItem('user', JSON.stringify(response.data.user));
-
-                } else if (response.data.refresh){
-                    //accessToken expirou mas refreshToken conseguiu atualizar ele
-                    localStorage.setItem('x-access-token', response.data.newAccessToken);
-                    fetchUserData(response.data.newAccessToken);
-
-                } else {
-                    //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
-                    setUser(null);
-                    localStorage.clear();
+            if(response.data.responseObject.auth){
+                if(response.data.responseObject.newAccessToken){
+                    localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                 }
+                console.log(response.data.responseObject.message);
+                setUser(response.data.responseObject.user);
+            } else {
+                //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
+                setUser(null);
+                localStorage.clear();
+            }
 
-            });
-
-        } else {
-
-            //garantir que não tenha lixo de outras sessões aqui
-            setUser(null);
-            localStorage.clear();
-
-        }
+        });
 
     }
 
 
     return (
         <div className="App">
-            <Header User={user} setUser={setUser}/>
+            <Header User={User} setUser={setUser}/>
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/" element={<HomePage User={user}/>}/>
-                    <Route path="/login" element={<Login User={user} setUser={setUser}/>}/>
-                    <Route path="/signUp" element={<SignUp User={user} setUser={setUser}/>}/>
-                    <Route path="/profile/:username" element={<Profile User={user}/>}/>
+                    <Route exact path="/" element={<HomePage User={User}/>}/>
+                    <Route exact path="/login" element={<Login User={User} setUser={setUser}/>}/>
+                    <Route exact path="/signUp" element={<SignUp User={User} setUser={setUser}/>}/>
+                    <Route exact path="/profile/:username" element={<Profile User={User} setUser={setUser}/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
             </BrowserRouter>

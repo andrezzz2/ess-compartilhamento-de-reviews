@@ -19,8 +19,6 @@ function Following({requestedUser}) {
         }
     }, [requestedUser]);
 
-
-
     return (
         <div className="Following">
             <div className="Following-div">

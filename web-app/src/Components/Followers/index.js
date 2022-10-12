@@ -3,7 +3,7 @@ import './Styles.css';
 import { useState, useEffect } from 'react';
 
 
-function Followers({requestedUser}) {
+function Followers({requestedUser, User, setUser}) {
 
     const [followersInfo, updateFollowersInfo] = useState([]);
 
