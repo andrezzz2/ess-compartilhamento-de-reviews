@@ -29,14 +29,16 @@ function EditProfile ( {User} ){
         if(pessoa.firstName!=null && pessoa.lastName && pessoa.email!=null && pessoa.email!=null && pessoa.bio!=null && pessoa.photoURL!=null){
 
             axios.post('http://localhost:8080/user/updateProfile',{pessoa:pessoa},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-
+                
                 console.log(response.status.responseObject.authMessage);
+
                 if(response.data.responseObject.auth){
                     if(response.data.responseObject.newAccessToken){
                         localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                     }
                     console.log(response.data.responseObject.message);
                 } 
+
             });
         }
     }
