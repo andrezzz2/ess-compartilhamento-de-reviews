@@ -1,22 +1,17 @@
 import './Styles.css';
 import axios from 'axios';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 
 function Lists({ requestedUser, User }) {
 
     const [searchedItems, setSearchedItems] = useState([]);
 
-    const createSearchContainer = useCallback((type)=>{
-        if(User && requestedUser){
-            if(User.username === requestedUser.username){
-                const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
-                SearchContainer.setAttribute("type", type);
-                SearchContainer.setAttribute("visible", "true");
-            }
-        }
-    }, [User, requestedUser]);
-
+    function createSearchContainer(type) {
+        const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
+        SearchContainer.setAttribute("type", type);
+        SearchContainer.setAttribute("visible", "true");
+    }
 
     function searchTitles() {
         const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
@@ -77,10 +72,10 @@ function Lists({ requestedUser, User }) {
 
         if (type === "movie" || type === "tvSeries") {
 
-            while(status!="watched" && status!="watching" && status!="abandoned")
+            while(status!=="watched" && status!=="watching" && status!=="abandoned")
                 status = prompt("Put its status (watched | watching | abandoned)");
             
-            while(rate!="1" && rate!="2" && rate!="3" && rate!="4" && rate!="5")
+            while(rate!=="1" && rate!=="2" && rate!=="3" && rate!=="4" && rate!=="5")
                 rate = prompt("Put its rate (1-5)");
 
             item = {
@@ -94,10 +89,10 @@ function Lists({ requestedUser, User }) {
             }
         } else if (type === "book"){
 
-            while(status!="read" && status!="reading" && status!="abandoned")
+            while(status!=="read" && status!=="reading" && status!=="abandoned")
                 status = prompt("Put its status (read | reading | abandoned)");
             
-            while(rate!="1" && rate!="2" && rate!="3" && rate!="4" && rate!="5")
+            while(rate!=="1" && rate!=="2" && rate!=="3" && rate!=="4" && rate!=="5")
                 rate = prompt("Put its rate (1-5)");
 
             item = {
@@ -177,9 +172,13 @@ function Lists({ requestedUser, User }) {
 
                     <span className='ListTitle'> Movies </span>
 
-                    <div className='AddToList' onClick={() => { createSearchContainer("movie") }}>
-                        <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
-                    </div>
+                    {(User?.username === requestedUser?.username)?
+                        <div className='AddToList' onClick={() => { createSearchContainer("movie") }}>
+                            <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
+                        </div>
+                        :
+                        <></>
+                    }
 
                 </div>
 
@@ -225,9 +224,13 @@ function Lists({ requestedUser, User }) {
 
                     <span className='ListTitle'> Series </span>
 
-                    <div className='AddToList' onClick={() => { createSearchContainer("tvSeries") }}>
-                        <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
-                    </div>
+                    {(User?.username === requestedUser?.username)?
+                        <div className='AddToList' onClick={() => { createSearchContainer("tvSeries") }}>
+                            <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
+                        </div>
+                        :
+                        <></>
+                    }
 
                 </div>
 
@@ -271,9 +274,13 @@ function Lists({ requestedUser, User }) {
 
                     <span className='ListTitle'> Books </span>
 
-                    <div className='AddToList' onClick={() => { createSearchContainer("book") }}>
-                        <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
-                    </div>
+                    {(User?.username === requestedUser?.username)?
+                        <div className='AddToList' onClick={() => { createSearchContainer("book") }}>
+                            <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
+                        </div>
+                        :
+                        <></>
+                    }
 
                 </div>
 

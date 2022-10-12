@@ -71,13 +71,19 @@ class SessionController {
         const accessToken = req.headers['x-access-token'];
         const refreshToken = req.headers['x-refresh-token'];
     
-        if (!accessToken || !refreshToken) 
-            return res.send({auth: false, user: null, message: 'No tokens provided.'});
-
+        if (!accessToken || !refreshToken){
+            req.body.responseObject.auth = false;
+            req.body.responseObject.authMessage = 'No tokens provided.';
+            return res.send({responseObject: req.body.responseObject});
+        }
+            
         try {
 
             var decoded = jwt.verify(accessToken, process.env.SECRET);
             req.body.username = decoded.username;
+
+            req.body.responseObject.auth = true;
+            req.body.responseObject.authMessage = 'Succesfull authentication with Access Token.';
             next();
 
         } catch(err) {
@@ -93,26 +99,36 @@ class SessionController {
                         //cria novo access token e atribui ele ao refresh token
                         const newAccessToken = this.createAccessToken(decoded.username);
                         this.assignToRefreshToken(refreshToken, newAccessToken);
-                        return res.send({auth: false, refresh:true,  newAccessToken:newAccessToken, message: 'Session has expired. New Access Token provided.'});
+
+                        req.body.responseObject.auth = true;
+                        req.body.responseObject.authMessage = 'Session has expired. New Access Token provided.';
+                        req.body.responseObject.newAccessToken = newAccessToken;
+                        next();
 
                     } else {
 
                         //nao esta na lista de permitidos, alguem tentou roubar a sessão
                         this.invalidateRefreshToken(refreshToken);
-                        return res.send({auth: false, refresh: false, message: 'Session hijacking, try logging in again'});
+                        req.body.responseObject.auth = false;
+                        req.body.responseObject.authMessage = 'Session hijacking, try logging in again';
+                        return res.send({responseObject: req.body.responseObject});
 
                     }
 
                 } catch(err) {
 
                     //refresh token também expirou, então só resta logar de novo
-                    return res.send({auth: false, refresh: false, message: 'Invalid refresh token or it has expired, try logging in again.'});
+                    req.body.responseObject.auth = false;
+                    req.body.responseObject.authMessage = 'Invalid refresh token or it has expired, try logging in again.';
+                    return res.send({responseObject: req.body.responseObject});
 
                 }
                 
             } else {
 
-                return res.send({auth: false, message: 'Token has been invalidated or server lost it.'});
+                req.body.responseObject.auth = false;
+                req.body.responseObject.authMessage = 'Token has been invalidated or server lost it.'
+                return res.send({responseObject: req.body.responseObject});
 
             }
 
