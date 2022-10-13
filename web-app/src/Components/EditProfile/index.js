@@ -37,6 +37,7 @@ function EditProfile ( {User, setUser} ){
                         localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                     }
                     console.log(response.data.responseObject.message);
+                    window.location.reload(); 
                 } else {
                     //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
                     setUser(null);
@@ -81,8 +82,6 @@ function EditProfile ( {User, setUser} ){
     function deleteUser(){
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
-        console.log(accessToken);
-        console.log(refreshToken);
 
         if (window.confirm("Tem certexa que deseja excluir o usuário?")) {
             axios.post('http://localhost:8080/user/deleteAccount',{}, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
