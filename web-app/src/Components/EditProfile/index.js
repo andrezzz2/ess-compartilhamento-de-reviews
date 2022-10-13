@@ -30,7 +30,7 @@ function EditProfile ( {User, setUser} ){
 
             axios.post('http://localhost:8080/user/updateProfile',{pessoa:pessoa},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
                 
-                console.log(response.status.responseObject.authMessage);
+                console.log(response.data.responseObject.authMessage);
 
                 if(response.data.responseObject.auth){
                     if(response.data.responseObject.newAccessToken){
@@ -51,29 +51,28 @@ function EditProfile ( {User, setUser} ){
         let atualPW = prompt("Digite a senha atual:");
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
-        if(User.password == atualPW){
+        if(User.password === atualPW){
             let newPW = prompt("Digite a nova senha:");
-            if(newPW == null || newPW == "" || newPW.length<8){
+            if(newPW === null || newPW === "" || newPW.length<8){
                 alert("Erro ao redefinir senha! A senha deve ter pelo menos 8 caracteres");
             }
             else{
                 axios.post('http://localhost:8080/user/changePassword',{password:newPW},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                        console.log(response.data.message);
-
-                        if(response.data.refresh){
-                            localStorage.setItem('x-access-token', response.data.newAccessToken);
-                            axios.post('http://localhost:8080/user/changePassword',{password:newPW},{headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                                console.log(response.data.message);
-                            
-                            alert(response.data.message);
-                            window.location.reload();
-                            });
-                        }
-                        else{
-                            alert(response.data.message);
-                            window.location.reload();
-                        }
+                    console.log(response.data.responseObject.authMessage);
                 
+                    if(response.data.responseObject.auth){
+                        if(response.data.responseObject.newAccessToken){
+                            localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                        }
+                        alert(response.data.responseObject.message);
+                        window.location.reload();
+                    } else {
+                        //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
+                        setUser(null);
+                        localStorage.clear();
+                    }
+    
+                    
                 });
                  
             }

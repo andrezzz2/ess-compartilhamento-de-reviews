@@ -85,10 +85,17 @@ function Profile({ User, setUser }) {
             const followersList = requestedUser.followersList;
 
             axios.post('http://localhost:8080/user/addfollower/'+requestedUser.username,{followingList: followingList, followersList: followersList},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}} ).then((response)=>{
-                console.log(response.data.message);
+                console.log(response.data.responseObject.authMessage);
+                if(response.data.responseObject.auth){
+                    if(response.data.responseObject.newAccessToken){
+                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                    }
+                    console.log(response.data.responseObject.message);
+                    window.location.reload();
+                }
 
-                window.location.reload();
-                });
+                
+            });
         }        
     }
 
@@ -101,10 +108,15 @@ function Profile({ User, setUser }) {
             const followersList = requestedUser.followersList;
 
             axios.post('http://localhost:8080/user/removefollower/'+requestedUser.username,{followingList: followingList, followersList: followersList},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}} ).then((response)=>{
-                console.log(response.data.message);
-                
-                window.location.reload();
-                });
+                console.log(response.data.responseObject.authMessage);
+                if(response.data.responseObject.auth){
+                    if(response.data.responseObject.newAccessToken){
+                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                    }
+                    console.log(response.data.responseObject.message);
+                    window.location.reload();
+                }
+            });
         }
     }
 
