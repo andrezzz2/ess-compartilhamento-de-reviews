@@ -48,7 +48,6 @@ function EditProfile ( {User} ){
     }
 
     function alterarSenha(){
-        let text;
         let atualPW = prompt("Digite a senha atual:");
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
@@ -81,11 +80,18 @@ function EditProfile ( {User} ){
         }
         else{
             alert("A senha digitada não corresponde com a senha atual do usuário!")
-        }
-        
-    
+        }  
 
     }
+
+    function deleteUser(){
+        if (window.confirm("Tem certexa que deseja excluir o usuário?")) {
+            console.log("batata");
+        } 
+        else {
+            console.log("aceitas?")
+        }
+    }    
 
     return (
         <div className="EditProfile">
@@ -105,8 +111,9 @@ function EditProfile ( {User} ){
                         <input type="text" id='URL' placeholder='Digite a URL da nova foto' />
                         <br/>
                     </form>
-                    <button onClick={alterarDados}>alterar</button>
-                    <button onClick={alterarSenha}>alterar senha</button>
+                    <button onClick={alterarDados}>Alterar</button>
+                    <button onClick={alterarSenha}>Alterar Senha</button>
+                    <button onClick={deleteUser}>Apagar Conta</button>
                 </div>
             </div>
         </div>
