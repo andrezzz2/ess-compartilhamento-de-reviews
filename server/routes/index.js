@@ -167,12 +167,12 @@ module.exports = databaseController => {
     
     
     //private route
-    router.put('/user/deleteAccount', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
-        
+    router.post('/user/deleteAccount', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
         User.deleteOne({ username: req.body.username }).then(function(){  //deletou com sucesso
 
             console.log("User",req.body.username,"deleted");
             req.body.responseObject.message = "Conta excluída do sistema.";
+            req.body.responseObject.accepted = true;
             res.status(200).send({responseObject: req.body.responseObject});
 
         }).catch(function(error){
@@ -440,17 +440,9 @@ module.exports = databaseController => {
 
                     req.body.responseObject.accepted = false;
                     req.body.responseObject.message = "Livro já está na lista.";
-                    res.status(202).send({responseObject: req.body.responseObject});
-
+                    res.status(404).send({responseObject: req.body.responseObject});
                 }
-            } else { //não encontrou usuário no BD
-
-                req.body.responseObject.accepted = false;
-                req.body.responseObject.message = "Usuário não encontrado.";
-                res.status(404).send({responseObject: req.body.responseObject});
-
             }
-
         });
 
     });
