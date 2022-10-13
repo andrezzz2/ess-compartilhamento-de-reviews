@@ -10,7 +10,7 @@ import {PacmanLoader} from 'react-spinners';
 import axios from 'axios';
 
 
-function Profile({ User }) {
+function Profile({ User, setUser }) {
 
     const { username } = useParams();
     const [ alert, SetAlert ] = useState(<div className="AlertProfilePage"><PacmanLoader color={"#240047"} size={30} speedMultiplier={1}/></div>);
@@ -24,10 +24,10 @@ function Profile({ User }) {
 
             axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
                 
-                console.log(response.data.message);
-                setRequestedUser(response.data.user);
+                console.log(response.data.responseObject.message);
+                setRequestedUser(response.data.responseObject.user);
 
-                if(!response.data.user){
+                if(!response.data.responseObject.user){
                     SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
                 } 
 
@@ -42,7 +42,7 @@ function Profile({ User }) {
         if(requestedUser){
             setActualEl(<Lists User={User} requestedUser={requestedUser}/>);
         }
-    }, [requestedUser])
+    }, [requestedUser, User]);
 
     function activeEl(event) {
         const items = document.querySelectorAll('.ProfileBarOptions');
@@ -85,10 +85,17 @@ function Profile({ User }) {
             const followersList = requestedUser.followersList;
 
             axios.post('http://localhost:8080/user/addfollower/'+requestedUser.username,{followingList: followingList, followersList: followersList},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}} ).then((response)=>{
-                console.log(response.data.message);
+                console.log(response.data.responseObject.authMessage);
+                if(response.data.responseObject.auth){
+                    if(response.data.responseObject.newAccessToken){
+                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                    }
+                    console.log(response.data.responseObject.message);
+                    window.location.reload();
+                }
 
-                window.location.reload();
-                });
+                
+            });
         }        
     }
 
@@ -101,10 +108,15 @@ function Profile({ User }) {
             const followersList = requestedUser.followersList;
 
             axios.post('http://localhost:8080/user/removefollower/'+requestedUser.username,{followingList: followingList, followersList: followersList},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}} ).then((response)=>{
-                console.log(response.data.message);
-                
-                window.location.reload();
-                });
+                console.log(response.data.responseObject.authMessage);
+                if(response.data.responseObject.auth){
+                    if(response.data.responseObject.newAccessToken){
+                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                    }
+                    console.log(response.data.responseObject.message);
+                    window.location.reload();
+                }
+            });
         }
     }
 
@@ -151,28 +163,28 @@ function Profile({ User }) {
                         <div className='ProfileBar'>
 
                             <div className='ProfileBarOptions Active' onClick={(e)=>{
-                                setActualEl(<Lists requestedUser={requestedUser} User={User}/>);
+                                setActualEl(<Lists requestedUser={requestedUser} User={User} setUser={setUser}/>);
                                 activeEl(e);}}>
                                 Lists
                             </div>
                             <div className='ProfileBarOptions' onClick={(e)=>{
-                                setActualEl(<Reviews requestedUser={requestedUser} User={User}/>);
+                                setActualEl(<Reviews requestedUser={requestedUser}/>);
                                 activeEl(e);}}>
                                 Reviews
                             </div>
                             <div className='ProfileBarOptions FollowersOption' onClick={(e)=>{
-                                setActualEl(<Followers requestedUser={requestedUser} User={User}/>);
+                                setActualEl(<Followers requestedUser={requestedUser}/>);
                                 activeEl(e);}}>
                                 Followers
                             </div>
                             <div className='ProfileBarOptions FollowingOption' onClick={(e)=>{
-                                setActualEl(<Following requestedUser={requestedUser} User={User}/>);
+                                setActualEl(<Following requestedUser={requestedUser}/>);
                                 activeEl(e);}}>
                                 Following
                             </div>
                             {(requestedUser?.username===User?.username)?
                                 <div className='ProfileBarOptions' onClick={(e)=>{
-                                    setActualEl(<EditProfile User={User}/>);
+                                    setActualEl(<EditProfile User={User} setUser={setUser}/>);
                                     activeEl(e);}}>
                                     Edit Profile
                                 </div>

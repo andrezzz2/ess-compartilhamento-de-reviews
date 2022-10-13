@@ -3,7 +3,7 @@ import './Styles.css';
 import { useState, useEffect } from 'react';
 
 
-function Followers({requestedUser}) {
+function Followers({requestedUser, User, setUser}) {
 
     const [followersInfo, updateFollowersInfo] = useState([]);
 
@@ -13,7 +13,7 @@ function Followers({requestedUser}) {
         if(followersInfo.length === 0 && requestedUser.followersList.length>0){
             requestedUser.followersList.forEach((follower) => {
                 axios.get('http://localhost:8080/user/getinfo/' + follower).then((response) => {
-                    updateFollowersInfo(arr => [...arr, [follower, response.data.user.photoURL, (response.data.user.firstName + " " + response.data.user.lastName),response.data.user.bio]]);
+                    updateFollowersInfo(arr => [...arr, [follower, response.data.responseObject.user.photoURL, (response.data.responseObject.user.firstName + " " + response.data.responseObject.user.lastName),response.data.responseObject.user.bio]]);
                 });
             });
         }

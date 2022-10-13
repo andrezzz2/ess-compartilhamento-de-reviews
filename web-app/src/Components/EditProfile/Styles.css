@@ -18,7 +18,7 @@
 }
 
 .ChangeData input{
-    width: 40.2rem;
+    width: 70%;
     height: 1.7rem;
     margin-bottom: 0.25rem;
 
@@ -46,3 +46,12 @@
     cursor: pointer;
 }
 
+#delete{
+    background-color: red;
+}
+
+#delete:hover{
+    background-color: white;
+    color: red;
+    cursor: pointer;
+}

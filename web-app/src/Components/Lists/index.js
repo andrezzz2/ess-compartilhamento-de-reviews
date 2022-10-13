@@ -1,39 +1,17 @@
 import './Styles.css';
 import axios from 'axios';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 
-function Lists({ requestedUser, User }) {
+function Lists({ requestedUser, User, setUser }) {
 
     const [searchedItems, setSearchedItems] = useState([]);
 
-    function expandItem(event) {
-        const el = event.target || event.srcElement;
-        const items = el.parentNode.querySelectorAll('.Hidden');
-        items.forEach(item => {
-            item.classList.remove('Hidden');
-        });
+    function createSearchContainer(type) {
+        const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
+        SearchContainer.setAttribute("type", type);
+        SearchContainer.setAttribute("visible", "true");
     }
-
-    function closeExpandItem(event) {
-        const el = event.target || event.srcElement;
-        const items = el.parentNode.parentNode.querySelectorAll('.HiddenAttribute');
-        items.forEach(item => {
-            item.classList.add('Hidden');
-        });
-        el.parentNode.classList.add('Hidden');
-    }
-
-    const createSearchContainer = useCallback((type)=>{
-        if(User && requestedUser){
-            if(User.username === requestedUser.username){
-                const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
-                SearchContainer.setAttribute("type", type);
-                SearchContainer.setAttribute("visible", "true");
-            }
-        }
-    }, [User, requestedUser]);
-
 
     function searchTitles() {
         const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
@@ -94,8 +72,11 @@ function Lists({ requestedUser, User }) {
 
         if (type === "movie" || type === "tvSeries") {
 
-            status = prompt("Put its status (watched | watching | abandoned)");
-            rate = prompt("Put its rate (0-5)");
+            while(status!=="watched" && status!=="watching" && status!=="abandoned")
+                status = prompt("Put its status (watched | watching | abandoned)");
+            
+            while(rate!=="1" && rate!=="2" && rate!=="3" && rate!=="4" && rate!=="5")
+                rate = prompt("Put its rate (1-5)");
 
             item = {
                 id: searchedItem.id,
@@ -108,8 +89,11 @@ function Lists({ requestedUser, User }) {
             }
         } else if (type === "book"){
 
-            let status = prompt("Put its status (read | reading | abandoned)");
-            let rate = prompt("Put its rate (0-5)");
+            while(status!=="read" && status!=="reading" && status!=="abandoned")
+                status = prompt("Put its status (read | reading | abandoned)");
+            
+            while(rate!=="1" && rate!=="2" && rate!=="3" && rate!=="4" && rate!=="5")
+                rate = prompt("Put its rate (1-5)");
 
             item = {
                 id: searchedItem.book_id,
@@ -141,6 +125,23 @@ function Lists({ requestedUser, User }) {
 
     }
 
+    function expandItem(event) {
+        const el = event.target || event.srcElement;
+        const items = el.parentNode.querySelectorAll('.Hidden');
+        items.forEach(item => {
+            item.classList.remove('Hidden');
+        });
+    }
+
+    function closeExpandItem(event) {
+        const el = event.target || event.srcElement;
+        const items = el.parentNode.parentNode.querySelectorAll('.HiddenAttribute');
+        items.forEach(item => {
+            item.classList.add('Hidden');
+        });
+        el.parentNode.classList.add('Hidden');
+    }
+
     return (
         <div className="Lists">
 
@@ -165,15 +166,19 @@ function Lists({ requestedUser, User }) {
                 </div>
             </div>
 
-            <div className='ListContainer'>
+            <div className='ListContainer' type="movie">
 
                 <div className='ListOptions'>
 
                     <span className='ListTitle'> Movies </span>
 
-                    <div className='AddToList' onClick={() => { createSearchContainer("movie") }}>
-                        <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
-                    </div>
+                    {(User?.username === requestedUser?.username)?
+                        <div className='AddToList' onClick={() => { createSearchContainer("movie") }}>
+                            <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
+                        </div>
+                        :
+                        <></>
+                    }
 
                 </div>
 
@@ -213,15 +218,19 @@ function Lists({ requestedUser, User }) {
             </div>
 
 
-            <div className='ListContainer'>
+            <div className='ListContainer' type="tvSeries">
 
                 <div className='ListOptions'>
 
                     <span className='ListTitle'> Series </span>
 
-                    <div className='AddToList' onClick={() => { createSearchContainer("tvSeries") }}>
-                        <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
-                    </div>
+                    {(User?.username === requestedUser?.username)?
+                        <div className='AddToList' onClick={() => { createSearchContainer("tvSeries") }}>
+                            <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
+                        </div>
+                        :
+                        <></>
+                    }
 
                 </div>
 
@@ -259,15 +268,19 @@ function Lists({ requestedUser, User }) {
 
             </div>
 
-            <div className='ListContainer'>
+            <div className='ListContainer' type="book">
 
                 <div className='ListOptions'>
 
                     <span className='ListTitle'> Books </span>
 
-                    <div className='AddToList' onClick={() => { createSearchContainer("book") }}>
-                        <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
-                    </div>
+                    {(User?.username === requestedUser?.username)?
+                        <div className='AddToList' onClick={() => { createSearchContainer("book") }}>
+                            <img alt='add to list icon' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABSklEQVRIie2Wz07CQBCHP+UZPCiVYPQpAB/Af9AXEZ/FI0EvHLlh8FmMF2KiL0A9CsHDdmXZsNvZrTUe+CVzaDvdb2Y6O13Y6Y+0F+DbAHrAFdAEkvz+B/AGTIEJ8P5bwdWBAbAAVgW2BMZ5YKWUAp8CoG0Z0I2F3qEyCIWa2fdDoWlJqAkXZ54QV15f2Y8k4Efhgi2gI/QdFkEbyLp3Zbwj8V2w3n4A7FvgFKgVRRehGmoGOMEXFUC1Ln3gswrBp76HGe5GksrVcJnpZGfsUshMD/H90Svy/akl9X8xQXbGs5hohdpY2wY/Vwie+h4eU80A+cIaINv0IFysDZwLfQdFUFA/fte2irE5cCgBg5pg0pL7bAncSKFafcofBG5DoVpd4so+B65joVoHwD2qMyVZjhB805DxlrA+3p6webydoWbAU3690//RN0/sInIeI4efAAAAAElFTkSuQmCC'></img>
+                        </div>
+                        :
+                        <></>
+                    }
 
                 </div>
 
