@@ -1,36 +1,76 @@
 import './Styles.css';
 
 function Reviews ( {requestedUser} ){
-    return (
-        <div className="Reviews">
+    function ShowReviewByType () {
+        var movieIndex, bookIndex, serieIndex
+        var currentMovie, currentBook, currentSerie
+        return (
+            <div>
             {
             requestedUser.reviews.map(
-                review => 
-                    <div className='ReviewBoxContainer'>
-                        <div className='WhiteBox'> 
-                            <div className='ImageContainer'> 
-                                <img src="https://media.tenor.com/sPfJjqKuuYUAAAAd/monkey-creepy.gif"></img> 
-                                <button>EDIT REVIEW</button>
-                            </div>
-                            <div className="ReviewContainerContainer">
-                                <div className="TitleRateContainer">
-                                    <div>{review.title}</div>
-                                    <div>Nota: {review.rate}</div>
+                review => {
+                    switch (review.type) {
+                        case "movie":
+                            movieIndex = parseInt(review.itemId)
+                            currentMovie = requestedUser.moviesList[movieIndex]
+                            return (
+                                <div className="ReviewContainer">
+                                    {currentMovie.title}
+                                    <div className="InlineContainer">
+                                        <img className="ReviewImg" src={currentMovie.imageURL} alt="filme"></img>
+                                        <div className='ReviewText'>
+                                            {review.text}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className='ReviewContainer'>
-                                {/* <div> {review.type} </div>  */}
-                                    <div> {review.text ? review.text : "-"} </div>
+                            );
+                        case "book":
+                            bookIndex = parseInt(review.itemId)
+                            currentBook = requestedUser.booksList[bookIndex]
+                            return (
+                                <div className="ReviewContainer">
+                                    {currentBook.title}
+                                    <div className="InlineContainer">
+                                        <img className="ReviewImg" src={currentBook.imageURL} alt="imagem"></img>
+                                        <div className='ReviewText'>
+                                            {review.text}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        {/* <br /> */}
-                    </div>
-            )}
+                            );
+                        case "serie":
+                            serieIndex = parseInt(review.itemId)
+                            currentSerie = requestedUser.seriesList[serieIndex]
+                            return (
+                                <div className="ReviewContainer">
+                                    {currentSerie.title}
+                                    <div className="InlineContainer">
+                                        <img className="ReviewImg" src={currentSerie.imageURL} alt="serie"></img>
+                                        <div className='ReviewText'>
+                                            {review.text}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        default:
+                            return (
+                                <div className="ReviewContainer">
+                                    bucetinha default
+                                </div>
+                            );
+                    } 
+                }
+            )
+        }
+        </div>
+        )
+    }
 
-            
+    return (
+        <div className="Reviews">
+            <ShowReviewByType/>
         </div>
     )
-
 }
 
 export default Reviews;
