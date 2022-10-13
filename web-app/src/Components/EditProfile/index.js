@@ -2,7 +2,7 @@ import './Styles.css';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-function EditProfile ( {User} ){
+function EditProfile ( {User, setUser} ){
 
     useEffect(()=>{
         if(User)
@@ -29,20 +29,20 @@ function EditProfile ( {User} ){
         if(pessoa.firstName!=null && pessoa.lastName && pessoa.email!=null && pessoa.email!=null && pessoa.bio!=null && pessoa.photoURL!=null){
 
             axios.post('http://localhost:8080/user/updateProfile',{pessoa:pessoa},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                console.log(response.data.message);
-               
+                
+                console.log(response.status.responseObject.authMessage);
 
-                if(response.data.refresh){
-                    localStorage.setItem('x-access-token', response.data.newAccessToken);
-                    
-                    axios.post('http://localhost:8080/user/updateProfile',{pessoa:pessoa},{headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                        console.log(response.data.message);
-                        window.location.reload();
-                    });
+                if(response.data.responseObject.auth){
+                    if(response.data.responseObject.newAccessToken){
+                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                    }
+                    console.log(response.data.responseObject.message);
+                } else {
+                    //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
+                    setUser(null);
+                    localStorage.clear();
                 }
-                else{
-                    window.location.reload();
-                }
+
             });
         }
     }
