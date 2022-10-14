@@ -295,7 +295,7 @@ module.exports = databaseController => {
 
     //private route
     router.post('/user/add/movie', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
-        
+ 
         User.findOne({ username: req.body.username}, (err, user)=>{
     
             if(err){

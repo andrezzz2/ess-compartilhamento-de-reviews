@@ -73,7 +73,12 @@
     justify-content: flex-start;
     align-items: center;
     margin: 0.8rem;
+    min-width: 8rem;
+    min-height: 10rem;
     max-width: 15rem;
+    max-height: 20rem;
+    position: relative;
+
 }
 
 .ItemImg{
@@ -87,6 +92,21 @@
     font-size: 0.8rem;
     font-weight: 500;
 }
+
+.Item[active="false"] .ItemTitle{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 8rem;
+    text-align: center;
+}
+
+.Item[active="true"] .ItemTitle{
+    white-space: normal;
+    overflow: visible;
+    width: auto;
+}
+
 
 .ItemStatus{
     font-size: 0.7rem;

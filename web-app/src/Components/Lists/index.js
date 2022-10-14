@@ -63,9 +63,6 @@ function Lists({ requestedUser, User, setUser }) {
         const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
         const type = SearchContainer.getAttribute("type");
 
-        const accessToken = localStorage.getItem('x-access-token');
-        const refreshToken = localStorage.getItem('x-refresh-token');
-
         let status;
         let rate;
         let item;
@@ -106,22 +103,34 @@ function Lists({ requestedUser, User, setUser }) {
             }
         }
 
-        axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+        try{
+
+            const accessToken = localStorage.getItem('x-access-token');
+            const refreshToken = localStorage.getItem('x-refresh-token');
+
+            axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                    
+                console.log(response.data.responseObject.message);
                 
-            console.log(response.data.message);
+                if(response.data.responseObject.auth){
+                    if(response.data.responseObject.newAccessToken){
+                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                    }
+                    if(!response.data.responseObject.accepted){
+                        alert(response.data.responseObject.message);
+                    } else {
+                        window.location.reload();
+                    }
+                } else {
+                    setUser(null);
+                    localStorage.clear();
+                }
+                
+            });
             
-            if(response.data.refresh){
-                localStorage.setItem('x-access-token', response.data.newAccessToken);
-                axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                    if(!response.data.accepted) alert(response.data.message);
-                    window.location.reload();
-                });
-            } else{
-                if(!response.data.accepted) alert(response.data.message);
-                window.location.reload();
-            } 
-            
-        });
+        }catch(err){
+            console.log(err);
+        }
 
     }
 
@@ -131,6 +140,7 @@ function Lists({ requestedUser, User, setUser }) {
         items.forEach(item => {
             item.classList.remove('Hidden');
         });
+        el.parentNode.setAttribute("active", "true");
     }
 
     function closeExpandItem(event) {
@@ -140,6 +150,7 @@ function Lists({ requestedUser, User, setUser }) {
             item.classList.add('Hidden');
         });
         el.parentNode.classList.add('Hidden');
+        el.parentNode.parentNode.setAttribute("active", "false");
     }
 
     return (
@@ -192,7 +203,7 @@ function Lists({ requestedUser, User, setUser }) {
 
                     {requestedUser.moviesList.map(movie => {
                         return (
-                            <article className='Item' key={movie.id} data-testid="MovieItem">
+                            <article className='Item' key={movie.id} data-testid="MovieItem" active="false">
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img className='Hidden' alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>
@@ -244,7 +255,7 @@ function Lists({ requestedUser, User, setUser }) {
 
                     {requestedUser.seriesList.map(serie => {
                         return (
-                            <article className='Item' key={serie.id} data-testid="SerieItem">
+                            <article className='Item' key={serie.id} data-testid="SerieItem" active="false">
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img className='Hidden' alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>
@@ -294,7 +305,7 @@ function Lists({ requestedUser, User, setUser }) {
 
                     {requestedUser.booksList.map(book => {
                         return (
-                            <article className='Item' key={book.id} data-testid="BookItem">
+                            <article className='Item' key={book.id} data-testid="BookItem" active="false">
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>
