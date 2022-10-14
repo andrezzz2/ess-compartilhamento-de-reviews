@@ -5,7 +5,6 @@
     flex-direction: column;
     background-color: #D5DBF0;
     margin-top: 1rem;
-    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
     overflow-y: auto;
     scroll-behavior: smooth;
 }
@@ -214,15 +213,35 @@
     align-items: flex-start;
     width: 6.5rem;
     height: 10rem;
+    overflow: visible;
     margin: 0.5rem 0.2rem;
-    overflow: hidden;
     cursor: pointer;
- }
+    position: relative;
+}
 
-.SearchContainerItem p{
+.HiddenTitle {
+    position: absolute;
+    top: -2rem;
+    left: 0;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    padding: 0.5rem;
+    margin: 0.1rem;
+    border-radius: 35%;
+    background-color: rgb(230, 230, 230);
+    z-index: 9999999999999;
+    visibility: hidden;
+}
+
+.SearchContainerItem:hover .HiddenTitle{
+    visibility: visible;
+}
+
+.SearchItemTitle{
     font-size: 0.8rem;
     font-weight: 500;
     margin: 0.1rem;
+    width: 6.5rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

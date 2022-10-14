@@ -158,7 +158,8 @@ function Lists({ requestedUser, User, setUser }) {
                     {
                         searchedItems?.map((searchedItem, index) => {
                             return <article key={index} className="SearchContainerItem" onClick={()=>addTitleToList(searchedItem)}>
-                                        <p>{searchedItem?.title || searchedItem?.name}</p>
+                                        <p className="HiddenTitle">{searchedItem?.title || searchedItem?.name}</p>
+                                        <p className="SearchItemTitle">{searchedItem?.title || searchedItem?.name}</p>
                                         <img src={searchedItem?.image?.url ||searchedItem?.cover} alt="movie"></img>
                                    </article>
                         })
