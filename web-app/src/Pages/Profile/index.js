@@ -80,7 +80,7 @@ function Profile({ User, setUser }) {
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
 
-        if(accessToken){
+        if(User && accessToken && refreshToken){
             const followingList = User.followingList;
             const followersList = requestedUser.followersList;
 
@@ -93,10 +93,13 @@ function Profile({ User, setUser }) {
                     console.log(response.data.responseObject.message);
                     window.location.reload();
                 }
-
                 
             });
-        }        
+        } else {
+            if(window.confirm("Para seguir alguém você precisa estar logado, deseja ir para página de login?")){
+                window.location.href = "http://localhost:3000/login";
+            }
+        } 
     }
 
     function unfollowUser(){

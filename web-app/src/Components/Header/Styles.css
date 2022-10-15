@@ -32,7 +32,7 @@
 }
 
 .HeaderButton {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
     padding: 0.3rem 1.2rem;
     margin: 0 0.2rem;
@@ -49,29 +49,15 @@
 .Login {
     background-color: white;
     border: 1px solid #240047;
-}
-
-.Login a{
     color: #240047;
     text-decoration: none;
-}
-
-.Login a:visited{
-    color: #240047;
 }
 
 .SignUp {
     background-color: #5707a7;
     border: 1px solid #5707a7;
-}
-
-.SignUp a{
     color: white;
     text-decoration: none;
-}
-
-.SignUp a:visited{
-    color: white;
 }
 
 .LogOut {

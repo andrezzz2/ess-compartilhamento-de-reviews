@@ -37,6 +37,7 @@ function EditProfile ( {User, setUser} ){
                         localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                     }
                     console.log(response.data.responseObject.message);
+                    window.location.reload(); 
                 } else {
                     //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
                     setUser(null);
@@ -74,21 +75,40 @@ function EditProfile ( {User, setUser} ){
     
                     
                 });
-                 
-            }
+            }    
         }
-        else{
-            alert("A senha digitada não corresponde com a senha atual do usuário!")
-        }  
-
     }
 
     function deleteUser(){
+        const accessToken = localStorage.getItem('x-access-token');
+        const refreshToken = localStorage.getItem('x-refresh-token');
+
         if (window.confirm("Tem certexa que deseja excluir o usuário?")) {
-            console.log("batata");
+            axios.post('http://localhost:8080/user/deleteAccount',{}, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                console.log(response.data.responseObject.authMessage);
+            
+                if(response.data.responseObject.auth){
+                    if(response.data.responseObject.newAccessToken){
+                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                    }
+                    alert(response.data.responseObject.message);
+                    if(response.data.responseObject.accepted){
+                        setUser(null);
+                        localStorage.clear();
+                        window.location.href = "http://localhost:3000";
+                    }
+                    
+                } else {
+                    //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
+                    setUser(null);
+                    localStorage.clear();
+                }
+
+                
+            });
         } 
         else {
-            console.log("aceitas?")
+            console.log("Não consegue né moisés")
         }
     }    
 
@@ -112,7 +132,7 @@ function EditProfile ( {User, setUser} ){
                     </form>
                     <button onClick={alterarDados}>Alterar</button>
                     <button onClick={alterarSenha}>Alterar Senha</button>
-                    <button onClick={deleteUser}>Apagar Conta</button>
+                    <button id='delete' onClick={deleteUser}>Apagar Conta</button>
                 </div>
             </div>
         </div>

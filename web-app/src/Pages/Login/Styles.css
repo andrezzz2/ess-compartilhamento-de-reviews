@@ -26,12 +26,32 @@
     margin: 2rem 0 4rem 0;
 }
 
-.loginSpan {
+.FloatInput {
+    display: flex;
+    align-items: center;
     position: relative;
+    margin-bottom: 1rem;
+}
+
+.LoginField {
+    padding: 0.2rem 0.2rem 0.2rem 0.5rem;
+    width: 18rem;
+    height: 1.5rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 1rem;
+}
+
+.LoginField:focus {
+    outline: none;
+}
+
+.LoginSpan {
+    position: absolute;
+    left: 0.5rem;
+    top: 0.3rem;
     font-size: 1rem;
     background-color: transparent;
-    top: -2.5rem;
-    left: -5.5rem;
     color: gray;
     pointer-events: none;
     border-radius: 0.2rem;
@@ -39,21 +59,6 @@
     transition: all 200ms;
 }
 
-
-.loginField {
-    margin: 0 8rem 1rem 8rem;
-    padding: 0.2rem 0.2rem 0.2rem 0.5rem;
-    width: 17rem;
-    font-size: 0.9rem;
-    border: 2px solid #240047;
-    outline: 3px solid white;
-    border-radius: 1rem;
-}
-
-.loginField:focus {
-    border: 2px solid #240047;
-    outline: 3px solid white;
-}
 
 .LoginContainer p{
     color: white;
@@ -63,7 +68,7 @@
 #loginButton {
     box-sizing: border-box;
     color: #240047;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     background-color: white;
     border: 1px solid white;
@@ -79,7 +84,7 @@
 #loginButton:hover {
     color: white;
     background-color: #240047;
-    border: 1px solid white;
+    outline: 1px solid white;
 }
 
 .LoginContainer a{

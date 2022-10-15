@@ -63,9 +63,6 @@ function Lists({ requestedUser, User, setUser }) {
         const SearchContainer = document.getElementsByClassName("SearchContainer")[0];
         const type = SearchContainer.getAttribute("type");
 
-        const accessToken = localStorage.getItem('x-access-token');
-        const refreshToken = localStorage.getItem('x-refresh-token');
-
         let status;
         let rate;
         let item;
@@ -106,22 +103,34 @@ function Lists({ requestedUser, User, setUser }) {
             }
         }
 
-        axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+        try{
+
+            const accessToken = localStorage.getItem('x-access-token');
+            const refreshToken = localStorage.getItem('x-refresh-token');
+
+            axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                    
+                console.log(response.data.responseObject.message);
                 
-            console.log(response.data.message);
+                if(response.data.responseObject.auth){
+                    if(response.data.responseObject.newAccessToken){
+                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                    }
+                    if(!response.data.responseObject.accepted){
+                        alert(response.data.responseObject.message);
+                    } else {
+                        window.location.reload();
+                    }
+                } else {
+                    setUser(null);
+                    localStorage.clear();
+                }
+                
+            });
             
-            if(response.data.refresh){
-                localStorage.setItem('x-access-token', response.data.newAccessToken);
-                axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": response.data.newAccessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                    if(!response.data.accepted) alert(response.data.message);
-                    window.location.reload();
-                });
-            } else{
-                if(!response.data.accepted) alert(response.data.message);
-                window.location.reload();
-            } 
-            
-        });
+        }catch(err){
+            console.log(err);
+        }
 
     }
 
@@ -131,6 +140,7 @@ function Lists({ requestedUser, User, setUser }) {
         items.forEach(item => {
             item.classList.remove('Hidden');
         });
+        el.parentNode.setAttribute("active", "true");
     }
 
     function closeExpandItem(event) {
@@ -140,25 +150,45 @@ function Lists({ requestedUser, User, setUser }) {
             item.classList.add('Hidden');
         });
         el.parentNode.classList.add('Hidden');
+        el.parentNode.parentNode.setAttribute("active", "false");
+    }
+
+    function closeSearchContainer(event) {
+        const el = event.target || event.srcElement;
+        el.parentNode.parentNode.parentNode.setAttribute("visible", "false");
     }
 
     return (
         <div className="Lists">
 
             <div className="SearchContainer" visible="false">
+                
+                <div className="SearchContainerMenu">
 
-                <div className="SearchContainerBar">
-                    <input className="SearchContainerInput" />
-                    <div className="SearchContainerIcon" onClick={searchTitles}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L486.6 441.4 509.3 464 464 509.3l-22.6-22.6L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" /></svg>
+                    <div className="SearchContainerBar">
+                        <input className="SearchContainerInput" onKeyUp={(e)=>{
+                            let key = e.which || e.keyCode;
+                            if (key === 13) { // codigo da tecla enter
+                                searchTitles();
+                            }}}
+                        />
+                        <div className="SearchContainerIcon" onClick={searchTitles}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L486.6 441.4 509.3 464 464 509.3l-22.6-22.6L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" /></svg>
+                        </div>
                     </div>
+
+                    <span className='CloseSearchContainer' onClick={(e) => { closeSearchContainer(e) }}>
+                        <img alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
+                    </span>
+
                 </div>
 
                 <div className="SearchContainerItems">
                     {
                         searchedItems?.map((searchedItem, index) => {
                             return <article key={index} className="SearchContainerItem" onClick={()=>addTitleToList(searchedItem)}>
-                                        <p>{searchedItem?.title || searchedItem?.name}</p>
+                                        <p className="HiddenTitle">{searchedItem?.title || searchedItem?.name}</p>
+                                        <p className="SearchItemTitle">{searchedItem?.title || searchedItem?.name}</p>
                                         <img src={searchedItem?.image?.url ||searchedItem?.cover} alt="movie"></img>
                                    </article>
                         })
@@ -186,7 +216,7 @@ function Lists({ requestedUser, User, setUser }) {
 
                     {requestedUser.moviesList.map(movie => {
                         return (
-                            <article className='Item' key={movie.id} data-testid="MovieItem">
+                            <article className='Item' key={movie.id} data-testid="MovieItem" active="false">
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img className='Hidden' alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>
@@ -238,7 +268,7 @@ function Lists({ requestedUser, User, setUser }) {
 
                     {requestedUser.seriesList.map(serie => {
                         return (
-                            <article className='Item' key={serie.id} data-testid="SerieItem">
+                            <article className='Item' key={serie.id} data-testid="SerieItem" active="false">
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img className='Hidden' alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>
@@ -288,7 +318,7 @@ function Lists({ requestedUser, User, setUser }) {
 
                     {requestedUser.booksList.map(book => {
                         return (
-                            <article className='Item' key={book.id} data-testid="BookItem">
+                            <article className='Item' key={book.id} data-testid="BookItem" active="false">
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>

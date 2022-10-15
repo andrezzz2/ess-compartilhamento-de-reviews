@@ -50,6 +50,9 @@ module.exports = databaseController => {
     //public route
     router.post('/signup', function(req, res){
         
+        req.body.photoURL = "https://img.icons8.com/material/344/user--v1.png";
+        req.body.bio = "";
+        
         const newUser = new User(req.body);
 
         newUser.save().then(Result=>{
@@ -59,14 +62,16 @@ module.exports = databaseController => {
             if(result){ //usuário foi cadastrado
 
                 let responseObject = {
-                    message: "Perfil criado com sucesso."
+                    message: "Perfil criado com sucesso.",
+                    accepted: true
                 }
                 res.status(201).send({responseObject: responseObject});
 
             } else { //usuário não foi cadastrado
 
                 let responseObject = {
-                    message: "Não foi possível realizar o cadastro, tente mais tarde."
+                    message: "Não foi possível realizar o cadastro, tente mais tarde.",
+                    accepted:false
                 }
                 res.status(500).send({responseObject: responseObject});
 
@@ -74,11 +79,21 @@ module.exports = databaseController => {
     
         }).catch(error=>{  //erro ao salvar no BD
 
-            console.error(error);
-            let responseObject = {
-                message: "Erro ao realizar o cadastro devido a requisitos internos"
+            console.error(error.name);
+            if(error.code==='E11000'){
+                let responseObject = {
+                    message: "Username ou Email já cadastrado.",
+                    accepted:false
+                }
+                res.status(502).send({responseObject: responseObject});
+            } else {
+                let responseObject = {
+                    message: "Erro ao realizar o cadastro.",
+                    accepted:false
+                }
+                res.status(502).send({responseObject: responseObject});
             }
-            res.status(502).send({responseObject: responseObject});
+            
 
         });
     
@@ -167,12 +182,12 @@ module.exports = databaseController => {
     
     
     //private route
-    router.put('/user/deleteAccount', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
-        
+    router.post('/user/deleteAccount', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
         User.deleteOne({ username: req.body.username }).then(function(){  //deletou com sucesso
 
             console.log("User",req.body.username,"deleted");
             req.body.responseObject.message = "Conta excluída do sistema.";
+            req.body.responseObject.accepted = true;
             res.status(200).send({responseObject: req.body.responseObject});
 
         }).catch(function(error){
@@ -280,7 +295,7 @@ module.exports = databaseController => {
 
     //private route
     router.post('/user/add/movie', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
-        
+ 
         User.findOne({ username: req.body.username}, (err, user)=>{
     
             if(err){
@@ -440,17 +455,9 @@ module.exports = databaseController => {
 
                     req.body.responseObject.accepted = false;
                     req.body.responseObject.message = "Livro já está na lista.";
-                    res.status(202).send({responseObject: req.body.responseObject});
-
+                    res.status(404).send({responseObject: req.body.responseObject});
                 }
-            } else { //não encontrou usuário no BD
-
-                req.body.responseObject.accepted = false;
-                req.body.responseObject.message = "Usuário não encontrado.";
-                res.status(404).send({responseObject: req.body.responseObject});
-
             }
-
         });
 
     });

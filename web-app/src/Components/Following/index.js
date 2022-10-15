@@ -13,7 +13,7 @@ function Following({requestedUser}) {
         if(followingInfo.length === 0 && requestedUser.followingList.length>0){
             requestedUser.followingList.forEach((follower) => {
                 axios.get('http://localhost:8080/user/getinfo/' + follower).then((response) => {
-                    updateFollowingInfo(arr => [...arr, [follower, response.data.user.photoURL, (response.data.user.firstName + " " + response.data.user.lastName),response.data.user.bio]]);
+                    updateFollowingInfo(arr => [...arr, [follower, response.data.responseObject.user.photoURL, (response.data.responseObject.user.firstName + " " + response.data.responseObject.user.lastName),response.data.responseObject.user.bio]]);
                 });
             });
         }

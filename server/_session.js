@@ -89,6 +89,15 @@ class SessionController {
 
         } catch(err) {
             // access token expirou
+            if(err.name === 'TokenExpiredError') {
+                const decoded = jwt.verify(accessToken, process.env.SECRET, {ignoreExpiration: true});
+                req.body.username = decoded.username;
+            } else {
+                req.body.responseObject.auth = false;
+                req.body.responseObject.authMessage = 'Invalid access token, try logging in again.';
+                return res.send({responseObject: req.body.responseObject});
+            }
+
             if(this.isValidRefreshToken(refreshToken)){     //verificar se o server tem registrado o refresh token
                 
                 try {   
@@ -119,14 +128,20 @@ class SessionController {
                 } catch(err) {
 
                     //refresh token também expirou, então só resta logar de novo
-                    req.body.responseObject.auth = false;
-                    req.body.responseObject.authMessage = 'Invalid refresh token or it has expired, try logging in again.';
-                    return res.send({responseObject: req.body.responseObject});
+                    if(err.name === 'TokenExpiredError') {
+                        req.body.responseObject.auth = false;
+                        req.body.responseObject.authMessage = 'Refresh token has expired, try logging in again.';
+                        return res.send({responseObject: req.body.responseObject});
+                    } else {
+                        req.body.responseObject.auth = false;
+                        req.body.responseObject.authMessage = 'Invalid refresh token, try logging in again.';
+                        return res.send({responseObject: req.body.responseObject});
+                    }
 
                 }
                 
             } else {
-
+                
                 req.body.responseObject.auth = false;
                 req.body.responseObject.authMessage = 'Token has been invalidated or server lost it.'
                 return res.send({responseObject: req.body.responseObject});
