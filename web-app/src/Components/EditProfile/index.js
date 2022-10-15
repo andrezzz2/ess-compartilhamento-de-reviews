@@ -46,6 +46,9 @@ function EditProfile ( {User, setUser} ){
 
             });
         }
+        else{
+            alert("Os campos não podem estar vazios");
+        }
     }
 
     function alterarSenha(){
