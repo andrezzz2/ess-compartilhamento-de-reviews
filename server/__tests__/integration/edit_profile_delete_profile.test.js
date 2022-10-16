@@ -14,10 +14,10 @@ beforeAll(async ()=>{
     await databaseController.connect();
 
     app = require('../../_app')(databaseController);
-    const response0 = await request(app).post('/login').send({username: "andrezzz", password: "senha123"});
+    const response0 = await request(app).post('/login').send({username: "Joca", password: "senha123"});
 
-    accessToken = response0.body.accessToken;
-    refreshToken = response0.body.refreshToken;
+    accessToken = response0.body.responseObject.accessToken;
+    refreshToken = response0.body.responseObject.refreshToken;
 });
 
 afterAll(async ()=>{
@@ -27,10 +27,65 @@ afterAll(async ()=>{
 
 describe(('Edit Profile'), () => {
 
-    it((''), () => {
+    it(('deve editar o perfil do usuário'), async() => {
+
+        var pessoa = new Object();
+        pessoa.firstName = "Jorge";
+        pessoa.lastName = "Camões";
+        pessoa.email = "geronsasadimo_br@gmail.br";
+        pessoa.bio = "nem melhor nem pior o diferencial";
+        pessoa.photoURL = "https://cdna.artstation.com/p/assets/images/images/033/053/542/large/tsyo-victoria-van-den-hoef-829071c7-e8b0-4e75-8233-a3dcfe0cb745.jpg?1608242996";
+
+
+        const response = await request(app).get('/user/getinfo/Joca');
+        expect(response.status).toBe(200);
+        expect(response.body.responseObject.user).not.toBeNull();
+        expect(response.body.responseObject.message).toBe("Busca de informações de usuário realizada com sucesso.");
+
+        const response1 = await request(app).post('/user/updateProfile').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({pessoa});
+       
+        const response2 = await request(app).get('/user/getinfo/Joca');
+        expect(response2.status).toBe(200);
+        expect(response2.body.responseObject.user.lastName).toBe("Camões");
 
     });
-    test((''), () => {
+    
+});
+
+describe(('Edit Password'), () => {
+
+    it(('deve mudar a senha do usuário'), async() => {
+
+        const response = await request(app).get('/user/getinfo/Joca');
+        expect(response.status).toBe(200);
+        expect(response.body.responseObject.user).not.toBeNull();
+        expect(response.body.responseObject.message).toBe("Busca de informações de usuário realizada com sucesso.");
+
+        const response1 = await request(app).post('/user/changePassword').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({password: "senha123"});
+        expect(response1.status).toBe(200);
+        expect(response1.body.responseObject.message).toBe("Senha alterada!");
 
     });
+    
+});
+
+
+describe(('Delete a account'), () => {
+
+    it(('deve deletar o usuário'), async() => {
+
+        const response = await request(app).get('/user/getinfo/Joca');
+        expect(response.status).toBe(200);
+        expect(response.body.responseObject.user).not.toBeNull();
+        expect(response.body.responseObject.message).toBe("Busca de informações de usuário realizada com sucesso.");
+
+        const response1 = await request(app).post('/user/deleteAccount').set({"x-access-token":accessToken, "x-refresh-token":refreshToken});
+        
+        const response2 = await request(app).get('/user/getinfo/Joca');
+        expect(response2.status).toBe(404);
+        expect(response2.body.responseObject.user).toBeNull();
+        expect(response2.body.responseObject.message).toBe("Usuário não encontrado.");
+
+    });
+    
 });

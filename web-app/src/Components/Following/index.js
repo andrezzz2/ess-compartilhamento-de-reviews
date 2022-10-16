@@ -14,6 +14,8 @@ function Following({requestedUser}) {
             requestedUser.followingList.forEach((follower) => {
                 axios.get('http://localhost:8080/user/getinfo/' + follower).then((response) => {
                     updateFollowingInfo(arr => [...arr, [follower, response.data.responseObject.user.photoURL, (response.data.responseObject.user.firstName + " " + response.data.responseObject.user.lastName),response.data.responseObject.user.bio]]);
+                }).catch(erro=>{
+                    console.error(erro.toJSON());
                 });
             });
         }

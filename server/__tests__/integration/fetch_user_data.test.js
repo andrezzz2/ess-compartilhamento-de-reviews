@@ -15,8 +15,8 @@ beforeAll(async ()=>{
     app = require('../../_app')(databaseController);
     const response0 = await request(app).post('/login').send({username: "andrezzz", password: "senha123"});
 
-    accessToken = response0.body.accessToken;
-    refreshToken = response0.body.refreshToken;
+    accessToken = response0.body.responseObject.accessToken;
+    refreshToken = response0.body.responseObject.refreshToken;
 });
 
 afterAll(async ()=>{
@@ -30,16 +30,16 @@ describe(('Fetch any user data'), () => {
         
         const response = await request(app).get('/user/getinfo/andrezzz').send();
         expect(response.status).toBe(200);
-        expect(response.body.user).not.toBeNull();
-        expect(response.body.message).toBe("Busca de informações de usuário realizada com sucesso.");
+        expect(response.body.responseObject.user).not.toBeNull();
+        expect(response.body.responseObject.message).toBe("Busca de informações de usuário realizada com sucesso.");
 
     });
     it(('deve retornar mensagem de erro e objeto de usuário nulo quando feita a busca por um usuário não existente'), async () => {
 
         const response = await request(app).get('/user/getinfo/andrezzz2').send();
         expect(response.status).toBe(404);
-        expect(response.body.user).toBeNull();
-        expect(response.body.message).toBe("Usuário não encontrado.");
+        expect(response.body.responseObject.user).toBeNull();
+        expect(response.body.responseObject.message).toBe("Usuário não encontrado.");
 
     });
 
@@ -59,9 +59,9 @@ describe(('Fetch my own data'), () => {
 
         const response = await request(app).get('/user/getmyinfo').set({"x-access-token":accessToken, "x-refresh-token":refreshToken});
         expect(response.status).toBe(200);
-        expect(response.body.auth).toBeTruthy();
-        expect(response.body.user).not.toBeNull();
-        expect(response.body.message).toBe("Busca de próprias informações realizada com sucesso.");
+        expect(response.body.responseObject.auth).toBeTruthy();
+        expect(response.body.responseObject.user).not.toBeNull();
+        expect(response.body.responseObject.message).toBe("Busca de próprias informações realizada com sucesso.");
 
     });
 
@@ -74,9 +74,9 @@ describe(('Fetch my own data'), () => {
         //fazendo request para obter informaçoes usando os tokens com um usuário não existente no bd
         const response = await request(app).get('/user/getmyinfo').set({"x-access-token": fakeAccessToken, "x-refresh-token": fakeRefreshToken});
         expect(response.status).toBe(404);
-        expect(response.body.auth).toBeTruthy();
-        expect(response.body.user).toBeNull();
-        expect(response.body.message).toBe("Usuário não encontrado.");
+        expect(response.body.responseObject.auth).toBeTruthy();
+        expect(response.body.responseObject.user).toBeNull();
+        expect(response.body.responseObject.message).toBe("Usuário não encontrado.");
         
     });
 

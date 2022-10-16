@@ -189,6 +189,7 @@ module.exports = databaseController => {
             req.body.responseObject.message = "Conta excluída do sistema.";
             req.body.responseObject.accepted = true;
             res.status(200).send({responseObject: req.body.responseObject});
+            
 
         }).catch(function(error){
 

@@ -55,7 +55,6 @@ function Reviews ( {requestedUser} ){
                         default:
                             return (
                                 <div className="ReviewContainer">
-                                    bucetinha default
                                 </div>
                             );
                     } 

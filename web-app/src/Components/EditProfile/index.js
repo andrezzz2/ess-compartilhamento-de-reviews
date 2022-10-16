@@ -26,8 +26,8 @@ function EditProfile ( {User, setUser} ){
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
 
-        if(pessoa.firstName!=null && pessoa.lastName && pessoa.email!=null && pessoa.email!=null && pessoa.bio!=null && pessoa.photoURL!=null){
-
+        if(pessoa.firstName!="" && pessoa.lastName!="" && pessoa.email!="" && pessoa.bio!="" && pessoa.photoURL!=""){
+            
             axios.post('http://localhost:8080/user/updateProfile',{pessoa:pessoa},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
                 
                 console.log(response.data.responseObject.authMessage);
@@ -44,7 +44,13 @@ function EditProfile ( {User, setUser} ){
                     localStorage.clear();
                 }
 
+            }).catch(erro=>{
+                console.log(erro.toJSON());
             });
+        
+        }
+        else{
+            alert("Os campos não podem estar vazios");
         }
     }
 
@@ -58,6 +64,7 @@ function EditProfile ( {User, setUser} ){
                 alert("Erro ao redefinir senha! A senha deve ter pelo menos 8 caracteres");
             }
             else{
+                
                 axios.post('http://localhost:8080/user/changePassword',{password:newPW},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
                     console.log(response.data.responseObject.authMessage);
                 
@@ -74,8 +81,14 @@ function EditProfile ( {User, setUser} ){
                     }
     
                     
+                }).catch(erro=>{
+                    console.error(erro.toJSON());
                 });
+                
             }    
+        }
+        else{
+            alert("Senha incorreta!")
         }
     }
 
@@ -84,6 +97,7 @@ function EditProfile ( {User, setUser} ){
         const refreshToken = localStorage.getItem('x-refresh-token');
 
         if (window.confirm("Tem certexa que deseja excluir o usuário?")) {
+            
             axios.post('http://localhost:8080/user/deleteAccount',{}, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
                 console.log(response.data.responseObject.authMessage);
             
@@ -105,7 +119,10 @@ function EditProfile ( {User, setUser} ){
                 }
 
                 
+            }).catch(erro=>{
+                console.error(erro.toJSON());
             });
+            
         } 
         else {
             console.log("Não consegue né moisés")
