@@ -26,6 +26,8 @@ function Login({ User, setUser }) {
 
             }
             
+        }).catch(erro=>{
+            console.error(erro.toJSON());
         });
 
     };

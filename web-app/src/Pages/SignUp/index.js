@@ -56,6 +56,7 @@ function SignUp({ User, setUser }) {
 				email: emailInput.current.value,
 				password: passwordInput.current.value,
 			}
+			
 			axios.post("http://localhost:8080/signup", body).then(response=>{
 				if(response.data.responseObject.accepted){
 					window.confirm(response.data.responseObject.message + "\n Você será redirecionado para a página de login.");
@@ -63,6 +64,8 @@ function SignUp({ User, setUser }) {
 				}else{
 					setResponse(response.data.responseObject.message);
 				}
+			}).catch(erro=>{
+				console.error(erro.toJSON());
 			});
 		}
 
