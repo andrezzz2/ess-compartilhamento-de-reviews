@@ -25,7 +25,7 @@ function Followers({requestedUser, User, setUser}) {
 
     return (
         <div className="Followers">
-            <div className="Followers-div">
+            <div className="Followers-div" data-testid="Followers">
                 {followersInfo?.map((follower) => {
                     return (
                         <div key={follower[0]} >
