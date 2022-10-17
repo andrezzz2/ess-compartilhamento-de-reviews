@@ -61,14 +61,17 @@ function SignUp({ User }) {
 			
 			axios.post("http://localhost:8080/signup", body).then(response=>{
 				if(response.data.responseObject.accepted){
-					if (swal({
-						text: response.data.responseObject.message + "\n Você será redirecionado para a página de login.",
+					swal({
+						text:response.data.responseObject.message + "\n Você será redirecionado para a página de login.",
 						buttons:{
 							confirm: true,
 							cancel: true
-						}})){
-						window.location.href = "http://localhost:3000/login";
-					}
+						}})
+					.then(value=>{
+						if(value){
+							window.location.href = "http://localhost:3000/login";
+						} 
+					});
 				}else{
 					setResponse(response.data.responseObject.message);
 				}

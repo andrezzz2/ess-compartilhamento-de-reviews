@@ -104,14 +104,21 @@ function Profile({ User, setUser }) {
                 console.error(error.toJSON());
             });
         } else {
-            if (swal({
+
+            swal({
                 text:"Para seguir alguém você precisa estar logado, deseja ir para página de login?",
                 buttons:{
                     confirm: true,
                     cancel: true
-                }})){
-                window.location.href = "http://localhost:3000/login";
-            }
+                }})
+            .then(value=>{
+                if(value){
+                    window.location.href = "http://localhost:3000/login";
+                } else {
+                    window.location.reload();
+                }
+            });
+
         } 
     }
 
@@ -137,14 +144,21 @@ function Profile({ User, setUser }) {
                 console.error(error.toJSON());
             });
         } else {
-            if (swal({
+
+            swal({
                 text:"Para seguir alguém você precisa estar logado, deseja ir para página de login?",
                 buttons:{
                     confirm: true,
                     cancel: true
-                }})){
-                window.location.href = "http://localhost:3000/login";
-            }
+                }})
+            .then(value=>{
+                if(value){
+                    window.location.href = "http://localhost:3000/login";
+                } else {
+                    window.location.reload();
+                }
+            });
+
         } 
     }
 

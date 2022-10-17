@@ -112,42 +112,41 @@ function EditProfile ( {User, setUser} ){
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
 
-        if (swal({
+        swal({
             text:"Tem certeza que deseja excluir a conta?",
             buttons:{
                 confirm: true,
                 cancel: true
-            }})){
-            
-            axios.post('http://localhost:8080/user/deleteAccount',{}, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                console.log(response.data.responseObject.authMessage);
-            
-                if(response.data.responseObject.auth){
-                    if(response.data.responseObject.newAccessToken){
-                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
-                    }
-                    swal(response.data.responseObject.message).then(value=>{
-                        if(response.data.responseObject.accepted){
-                            setUser(null);
-                            localStorage.clear();
-                            window.location.href = "http://localhost:3000";
-                        }
-                    });
-                } else {
-                    //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
-                    setUser(null);
-                    localStorage.clear();
-                }
-
+            }})
+        .then(value=>{
+            if(value){
+                axios.post('http://localhost:8080/user/deleteAccount',{}, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                    console.log(response.data.responseObject.authMessage);
                 
-            }).catch(erro=>{
-                console.error(erro.toJSON());
-            });
-            
-        } 
-        else {
-            console.log("Não consegue né moisés")
-        }
+                    if(response.data.responseObject.auth){
+                        if(response.data.responseObject.newAccessToken){
+                            localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                        }
+                        swal(response.data.responseObject.message).then(value=>{
+                            if(response.data.responseObject.accepted){
+                                setUser(null);
+                                localStorage.clear();
+                                window.location.href = "http://localhost:3000";
+                            }
+                        });
+                    } else {
+                        //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
+                        setUser(null);
+                        localStorage.clear();
+                    }
+
+                }).catch(erro=>{
+                    console.error(erro.toJSON());
+                });
+            } else {
+                console.log("Não consegue né moisés");
+            }
+        })
     }    
 
     return (
