@@ -42,6 +42,10 @@ function App() {
                 localStorage.clear();
             }
 
+        }).catch(error=>{
+            setUser(null);
+            localStorage.clear();
+            console.error(error.toJSON());
         });
 
     }

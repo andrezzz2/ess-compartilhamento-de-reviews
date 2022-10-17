@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {PacmanLoader} from 'react-spinners';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 
 function Profile({ User, setUser }) {
@@ -20,22 +21,27 @@ function Profile({ User, setUser }) {
 
     useEffect(()=>{
 
-        if(username){
-
-            axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
-                
-                console.log(response.data.responseObject.message);
-                setRequestedUser(response.data.responseObject.user);
-
-                if(!response.data.responseObject.user){
-                    SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
-                } 
-
-            });
-
-        }
+        if(username) fetchRequestedUser(username);
 
     }, [username]);
+
+    function fetchRequestedUser(username) {
+
+        axios.get('http://localhost:8080/user/getinfo/'+username).then((response)=>{
+                
+            console.log(response.data.responseObject.message);
+            setRequestedUser(response.data.responseObject.user);
+
+            if(!response.data.responseObject.user){
+                SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
+            } 
+
+        }).catch(error=>{
+            console.error(error.toJSON());
+            SetAlert(<div className="AlertProfilePage">Usuário não encontrado.</div>);
+        });
+
+    }
 
     //logo após requestedUser ser definido, o componente de listas vai ser mostrado
     useEffect(()=>{
@@ -91,22 +97,30 @@ function Profile({ User, setUser }) {
                         localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                     }
                     console.log(response.data.responseObject.message);
-                    window.location.reload();
+                    fetchRequestedUser(username);
                 }
                 
+            }).catch(error=>{
+                console.error(error.toJSON());
             });
         } else {
-            if(window.confirm("Para seguir alguém você precisa estar logado, deseja ir para página de login?")){
+            if (swal({
+                text:"Para seguir alguém você precisa estar logado, deseja ir para página de login?",
+                buttons:{
+                    confirm: true,
+                    cancel: true
+                }})){
                 window.location.href = "http://localhost:3000/login";
             }
         } 
     }
 
     function unfollowUser(){
+
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
 
-        if(accessToken){
+        if(User && accessToken && refreshToken){
             const followingList = User.followingList;
             const followersList = requestedUser.followersList;
 
@@ -117,10 +131,21 @@ function Profile({ User, setUser }) {
                         localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                     }
                     console.log(response.data.responseObject.message);
-                    window.location.reload();
+                    fetchRequestedUser(username);
                 }
+            }).catch(error=>{
+                console.error(error.toJSON());
             });
-        }
+        } else {
+            if (swal({
+                text:"Para seguir alguém você precisa estar logado, deseja ir para página de login?",
+                buttons:{
+                    confirm: true,
+                    cancel: true
+                }})){
+                window.location.href = "http://localhost:3000/login";
+            }
+        } 
     }
 
     return (

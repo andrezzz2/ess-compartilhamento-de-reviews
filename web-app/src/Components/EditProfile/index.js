@@ -1,6 +1,7 @@
 import './Styles.css';
 import axios from 'axios';
 import { useEffect } from 'react';
+import swal from 'sweetalert';
 
 function EditProfile ( {User, setUser} ){
 
@@ -50,53 +51,73 @@ function EditProfile ( {User, setUser} ){
         
         }
         else{
-            alert("Os campos não podem estar vazios");
+            swal("Os campos não podem estar vazios");
         }
     }
 
     function alterarSenha(){
-        let atualPW = prompt("Digite a senha atual:");
-        const accessToken = localStorage.getItem('x-access-token');
-        const refreshToken = localStorage.getItem('x-refresh-token');
-        if(User.password === atualPW){
-            let newPW = prompt("Digite a nova senha:");
-            if(newPW === null || newPW === "" || newPW.length<8){
-                alert("Erro ao redefinir senha! A senha deve ter pelo menos 8 caracteres");
+
+        swal({
+            text: "Digite a senha atual:",
+            content: "input",
+            buttons: false
+        }).then(value => {
+
+            let atualPW = value;
+            const accessToken = localStorage.getItem('x-access-token');
+            const refreshToken = localStorage.getItem('x-refresh-token');
+            if(User.password === atualPW){
+                swal({
+                    text: "Digite a nova senha:",
+                    content: "input",
+                    buttons: false
+                }).then(value => {
+                    let newPW = value;
+                    if(newPW === null || newPW === "" || newPW.length<8){
+                        swal("Erro ao redefinir senha! A senha deve ter pelo menos 8 caracteres");
+                    }
+                    else{
+                        
+                        axios.post('http://localhost:8080/user/changePassword',{password:newPW},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                            
+                            console.log(response.data.responseObject.authMessage);
+                        
+                            if(response.data.responseObject.auth){
+                                if(response.data.responseObject.newAccessToken){
+                                    localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                                }
+                                swal(response.data.responseObject.message).then(value=>{
+                                    window.location.reload();
+                                });
+                            } else {
+                                //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
+                                setUser(null);
+                                localStorage.clear();
+                            }
+                            
+                        }).catch(erro=>{
+                            console.error(erro.toJSON());
+                        });
+                        
+                    }
+                });
             }
             else{
-                
-                axios.post('http://localhost:8080/user/changePassword',{password:newPW},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                    console.log(response.data.responseObject.authMessage);
-                
-                    if(response.data.responseObject.auth){
-                        if(response.data.responseObject.newAccessToken){
-                            localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
-                        }
-                        alert(response.data.responseObject.message);
-                        window.location.reload();
-                    } else {
-                        //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
-                        setUser(null);
-                        localStorage.clear();
-                    }
-    
-                    
-                }).catch(erro=>{
-                    console.error(erro.toJSON());
-                });
-                
-            }    
-        }
-        else{
-            alert("Senha incorreta!")
-        }
+                swal("Senha incorreta!");
+            }
+        });
     }
 
     function deleteUser(){
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
 
-        if (window.confirm("Tem certexa que deseja excluir o usuário?")) {
+        if (swal({
+            text:"Tem certeza que deseja excluir a conta?",
+            buttons:{
+                confirm: true,
+                cancel: true
+            }})){
             
             axios.post('http://localhost:8080/user/deleteAccount',{}, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
                 console.log(response.data.responseObject.authMessage);
@@ -105,13 +126,13 @@ function EditProfile ( {User, setUser} ){
                     if(response.data.responseObject.newAccessToken){
                         localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                     }
-                    alert(response.data.responseObject.message);
-                    if(response.data.responseObject.accepted){
-                        setUser(null);
-                        localStorage.clear();
-                        window.location.href = "http://localhost:3000";
-                    }
-                    
+                    swal(response.data.responseObject.message).then(value=>{
+                        if(response.data.responseObject.accepted){
+                            setUser(null);
+                            localStorage.clear();
+                            window.location.href = "http://localhost:3000";
+                        }
+                    });
                 } else {
                     //accessToken expirado e refreshToken também expirado ou houve sequestro de sessão
                     setUser(null);

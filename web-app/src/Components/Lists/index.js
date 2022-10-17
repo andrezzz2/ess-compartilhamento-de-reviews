@@ -1,6 +1,7 @@
 import './Styles.css';
 import axios from 'axios';
 import { useState } from 'react';
+import swal from 'sweetalert';
 
 
 function Lists({ requestedUser, User, setUser }) {
@@ -69,68 +70,123 @@ function Lists({ requestedUser, User, setUser }) {
 
         if (type === "movie" || type === "tvSeries") {
 
-            while(status!=="watched" && status!=="watching" && status!=="abandoned")
-                status = prompt("Put its status (watched | watching | abandoned)");
-            
-            while(rate!=="1" && rate!=="2" && rate!=="3" && rate!=="4" && rate!=="5")
-                rate = prompt("Put its rate (1-5)");
+            swal({
+                text: "Digite o status como 'abandoned' | 'watching' | 'watched'",
+                content: "input",
+                buttons: false
+            }).then(value => {
 
-            item = {
-                id: searchedItem.id,
-                title: searchedItem.title,
-                imageURL: searchedItem.image.url,
-                type: searchedItem.titleType,
-                year: searchedItem.year,
-                status: status,
-                rate: rate
-            }
-        } else if (type === "book"){
-
-            while(status!=="read" && status!=="reading" && status!=="abandoned")
-                status = prompt("Put its status (read | reading | abandoned)");
-            
-            while(rate!=="1" && rate!=="2" && rate!=="3" && rate!=="4" && rate!=="5")
-                rate = prompt("Put its rate (1-5)");
-
-            item = {
-                id: searchedItem.book_id,
-                title: searchedItem.name,
-                imageURL: searchedItem.cover,
-                type: "book",
-                year: searchedItem.year,
-                status: status,
-                rate: rate
-            }
-        }
-
-        try{
-
-            const accessToken = localStorage.getItem('x-access-token');
-            const refreshToken = localStorage.getItem('x-refresh-token');
-
-            axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
-                    
-                console.log(response.data.responseObject.message);
-                
-                if(response.data.responseObject.auth){
-                    if(response.data.responseObject.newAccessToken){
-                        localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
-                    }
-                    if(!response.data.responseObject.accepted){
-                        alert(response.data.responseObject.message);
-                    } else {
-                        window.location.reload();
-                    }
-                } else {
-                    setUser(null);
-                    localStorage.clear();
+                if(value==="abandoned" || value==="watching" || value==="watched")
+                    status = value;
+                else{
+                    swal("Operação cancelada, status não aceito.");
+                    return ;
                 }
-                
+
+                swal({
+                    text: "Dê uma avaliação de 1-5",
+                    content: "input",
+                    buttons: false
+                }).then(value => {
+
+                    if(value!=="1" && value!=="2" && value!=="3" && value!=="4" && value!=="5"){
+                        swal("Operação cancelada, valor não aceito.");
+                        return ;
+                    }
+
+                    rate = value;
+
+                    item = {
+                        id: searchedItem.id,
+                        title: searchedItem.title,
+                        imageURL: searchedItem.image.url,
+                        type: searchedItem.titleType,
+                        year: searchedItem.year,
+                        status: status,
+                        rate: rate
+                    }
+                    addTitleToServerList(type, item);
+
+                });
+
             });
             
-        }catch(err){
-            console.log(err);
+        } else if (type === "book"){
+
+            swal({
+                text: "Digite o status como 'abandoned' | 'watching' | 'watched'",
+                content: "input",
+                buttons: false
+            }).then(value => {
+
+                if(value==="abandoned" || value==="watching" || value==="watched")
+                    status = value;
+                else{
+                    swal("Operação cancelada, status não aceito.");
+                    return ;
+                }
+
+                swal({
+                    text: "Dê uma avaliação de 1-5",
+                    content: "input",
+                    buttons: false
+                }).then(value => {
+
+                    if(value!=="1" && value!=="2" && value!=="3" && value!=="4" && value!=="5"){
+                        swal("Operação cancelada, valor não aceito.");
+                        return ;
+                    }
+
+                    rate = value;
+
+                    item = {
+                        id: searchedItem.book_id,
+                        title: searchedItem.name,
+                        imageURL: searchedItem.cover,
+                        type: "book",
+                        year: searchedItem.year,
+                        status: status,
+                        rate: rate
+                    }
+
+                    addTitleToServerList(type, item);
+
+                });
+
+            });
+
         }
+
+    }
+
+    function addTitleToServerList(type, item) {
+
+        const accessToken = localStorage.getItem('x-access-token');
+        const refreshToken = localStorage.getItem('x-refresh-token');
+
+        axios.post('http://localhost:8080/user/add/'+type, item, {headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
+                
+            console.log(response.data.responseObject.authMessage);
+            
+            if(response.data.responseObject.auth){
+                if(response.data.responseObject.newAccessToken){
+                    localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
+                }
+                if(response.data.responseObject.accepted){
+                    swal(response.data.responseObject.message).then(value=>{
+                        window.location.reload();
+                    });
+                } else {
+                    swal(response.data.responseObject.message);
+                }
+            } else {
+                setUser(null);
+                localStorage.clear();
+            }
+            
+        }).catch(error=>{
+            console.log(error);
+        });
 
     }
 
@@ -186,7 +242,7 @@ function Lists({ requestedUser, User, setUser }) {
                 <div className="SearchContainerItems">
                     {
                         searchedItems?.map((searchedItem, index) => {
-                            return <article key={index} className="SearchContainerItem" onClick={()=>addTitleToList(searchedItem)}>
+                            return <article key={"searchedItem"+index} className="SearchContainerItem" onClick={()=>addTitleToList(searchedItem)}>
                                         <p className="HiddenTitle">{searchedItem?.title || searchedItem?.name}</p>
                                         <p className="SearchItemTitle">{searchedItem?.title || searchedItem?.name}</p>
                                         <img src={searchedItem?.image?.url ||searchedItem?.cover} alt="movie"></img>
@@ -197,7 +253,7 @@ function Lists({ requestedUser, User, setUser }) {
             </div>
 
             <div className='ListContainer' type="movie">
-
+                    
                 <div className='ListOptions'>
 
                     <span className='ListTitle'> Movies </span>

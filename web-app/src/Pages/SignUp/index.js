@@ -1,10 +1,12 @@
 import axios from 'axios';
 import './Styles.css';
 import { useEffect, useRef, useState } from 'react';
+import swal from 'sweetalert';
 
-function SignUp({ User, setUser }) {
+function SignUp({ User }) {
 
-	
+	if(User) window.location.href = "http://localhost:3000";
+
 	const firstNameInput = useRef();
 	const lastNameInput = useRef();
 	const usernameInput = useRef();
@@ -59,8 +61,14 @@ function SignUp({ User, setUser }) {
 			
 			axios.post("http://localhost:8080/signup", body).then(response=>{
 				if(response.data.responseObject.accepted){
-					window.confirm(response.data.responseObject.message + "\n Você será redirecionado para a página de login.");
-					window.location.href = "http://localhost:3000/login";
+					if (swal({
+						text: response.data.responseObject.message + "\n Você será redirecionado para a página de login.",
+						buttons:{
+							confirm: true,
+							cancel: true
+						}})){
+						window.location.href = "http://localhost:3000/login";
+					}
 				}else{
 					setResponse(response.data.responseObject.message);
 				}
