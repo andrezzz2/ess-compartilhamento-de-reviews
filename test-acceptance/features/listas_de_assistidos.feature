@@ -5,7 +5,7 @@ Feature: Listas de assistidos
 
     Background:
         Given Eu estou logado com o usuário "usuario-de-testes-das-listas-1"
-        And Eu tenho todas as listas preenchidas
+        And Eu tenho todas as listas com algum item
 
     Scenario: O usuário tenta acessar a aba de listas a partir da página Home
         Given Eu estou na página "/"
@@ -48,7 +48,7 @@ Feature: Listas de assistidos
 
     Background:
         Given Eu estou logado com o usuário "usuario-de-testes-das-listas-2"
-        And Eu não tenho nenhum item nas minhas listas
+        And Eu não tenho nenhum item nas listas
 
     Scenario: O usuário tem sua lista de filmes vazia
         Given Eu estou na página "/"
