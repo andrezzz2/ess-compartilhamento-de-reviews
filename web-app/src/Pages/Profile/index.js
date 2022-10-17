@@ -76,9 +76,9 @@ function Profile({ User, setUser }) {
 
     function FollowUnfollow(){
         if(User?.followingList.includes(requestedUser.username))
-            return (<button className='Unfollow-button' onClick={unfollowUser}>Unfollow</button>)
+            return (<button className='Unfollow-button' data-testid = "unfollow" onClick={unfollowUser}>Unfollow</button>)
         else
-            return (<button className='Follow-button' onClick={followUser}>Follow</button>)
+            return (<button className='Follow-button' data-testid = "follow" onClick={followUser}>Follow</button>)
     }
 
     function followUser(){
