@@ -10,5 +10,10 @@
   "license": "ISC",
   "devDependencies": {
     "cucumber": "^6.0.7"
+  },
+  "dependencies": {
+    "chai": "^4.3.6",
+    "chromedriver": "^106.0.1",
+    "selenium-webdriver": "^4.5.0"
   }
 }

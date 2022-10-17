@@ -1,14 +1,24 @@
 const assert = require("assert");
 const { Given, When, Then } = require("cucumber");
 
+require('chromedriver');
+const seleniumWebdriver = require('selenium-webdriver');
+const {By} = require('selenium-webdriver');
+
+let driver = new seleniumWebdriver.Builder()
+                  .forBrowser('chrome')
+                  .build();
+
+
 
 Given("Eu estou logado com o usuário {string}", function(user){
-    //criar esse ambiente descrito no Given
-    return "pending";
+    driver.get('http://localhost:3000/login').then(retorno=>{
+
+    });
 });
 
+
 Given("Eu estou na página {string}", function(path){
-    //criar esse ambiente descrito no Given
     return "pending";
 });
 

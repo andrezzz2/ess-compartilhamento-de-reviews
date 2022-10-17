@@ -27,7 +27,7 @@ function EditProfile ( {User, setUser} ){
         const accessToken = localStorage.getItem('x-access-token');
         const refreshToken = localStorage.getItem('x-refresh-token');
 
-        if(pessoa.firstName!="" && pessoa.lastName!="" && pessoa.email!="" && pessoa.bio!="" && pessoa.photoURL!=""){
+        if(pessoa.firstName!=="" && pessoa.lastName!=="" && pessoa.email!=="" && pessoa.bio!=="" && pessoa.photoURL!==""){
             
             axios.post('http://localhost:8080/user/updateProfile',{pessoa:pessoa},{headers: {"x-access-token": accessToken, "x-refresh-token": refreshToken}}).then((response)=>{
                 
