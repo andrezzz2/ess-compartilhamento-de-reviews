@@ -12,16 +12,86 @@ beforeAll(async ()=>{
     const DatabaseController = require('../../_database');
     databaseController = new DatabaseController(process.env.DB_USERNAME, process.env.DB_PASSWORD, process.env.DB_CLUSTER, process.env.DB_NAME);
     await databaseController.connect();
-
     app = require('../../_app')(databaseController);
-    const response0 = await request(app).post('/login').send({username: "Joca", password: "senha123"});
-
-    accessToken = response0.body.responseObject.accessToken;
-    refreshToken = response0.body.responseObject.refreshToken;
 });
 
 afterAll(async ()=>{
     databaseController.disconnect();
+});
+
+describe(('Sign Up'), () => {
+
+    test(('Sign Up com username e email não cadastrados'), async() => {
+
+        var pessoa = new Object();
+        pessoa.firstName = "Joca";
+        pessoa.lastName = "Joquinha";
+        pessoa.username = "Joca";
+        pessoa.email = "geronsasadimo_br@gmail.br";
+        pessoa.password = "senha123";
+
+        const response = await request(app).post('/signup').send(pessoa);
+        expect(response.status).toBe(201);
+        expect(response.body.responseObject.message).toBe("Perfil criado com sucesso.");
+        expect(response.body.responseObject.accepted).toBeTruthy();
+
+    });
+
+    test(('Sign Up com username ou email cadastrados'), async() => {
+
+        var pessoa = new Object();
+        pessoa.firstName = "Joca";
+        pessoa.lastName = "Joquinha";
+        pessoa.username = "Joca";
+        pessoa.email = "geronsasadimo_br@gmail.br";
+        pessoa.password = "senha123";
+
+        const response = await request(app).post('/signup').send({pessoa});
+        expect(response.status).toBe(502);
+        expect(response.body.responseObject.message).toBe("Username ou Email já cadastrado.");
+        expect(response.body.responseObject.accepted).toBeFalsy();
+
+    });
+
+});
+
+describe(('Login'), () => {
+
+    test(('Login com username inexistente'), async() => {
+
+        const response = await request(app).post('/login').send({username: "Joca123", password: "senha123"});
+        
+        expect(response.status).toBe(406);
+        expect(response.body.responseObject.user).toBeNull();
+        expect(response.body.responseObject.message).toBe("Usuário ou senha incorretos.");
+
+    });
+
+    test(('Login com senha errada'), async() => {
+
+        const response = await request(app).post('/login').send({username: "Joca", password: "senha1234"});
+        
+        expect(response.status).toBe(406);
+        expect(response.body.responseObject.user).toBeNull();
+        expect(response.body.responseObject.message).toBe("Usuário ou senha incorretos.");
+
+    });
+
+
+    test(('Login com informações corretas'), async() => {
+
+        const response = await request(app).post('/login').send({username: "Joca", password: "senha123"});
+        
+        expect(response.status).toBe(201);
+        expect(response.body.responseObject.user).not.toBeNull();
+        expect(response.body.responseObject.message).toBe("Login realizado com sucesso.");
+        expect(response.body.responseObject.accessToken).not.toBeNull();
+        expect(response.body.responseObject.refreshToken).not.toBeNull();
+        accessToken = response.body.responseObject.accessToken;
+        refreshToken = response.body.responseObject.refreshToken;
+
+    });
+
 });
 
 
@@ -61,7 +131,7 @@ describe(('Edit Password'), () => {
         expect(response.body.responseObject.user).not.toBeNull();
         expect(response.body.responseObject.message).toBe("Busca de informações de usuário realizada com sucesso.");
 
-        const response1 = await request(app).post('/user/changePassword').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({password: "senha123"});
+        const response1 = await request(app).post('/user/changePassword').set({"x-access-token":accessToken, "x-refresh-token":refreshToken}).send({password: "senha1234"});
         expect(response1.status).toBe(200);
         expect(response1.body.responseObject.message).toBe("Senha alterada!");
 
