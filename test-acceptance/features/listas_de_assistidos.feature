@@ -11,13 +11,13 @@ Feature: Listas de assistidos
          When Eu clico no meu icone de usuário
          Then A lista movies mostra o item com id "/title/tt0460892/" com título "Lost in Love" com status "abandoned"
 
-   #   Scenario: O usuário tem sua lista de series com alguma serie
-   #       When Eu clico no meu icone de usuário
-   #       Then A lista series mostra o item com id "/title/tt0460892/" com título "The Glory Is Gone" com status "watching"
+      Scenario: O usuário tem sua lista de series com alguma serie
+         When Eu clico no meu icone de usuário
+         Then A lista series mostra o item com id "/title/tt4714132/" com título "The Glory Is Gone" com status "watching"
 
-   #   Scenario: O usuário tem sua lista de livros com algum livro
-   #       When Eu clico no meu icone de usuário
-   #       Then A lista books mostra o item com título "Where'd You Go, Bernadette" com status "read"
+      Scenario: O usuário tem sua lista de livros com algum livro
+         When Eu clico no meu icone de usuário
+         Then A lista books mostra o item com id "13526165" com título "Where'd You Go, Bernadette" com status "read"
 
       
     # Scenario: O usuário deseja ver mais informações sobre um filme da sua lista de filmes
