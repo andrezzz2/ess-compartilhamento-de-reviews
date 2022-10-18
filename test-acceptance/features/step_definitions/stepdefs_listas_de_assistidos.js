@@ -7,20 +7,30 @@ const {By, until} = require('selenium-webdriver');
 let driver = new seleniumWebdriver.Builder().forBrowser('chrome').build();
 
 Given("Eu estou logado com o usuário {string} de senha {string}", async function(username, password){
-    
+
     await driver.get('http://localhost:3000/login');
-    
+    await driver.findElement(By.className("LoginField")).sendKeys(username);
+    await driver.findElement(By.id("passWord")).sendKeys(password);
     await driver.wait(until.elementLocated(By.css('#loginButton')), 3000).click();
     
 });
 
-Given("Eu estou na página {string}", function(path){
-    return "pending";
+Given("Eu tenho todas as listas com algum item", async function(){
+
+   return ;
+
 });
 
-When("Eu vou para a página {string}", function(user, path) {
-    //realizar ação descrita no When
-    throw "nada criado ainda";
+Given("Eu estou na página {string}", async function(path){
+
+    await driver.get('http://localhost:3000/login'+path);
+
+});
+
+When("Eu clico no meu icone de usuário", async function() {
+    
+    await driver.wait(until.elementLocated(By.css('[data-testid]="HeaderUserIcon"')), 3000).click();
+
 });
 
 When("Eu clico para criar uma lista", function() {

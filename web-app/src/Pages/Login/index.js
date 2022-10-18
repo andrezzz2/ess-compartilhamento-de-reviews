@@ -27,7 +27,7 @@ function Login({ User, setUser }) {
                     localStorage.setItem("x-refresh-token", response.data.responseObject.refreshToken);
                     localStorage.setItem("user", JSON.stringify(response.data.responseObject.user));
                     setUser(response.data.responseObject.user);
-
+                    window.location.reload();
                 }
                 
             }).catch(erro=>{

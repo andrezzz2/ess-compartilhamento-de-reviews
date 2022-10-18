@@ -16,3 +16,4 @@ Feature: Histórico de Reviews, Posts
         And Eu vou para a página "/Listas"
         When Tenta clicar no histórico de Reviews
         Then O site retorna o histórico de reviews
+

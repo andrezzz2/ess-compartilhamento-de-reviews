@@ -8,24 +8,20 @@ Feature: Listas de assistidos
         And Eu tenho todas as listas com algum item
 
     Scenario: O usuário tenta acessar a aba de listas a partir da página Home
-        Given Eu estou na página "/"
         When Eu clico no meu icone de usuário
         Then O site mostra mostra todas as 3 listas
 
     Scenario: O usuário tem sua lista de filmes com algum filme
-        Given Eu estou na página "/"
         When Eu clico no meu icone de usuário
         And Eu seleciono a aba "Lists"
         Then A lista de "movies" mostra todos os itens que ela possui
 
     Scenario: O usuário tem sua lista de series com alguma serie
-        Given Eu estou na página "/"
         When Eu clico no meu icone de usuário
         And Eu seleciono a aba "Lists"
         Then A lista de "series" mostra todas as itens que ela possui
 
     Scenario: O usuário tem sua lista de livros com algum livro
-        Given Eu estou na página "/"
         When Eu clico no meu icone de usuário
         And Eu seleciono a aba "Lists"
         Then A lista de "books" mostra todas os itens que ela possui

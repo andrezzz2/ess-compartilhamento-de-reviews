@@ -114,12 +114,12 @@ function Lists({ requestedUser, User, setUser }) {
         } else if (type === "book"){
 
             swal({
-                text: "Digite o status como 'abandoned' | 'watching' | 'watched'",
+                text: "Digite o status como 'abandoned' | 'reading' | 'read'",
                 content: "input",
                 buttons: false
             }).then(value => {
 
-                if(value==="abandoned" || value==="watching" || value==="watched")
+                if(value==="abandoned" || value==="reading" || value==="read")
                     status = value;
                 else{
                     swal("Operação cancelada, status não aceito.");
