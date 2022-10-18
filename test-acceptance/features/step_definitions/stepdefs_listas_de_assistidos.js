@@ -11,6 +11,7 @@ let driver = new seleniumWebdriver.Builder().forBrowser('chrome').build();
 
 Given("Eu estou logado com o usuário {string} de senha {string}", async function(username, password){
 
+    //tentando deslogar se tiver alguem logado
     await driver.get('http://localhost:3000/');
     try{    
         await driver.wait(until.elementLocated(By.css("#headerLogOut")), 2000).click();
@@ -23,12 +24,11 @@ Given("Eu estou logado com o usuário {string} de senha {string}", async functio
         }
     }
 
+    //logando com usuario
     await driver.get('http://localhost:3000/login');
     await driver.wait(until.elementLocated(By.id("userName")), 2000).sendKeys(username);
     await driver.wait(until.elementLocated(By.id("passWord")), 2000).sendKeys(password);
     await driver.wait(until.elementLocated(By.id("loginButton")), 2000).click();
-    
-    await driver.wait(until.elementLocated(By.css(".HomePage")), 2000);
 
 }); 
 
@@ -40,7 +40,7 @@ Given("Eu tenho todas as listas com algum item", async function(){
 
 Given("Eu estou na página {string}", async function(path){
 
-    await driver.get('http://localhost:3000/login'+path);
+    await driver.get('http://localhost:3000'+path);
 
 });
 
@@ -102,6 +102,80 @@ Then("A lista books mostra o item com id {string} com título {string} com statu
 
 })
 
+When("Eu clico no filme com id {string}", async function(id) {
+
+    try{    
+        await driver.wait(until.elementLocated(By.id(id)), 2000).click();
+    } catch (error){
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id(id))), 2000).click();
+    }
+        
+});
+
+When("Eu clico na serie com id {string}", async function(id) {
+
+    try{    
+        await driver.wait(until.elementLocated(By.id(id)), 2000).click();
+    } catch (error){
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id(id))), 2000).click();
+    }
+        
+});
+
+When("Eu clico no livro com id {string}", async function(id) {
+
+    try{    
+        await driver.wait(until.elementLocated(By.id(id)), 2000).click();
+    } catch (error){
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id(id))), 2000).click();
+    }
+        
+});
+
+Then("O filme com id {string} se expande e mostra título {string} status {string} nota {string} e ano {string}", async function(id, titulo, status, rate, year){
+    
+    let movie;
+    try{    
+        movie = await driver.wait(until.elementLocated(By.id(id)), 2000);
+    } catch (error){
+        movie = await driver.wait(until.elementIsVisible(driver.findElement(By.id(id))), 2000);
+    }
+    
+    let movieText = await movie.getText();
+    expect(movieText).to.equal(titulo+'\n'+year+'\n'+status);
+    movie.findElement(By.css('[rate="'+rate+'"]'));
+
+})
+
+Then("A serie com id {string} se expande e mostra título {string} status {string} nota {string} e ano {string}", async function(id, titulo, status, rate, year){
+    
+    let serie;
+    try{    
+        serie = await driver.wait(until.elementLocated(By.id(id)), 2000);
+    } catch (error){
+        serie = await driver.wait(until.elementIsVisible(driver.findElement(By.id(id))), 2000);
+    }
+    
+    let serieText = await serie.getText();
+    expect(serieText).to.equal(titulo+'\n'+year+'\n'+status);
+    serie.findElement(By.css('[rate="'+rate+'"]'));
+    
+})
+
+Then("O livro com id {string} se expande e mostra título {string} status {string} nota {string} e ano {string}", async function(id, titulo, status, rate, year){
+    
+    let book;
+    try{    
+        book = await driver.wait(until.elementLocated(By.id(id)), 2000);
+    } catch (error){
+        book = await driver.wait(until.elementIsVisible(driver.findElement(By.id(id))), 2000);
+    }
+    
+    let bookText = await book.getText();
+    expect(bookText).to.equal(titulo+'\n'+year+'\n'+status);
+    book.findElement(By.css('[rate="'+rate+'"]'));
+    
+})
 
 AfterAll(()=>{
     driver.quit();
