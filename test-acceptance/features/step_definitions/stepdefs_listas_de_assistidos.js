@@ -14,11 +14,11 @@ Given("Eu estou logado com o usuário {string} de senha {string}", async functio
     //tentando deslogar se tiver alguem logado
     await driver.get('http://localhost:3000/');
     try{    
-        await driver.wait(until.elementLocated(By.css("#headerLogOut")), 2000).click();
+        await driver.wait(until.elementLocated(By.css("#headerLogOut")), 1000).click();
     } catch (error){
         console.error("tentando deslogar - "+error.name);
         try{
-            await driver.wait(until.elementIsVisible(driver.findElement(By.css("#headerLogOut"))), 2000).click();
+            await driver.wait(until.elementIsVisible(driver.findElement(By.css("#headerLogOut"))), 1000).click();
         }catch (error){
             console.error("tentando deslogar - "+error.name);
         }
