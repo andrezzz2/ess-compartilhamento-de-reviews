@@ -4,7 +4,7 @@ const { Given, When, Then } = require("cucumber");
 require('chromedriver');
 const seleniumWebdriver = require('selenium-webdriver');
 const {By,until} = require('selenium-webdriver');
-
+/*
 let driver = new seleniumWebdriver.Builder()
                   .forBrowser('chrome')
                   .build();
@@ -21,3 +21,4 @@ Given('Eu estou logado com o usuario {string} e senha {string}', {timeout: 60 *1
         console.log(erro);
     }
 })
+*/

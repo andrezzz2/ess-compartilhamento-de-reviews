@@ -70,7 +70,8 @@ function Login({ User, setUser }) {
                 <div className="LoginTitle">Login</div>
 
                 <div className="FloatInput">
-                    <input className="LoginField" 
+                    <input id="userName"
+                        className="LoginField" 
                         type="text" 
                         ref={usernameInput} 
                         onFocus={event=>spanAnimation(event)}
@@ -79,7 +80,8 @@ function Login({ User, setUser }) {
                 </div>
 
                 <div className="FloatInput">
-                    <input id="passWord" className="LoginField" 
+                    <input id="passWord" 
+                        className="LoginField" 
                         type="password" 
                         ref={passwordInput} 
                         onFocus={event=>spanAnimation(event)}

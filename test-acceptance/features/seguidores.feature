@@ -3,7 +3,7 @@ Feature: Amigos_seguidores
     Background:
         Given Eu estou logado com o usuario "mmag2" e senha "senha123"
 
-    Scenario: Adição de amigo bem sucedida
+     Scenario: Adição de amigo bem sucedida
         Given eu estou na página de perfil de "andrezzz"
         And eu não tenho o usuario "andrezzz" na lista de seguindo 
         When eu clico em "adicionar amigo"

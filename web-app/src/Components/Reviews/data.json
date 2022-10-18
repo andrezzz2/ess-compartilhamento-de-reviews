@@ -1,27 +1,155 @@
 {
     "_id": {
-        "$oid": "6309209a913c5ab839661b01"
+        "$oid": "634e1a585a37eb6712ecb5e8"
     },
-    "firstName": "André",
-    "bio": "bwbiuovwenjogoivbiuewbbienwbionieonbwewiobneibneoinbeiwnbiewbnbolabiweb0enewionbe0wibnienfownewiunbienbew0bndiewenibneibn0dncmib0nermwmcisnibnrenb0wewni0wenciwdançomvbcmsoidnbornbwepnvw",
-    "followers": "2",
-    "following": "2",
+    "firstName": "Andre",
     "lastName": "Luiz",
+    "username": "andrezzz",
+    "email": "dedezinho_bolado@ehocria.com",
+    "password": "senha123",
+    "bio": "acima de mim só Deus e a roda da frente #graudemoto",
+    "photoURL": "https://akamai.sscdn.co/uploadfile/letras/fotos/a/3/9/5/a39539d6394c7df4bbe3e54b03f22bcf.jpg",
     "moviesList": [
         {
+            "id": "/title/tt4154796/",
+            "title": "Avengers: Endgame",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg",
             "type": "movie",
-            "id": "1",
-            "title": "Thor: Amor e Trovão",
-            "photoURL": "https://lumiere-a.akamaihd.net/v1/images/56015l10_bigsal_brazil_intpayoff_4x5_d4019af6.jpeg",
-            "description": "“Thor: Amor e Trovão”, da Marvel Studios, encontra o Deus do Trovão numa jornada diferente de tudo o que já enfrentou – a procura pela paz interior. Mas a reforma de Thor é interrompida por um assassino galáctico conhecido como Gorr, o Carniceiro dos Deuses, que procura a extinção dos deuses. Para combater a ameaça, Thor pede a ajuda da Rei Valkiria, de Korg e da ex-namorada Jane Foster, que – para surpresa de Thor – empunha inexplicavelmente o seu martelo mágico, Mjolnir, e se intitula a Poderosa Thor. Juntos, eles embarcam numa angustiante aventura cósmica para descobrir o mistério da vingança do Carniceiro dos Deuses e detê-lo antes que seja tarde demais.",
-            "director": "Taika Waitili",
-            "rate": "3",
-            "reviewId": "1",
-            "status": "watched"
+            "year": {
+                "$numberInt": "2019"
+            },
+            "status": "watched",
+            "rate": "4",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": "/title/tt4154756/",
+            "title": "Avengers: Infinity War",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_.jpg",
+            "type": "movie",
+            "year": {
+                "$numberInt": "2018"
+            },
+            "status": "watching",
+            "rate": "4",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": "/title/tt0099856/",
+            "title": "The Invisible Maniac",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BNzEzNTdhMDMtZGU5YS00MmU2LTkwZWUtZmIzMDhlY2M1MzA0XkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_.jpg",
+            "type": "movie",
+            "year": {
+                "$numberInt": "1990"
+            },
+            "status": "abandoned",
+            "rate": "4",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": "/title/tt0083580/",
+            "title": "Ace of Aces",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BYTU3NjlkZGYtY2Y2MC00ZTA5LTg4YTktNmRhZDk5YjZmZWY3XkEyXkFqcGdeQXVyMjQzMzQzODY@._V1_.jpg",
+            "type": "movie",
+            "year": {
+                "$numberInt": "1982"
+            },
+            "status": "watched",
+            "rate": "2",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Session has expired. New Access Token provided.",
+                "newAccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZHJlenp6IiwiaWF0IjoxNjY1OTY4MTA1LCJleHAiOjE2NjU5NjgyMjV9.bsN1TG_kHMWEOL6b1tfQCdvMb7rOj1UlCxwWKuA-SX0"
+            },
+            "username": "andrezzz"
         }
     ],
-    "photoURL": "https://akamai.sscdn.co/uploadfile/letras/fotos/a/3/9/5/a39539d6394c7df4bbe3e54b03f22bcf.jpg",
-    "username": "andrezzz",
+    "seriesList": [
+        {
+            "id": "/title/tt4363582/",
+            "title": "The Day My Butt Went Psycho!",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BMmI0MWI5MDctN2FiMy00YmNkLWEzZDgtYTVmNTVlNGI0NmM0XkEyXkFqcGdeQXVyMjY0MzgwMTc@._V1_.jpg",
+            "type": "tvSeries",
+            "year": {
+                "$numberInt": "2013"
+            },
+            "status": "watching",
+            "rate": "5",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Session has expired. New Access Token provided.",
+                "newAccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZHJlenp6IiwiaWF0IjoxNjY1ODY5NTY5LCJleHAiOjE2NjU4Njk2ODl9.Li8fb2gQvvUHVO7I0Vr3Bh1I5smUg9hgt9miLcvl5XQ"
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": "/title/tt5603356/",
+            "title": "Ace Attorney",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BZDc0MGJjODEtZTM5Zi00MWIwLTk4MjktZDViMzI0ODQzNWFjXkEyXkFqcGdeQXVyNTgzOTEwNTg@._V1_.jpg",
+            "type": "tvSeries",
+            "year": {
+                "$numberInt": "2016"
+            },
+            "status": "abandoned",
+            "rate": "3",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        }
+    ],
+    "booksList": [
+        {
+            "id": {
+                "$numberInt": "30521887"
+            },
+            "title": "How To Kill Friends And Implicate People",
+            "imageURL": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1468786570i/30521887._SX50_.jpg",
+            "type": "book",
+            "year": {
+                "$numberInt": "2016"
+            },
+            "status": "reading",
+            "rate": "3",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": {
+                "$numberInt": "36593240"
+            },
+            "title": "Sex, Not Love",
+            "imageURL": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1510836886i/36593240._SY75_.jpg",
+            "type": "book",
+            "year": {
+                "$numberInt": "2018"
+            },
+            "status": "reading",
+            "rate": "4",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Session has expired. New Access Token provided.",
+                "newAccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZHJlenp6IiwiaWF0IjoxNjY1ODY5NzY5LCJleHAiOjE2NjU4Njk4ODl9.5LfPZ_9AcPt39dnbyE383F-1n_QCvReOyIkaT8gf5QU"
+            },
+            "username": "andrezzz"
+        }
+    ],
     "reviews": [
         {
             "type": "movie",
@@ -101,33 +229,10 @@
         "tatuzão_piranhão"
     ],
     "followingList": [
+        "tatuzão_piranhão",
         "mmag2"
     ],
-    "seriesList": [
-        {
-            "type": "serie",
-            "id": "1",
-            "title": "Stranger Things",
-            "photoURL": "https://m.media-amazon.com/images/I/91NNuqAp73L._AC_SL1500_.jpg",
-            "description": "A quarta temporada da série de terror de ficção científica estadunidense Stranger Things foi lançada no serviço de streaming Netflix em dois volumes. O primeiro volume de sete episódios foi lançado em 27 de maio de 2022, enquanto o segundo volume de dois episódios foi lançado em 1º de julho de 2022.",
-            "season": "4",
-            "originalBroadcaster": "netflix",
-            "rate": "5",
-            "reviewId": "2",
-            "status": "watching"
-        }
-    ],
-    "booksList": [
-        {
-            "type": "book",
-            "id": "1",
-            "title": "Clean Code",
-            "photoURL": "https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg",
-            "description": "Even bad code can function. But if code isn’t clean, it can bring a development organization to its knees. Every year, countless hours and significant resources are lost because of poorly written code. But it doesn’t have to be that way.\nNoted software expert Robert C. Martin presents a revolutionary paradigm with Clean Code: A Handbook of Agile Software Craftsmanship. Martin has teamed up with his colleagues from Object Mentor to distill their best agile practice of cleaning code “on the fly” into a book that will instill within you the values of a software craftsman and make you a better programmer—but only if you work at it.\nWhat kind of work will you be doing? You’ll be reading code—lots of code. And you will be challenged to think about what’s right about that code, and what’s wrong with it. More importantly, you will be challenged to reassess your professional values and your commitment to your craft.\nClean Code is divided into three parts. The first describes the principles, patterns, and practices of writing clean code. The second part consists of several case studies of increasing complexity. Each case study is an exercise in cleaning up code—of transforming a code base that has some problems into one that is sound and efficient. The third part is the payoff: a single chapter containing a list of heuristics and “smells” gathered while creating the case studies. The result is a knowledge base that describes the way we think when we write, read, and clean code.",
-            "author": "Robert C. Martin",
-            "rate": "5",
-            "status": "abandoned"
-        }
-    ],
-    "password": "senha123"
+    "__v": {
+        "$numberInt": "0"
+    }
 }
