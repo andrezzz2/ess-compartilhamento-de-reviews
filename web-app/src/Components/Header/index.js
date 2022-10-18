@@ -20,8 +20,8 @@ function Header( { User, setUser } ) {
                 {User?
                     <>
                         <span className='LogOut' onClick={LogOut} data-testid="HeaderLogOut">LogOut</span>
-                        <a href={'http://localhost:3000/profile/'+User?.username} data-testid="HeaderUserIcon">
-                            <img alt='user profile' src={User?.photoURL}/>
+                        <a id='userIcon' href={'http://localhost:3000/profile/'+User?.username} data-testid="HeaderUserIcon">
+                            <img  alt='user profile' src={User?.photoURL}/>
 
                         </a>
                     </>
