@@ -97,7 +97,7 @@ function Profile({ User, setUser }) {
                         localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                     }
                     console.log(response.data.responseObject.message);
-                    fetchRequestedUser(username);
+                    window.location.reload();
                 }
                 
             }).catch(error=>{
@@ -138,7 +138,7 @@ function Profile({ User, setUser }) {
                         localStorage.setItem('x-access-token', response.data.responseObject.newAccessToken);
                     }
                     console.log(response.data.responseObject.message);
-                    fetchRequestedUser(username);
+                    window.location.reload();
                 }
             }).catch(error=>{
                 console.error(error.toJSON());

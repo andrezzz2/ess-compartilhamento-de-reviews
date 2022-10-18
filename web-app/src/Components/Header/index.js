@@ -26,13 +26,13 @@ function Header( { User, setUser } ) {
                     </>
                     :
                     <>
-                        <a href='http://localhost:3000/login'>
-                            <div className='HeaderButton Login' data-testid="HeaderLoginButton">
+                        <a href='http://localhost:3000/login' data-testid="HeaderLoginButton">
+                            <div className='HeaderButton Login'>
                                 Login
                             </div>
                         </a> 
-                        <a href='http://localhost:3000/signUp'>
-                            <div className='HeaderButton SignUp' data-testid="HeaderSignUpButton">
+                        <a href='http://localhost:3000/signUp' data-testid="HeaderSignUpButton">
+                            <div className='HeaderButton SignUp'>
                                 Sign Up
                             </div>
                         </a> 
