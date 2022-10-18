@@ -19,10 +19,8 @@ module.exports = databaseController => {
                     message: "Erro ao buscar usuário, tente novamente mais tarde."
                 }
                 res.status(502).send({responseObject: responseObject});
-
             }
             if(user){   //login certo
-
                 const {accessToken, refreshToken} = session.init(req.body.username);
                 let responseObject = {
                     user: user,
@@ -31,20 +29,15 @@ module.exports = databaseController => {
                     refreshToken: refreshToken
                 }
                 res.status(201).send({responseObject: responseObject});
-
             }
             else{   //login errado
-
                 let responseObject = {
                     user: null,
                     message: "Usuário ou senha incorretos."
                 }
                 res.status(406).send({responseObject: responseObject});
-
             }
-    
         });
-    
     });
     
     //public route
@@ -79,22 +72,12 @@ module.exports = databaseController => {
     
         }).catch(error=>{  //erro ao salvar no BD
 
-            console.error(error.name);
-            if(error.code==='E11000'){
-                let responseObject = {
-                    message: "Username ou Email já cadastrado.",
-                    accepted:false
-                }
-                res.status(502).send({responseObject: responseObject});
-            } else {
-                let responseObject = {
-                    message: "Erro ao realizar o cadastro.",
-                    accepted:false
-                }
-                res.status(502).send({responseObject: responseObject});
+            let responseObject = {
+                message: "Username ou Email já cadastrado.",
+                accepted:false
             }
+            res.status(502).send({responseObject: responseObject});
             
-
         });
     
     });
@@ -176,8 +159,6 @@ module.exports = databaseController => {
             res.status(502).send({responseObject: req.body.responseObject});
     
         });
-
-    
     });   
     
     
@@ -185,7 +166,6 @@ module.exports = databaseController => {
     router.post('/user/deleteAccount', (req, res, next) => session.verifyJWT(req, res, next), function(req, res){
         User.deleteOne({ username: req.body.username }).then(function(){  //deletou com sucesso
 
-            console.log("User",req.body.username,"deleted");
             req.body.responseObject.message = "Conta excluída do sistema.";
             req.body.responseObject.accepted = true;
             res.status(200).send({responseObject: req.body.responseObject});

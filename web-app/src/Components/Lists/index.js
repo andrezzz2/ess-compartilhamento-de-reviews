@@ -272,7 +272,7 @@ function Lists({ requestedUser, User, setUser }) {
 
                     {requestedUser.moviesList.map(movie => {
                         return (
-                            <article className='Item' key={movie.id} data-testid="MovieItem" active="false">
+                            <article className='Item Movie' key={movie.id} id={movie.id} data-testid="MovieItem" active="false">
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img className='Hidden' alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>
@@ -294,7 +294,7 @@ function Lists({ requestedUser, User, setUser }) {
                     {requestedUser.moviesList.length > 0 ?
                         <></>
                         :
-                        <div className="EmptyList">
+                        <div className="EmptyList" id="movieEmptyList">
                             <p data-testid="EmptyMoviesListMessage">Empty List</p>
                         </div>
                     }
@@ -324,7 +324,7 @@ function Lists({ requestedUser, User, setUser }) {
 
                     {requestedUser.seriesList.map(serie => {
                         return (
-                            <article className='Item' key={serie.id} data-testid="SerieItem" active="false">
+                            <article className='Item Serie' key={serie.id} id={serie.id} data-testid="SerieItem" active="false">
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img className='Hidden' alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>
@@ -346,7 +346,7 @@ function Lists({ requestedUser, User, setUser }) {
                     {requestedUser.seriesList.length > 0 ?
                         <></>
                         :
-                        <div className="EmptyList">
+                        <div className="EmptyList" id="serieEmptyList">
                             <p data-testid="EmptySeriesListMessage">Empty List</p>
                         </div>
                     }
@@ -374,7 +374,7 @@ function Lists({ requestedUser, User, setUser }) {
 
                     {requestedUser.booksList.map(book => {
                         return (
-                            <article className='Item' key={book.id} data-testid="BookItem" active="false">
+                            <article className='Item Book' key={book.id} id={book.id} data-testid="BookItem" active="false">
                                 <span className='CloseExpandItem Hidden' onClick={(e) => { closeExpandItem(e) }}>
                                     <img alt='close icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABPklEQVRIie2WwU7CQBCGP+QZOCiVQPQpDC+gYumLiM/iTYPx4NGbBp/FcCEm8gItRyBy2G4oa2l3tl3jgT+ZQ7vb/WZmd6cDB/2RGoK5HWAIXANdIEjfz4EvYAK8Ad91OdcGHoEV8FNia+A1daySImBhATQtAUJX6B0qAik0G/1ICo0qQrNw68gD3NJblPYTG/BzjVBt4zJoB7vTK7UV2+sHwJEBjoBmmXcOaqJqwF7wpQeo1lUR+Nwj+KxoMOH3/lw4QPo56yTZCWbEeZLUc+dvptR/orV9ZkFmxDOppwLtrG2CPzyCJ0WDp/gpIEuMApKnJw/ghzIoqB9/3rVytRg4tgGDqmB1pHwN3NhCtUZUbwRupVCtELe0x8DAFarVAu5RJ9Mmyhcs9lRS2gK27W2P3fZ2hqoB7+nzQf9HG1ixKXyZ2CzlAAAAAElFTkSuQmCC" />
                                 </span>
@@ -396,7 +396,7 @@ function Lists({ requestedUser, User, setUser }) {
                     {requestedUser.booksList.length > 0 ?
                         <></>
                         :
-                        <div className="EmptyList">
+                        <div className="EmptyList" id="bookEmptyList">
                             <p data-testid="EmptyBooksListMessage">Empty List</p>
                         </div>
                     }

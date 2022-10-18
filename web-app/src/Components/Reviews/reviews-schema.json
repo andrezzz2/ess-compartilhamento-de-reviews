@@ -1,0 +1,190 @@
+{
+    "_id": {
+        "$oid": "634e1a585a37eb6712ecb5e8"
+    },
+    "firstName": "Andre",
+    "lastName": "Luiz",
+    "username": "andrezzz",
+    "email": "dedezinho_bolado@ehocria.com",
+    "password": "senha123",
+    "bio": "acima de mim só Deus e a roda da frente #graudemoto",
+    "photoURL": "https://akamai.sscdn.co/uploadfile/letras/fotos/a/3/9/5/a39539d6394c7df4bbe3e54b03f22bcf.jpg",
+    "moviesList": [
+        {
+            "id": "/title/tt4154796/",
+            "title": "Avengers: Endgame",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg",
+            "type": "movie",
+            "year": {
+                "$numberInt": "2019"
+            },
+            "status": "watched",
+            "rate": "4",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": "/title/tt4154756/",
+            "title": "Avengers: Infinity War",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_.jpg",
+            "type": "movie",
+            "year": {
+                "$numberInt": "2018"
+            },
+            "status": "watching",
+            "rate": "4",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": "/title/tt0099856/",
+            "title": "The Invisible Maniac",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BNzEzNTdhMDMtZGU5YS00MmU2LTkwZWUtZmIzMDhlY2M1MzA0XkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_.jpg",
+            "type": "movie",
+            "year": {
+                "$numberInt": "1990"
+            },
+            "status": "abandoned",
+            "rate": "4",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": "/title/tt0083580/",
+            "title": "Ace of Aces",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BYTU3NjlkZGYtY2Y2MC00ZTA5LTg4YTktNmRhZDk5YjZmZWY3XkEyXkFqcGdeQXVyMjQzMzQzODY@._V1_.jpg",
+            "type": "movie",
+            "year": {
+                "$numberInt": "1982"
+            },
+            "status": "watched",
+            "rate": "2",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Session has expired. New Access Token provided.",
+                "newAccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZHJlenp6IiwiaWF0IjoxNjY1OTY4MTA1LCJleHAiOjE2NjU5NjgyMjV9.bsN1TG_kHMWEOL6b1tfQCdvMb7rOj1UlCxwWKuA-SX0"
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": "/title/tt4566758/",
+            "title": "Mulan",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BNDliY2E1MjUtNzZkOS00MzJlLTgyOGEtZDg4MTI1NzZkMTBhXkEyXkFqcGdeQXVyNjMwMzc3MjE@._V1_.jpg",
+            "type": "movie",
+            "year": {
+                "$numberInt": "2020"
+            },
+            "status": "abandoned",
+            "rate": "5",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Session has expired. New Access Token provided.",
+                "newAccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZHJlenp6IiwiaWF0IjoxNjY2MDY1NzIwLCJleHAiOjE2NjYwNjU4NDB9.kgV70LYrCBZAwNLzcCz89jD4_xFXqisFF0zS9xDnPOk"
+            },
+            "username": "andrezzz"
+        }
+    ],
+    "seriesList": [
+        {
+            "id": "/title/tt4363582/",
+            "title": "The Day My Butt Went Psycho!",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BMmI0MWI5MDctN2FiMy00YmNkLWEzZDgtYTVmNTVlNGI0NmM0XkEyXkFqcGdeQXVyMjY0MzgwMTc@._V1_.jpg",
+            "type": "tvSeries",
+            "year": {
+                "$numberInt": "2013"
+            },
+            "status": "watching",
+            "rate": "5",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Session has expired. New Access Token provided.",
+                "newAccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZHJlenp6IiwiaWF0IjoxNjY1ODY5NTY5LCJleHAiOjE2NjU4Njk2ODl9.Li8fb2gQvvUHVO7I0Vr3Bh1I5smUg9hgt9miLcvl5XQ"
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": "/title/tt5603356/",
+            "title": "Ace Attorney",
+            "imageURL": "https://m.media-amazon.com/images/M/MV5BZDc0MGJjODEtZTM5Zi00MWIwLTk4MjktZDViMzI0ODQzNWFjXkEyXkFqcGdeQXVyNTgzOTEwNTg@._V1_.jpg",
+            "type": "tvSeries",
+            "year": {
+                "$numberInt": "2016"
+            },
+            "status": "abandoned",
+            "rate": "3",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        }
+    ],
+    "booksList": [
+        {
+            "id": {
+                "$numberInt": "30521887"
+            },
+            "title": "How To Kill Friends And Implicate People",
+            "imageURL": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1468786570i/30521887._SX50_.jpg",
+            "type": "book",
+            "year": {
+                "$numberInt": "2016"
+            },
+            "status": "reading",
+            "rate": "3",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Succesfull authentication with Access Token."
+            },
+            "username": "andrezzz"
+        },
+        {
+            "id": {
+                "$numberInt": "36593240"
+            },
+            "title": "Sex, Not Love",
+            "imageURL": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1510836886i/36593240._SY75_.jpg",
+            "type": "book",
+            "year": {
+                "$numberInt": "2018"
+            },
+            "status": "reading",
+            "rate": "4",
+            "responseObject": {
+                "auth": true,
+                "authMessage": "Session has expired. New Access Token provided.",
+                "newAccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFuZHJlenp6IiwiaWF0IjoxNjY1ODY5NzY5LCJleHAiOjE2NjU4Njk4ODl9.5LfPZ_9AcPt39dnbyE383F-1n_QCvReOyIkaT8gf5QU"
+            },
+            "username": "andrezzz"
+        }
+    ],
+    "reviews": [
+        {
+            "type": "movie",
+            "title": "mais ou menos",
+            "itemId": "1",
+            "rate": "3",
+            "text": "meia boca rewibnreiobnirenwenopbnwienowepownvp",
+            "date": "25-08-2022"
+        }
+    ],
+    "followersList": [
+        "mmag2",
+        "tatuzão_piranhão"
+    ],
+    "followingList": [
+        "tatuzão_piranhão"
+    ],
+    "__v": {
+        "$numberInt": "0"
+    }
+}

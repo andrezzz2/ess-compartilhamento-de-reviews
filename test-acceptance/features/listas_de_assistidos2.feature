@@ -4,23 +4,17 @@ Feature: Listas de assistidos
     de 1 a 5
 
     Background:
-        Given Eu estou logado com o usuário "usuario-de-testes-das-listas-2" de senha "senha123"
+        Given Eu estou logado com o usuário "usuario-de-testes-das-listas-2" de senha "teste123"
         And Eu não tenho nenhum item nas listas
 
     Scenario: O usuário tem sua lista de filmes vazia
-        Given Eu estou na página "/"
         When Eu clico no meu icone de usuário
-        And Eu seleciono a aba "Lists"
-        Then A lista de "movies" exibe a mensagem "Empty List"
+        Then A lista movies exibe a mensagem "Empty List"
 
     Scenario: O usuário tem sua lista de series vazia
-        Given Eu estou na página "/"
         When Eu clico no meu icone de usuário
-        And Eu seleciono a aba "Lists"
-        Then A lista de "series" exibe a mensagem "Empty List"
+        Then A lista series exibe a mensagem "Empty List"
 
     Scenario: O usuário tem sua lista de livros vazia
-        Given Eu estou na página "/"
         When Eu clico no meu icone de usuário
-        And Eu seleciono a aba "Lists"
-        Then A lista de "books" exibe a mensagem "Empty List"
+        Then A lista books exibe a mensagem "Empty List"
