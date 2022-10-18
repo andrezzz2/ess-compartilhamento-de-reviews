@@ -81,34 +81,4 @@ Then('o usuário {string} é adicionado à lista de seguindo',async()=>{
     await driver.quit();
 })
 
-/*
-Given('{string} esta na minha lista de seguindo',async()=>{
-    try{
-        await driver.wait(until.elementLocated(By.className("FollowingOption")), 5000).click();
-    }
-    catch(erro){
-        console.log(erro);
-    }
-})
 
-When('visito o perfil de {string}',async(string)=>{
-    await driver.get('http://localhost:3000/profile/jjp');
-})
-
-When('eu clico no botao de {string}',async(string)=>{
-    try{
-        await driver.wait(until.elementLocated(By.className("Unfollow-button")), 5000).click();
-    }
-    catch(erro){
-        console.log(erro);
-    }
-    await driver.navigate().refresh();
-})
-
-Then('{string} é removido da minha lista de seguindo',async()=>{
-    var name = await driver.findElement(By.className('Follow-button')).getText();
-    expect(name).equal("Follow");
-
-    await driver.quit();
-})
-*/

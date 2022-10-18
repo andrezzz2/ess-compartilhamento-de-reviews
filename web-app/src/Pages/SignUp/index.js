@@ -132,7 +132,7 @@ function SignUp({ User }) {
 				<div className="SignUpTitle">Sign Up</div>
 
 				<div className="FloatInput">
-					<input className="SignUpField"
+					<input id='Fname' className="SignUpField"
 						type="text"
 						ref={firstNameInput}
 						onFocus={event => spanAnimation(event)}
@@ -141,7 +141,7 @@ function SignUp({ User }) {
 				</div>
 
 				<div className="FloatInput">
-					<input className="SignUpField"
+					<input id='Lname' className="SignUpField"
 						type="text"
 						ref={lastNameInput}
 						onFocus={event => spanAnimation(event)}
@@ -150,7 +150,7 @@ function SignUp({ User }) {
 				</div>
 
 				<div className="FloatInput">
-					<input className="SignUpField"
+					<input id='Uname' className="SignUpField"
 						type="text"
 						ref={usernameInput}
 						onFocus={event => spanAnimation(event)}
@@ -159,7 +159,7 @@ function SignUp({ User }) {
 				</div>
 
 				<div className="FloatInput">
-					<input className="SignUpField"
+					<input id='emaiL' className="SignUpField"
 						type="text"
 						ref={emailInput}
 						onFocus={event => spanAnimation(event)}
@@ -168,7 +168,7 @@ function SignUp({ User }) {
 				</div>
 
 				<div className="FloatInput">
-					<input className="SignUpField"
+					<input id='passWorD' className="SignUpField"
 						type="password"
 						ref={passwordInput}
 						onFocus={event => spanAnimation(event)}
