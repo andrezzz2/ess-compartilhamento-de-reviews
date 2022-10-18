@@ -3,18 +3,15 @@ const { Given, When, Then } = require("cucumber");
 
 require('chromedriver');
 const seleniumWebdriver = require('selenium-webdriver');
-const {By} = require('selenium-webdriver');
+const {By, until} = require('selenium-webdriver');
 
-let driver = new seleniumWebdriver.Builder()
-                  .forBrowser('chrome')
-                  .build();
+let driver = new seleniumWebdriver.Builder().forBrowser('chrome').build();
 
-
-
-Given("Eu estou logado com o usuário {string}", function(user){
-    driver.get('http://localhost:3000/login').then(retorno=>{
-
-    });
+Given("Eu estou logado com o usuário {string} de senha {string}", async function(username, password){
+    await driver.get('http://localhost:3000/login');
+    
+    await driver.wait(until.elementLocated(By.css('#loginButton')), 5000).click();
+    
 });
 
 
