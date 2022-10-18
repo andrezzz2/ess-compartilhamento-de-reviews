@@ -12,18 +12,49 @@
 }
 
 .ReviewContainer {
- 
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background-color: #D5DBF0;
+    border-radius: 0.2rem;
+    flex-direction: column;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+}
+
+.TitleName {
+    padding-left: 0.5rem;
+}
+
+.WhiteBoxContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 0.2rem;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    margin: 0.8rem 0.8rem 0.4rem 0.8rem;
 }
 
 .InlineContainer {
+    margin: 0.8rem 0.8rem 0.4rem 0.8rem;
     display: flex;
 }
 
 .ReviewImg {
+    margin: 0.8rem 0.8rem 0.4rem 0.8rem;
+}
+
+.ReviewImg img {
     width: 9rem;
     height: 13.5rem;
 }
 
-.ReviewTextContainer {
-    
+.TitleName {
+    background-color: #D5DBF0;
+    margin: 0.5rem 0rem 0.5rem 0rem;
+}
+
+.ReviewText {
+    flex: 1;
+    margin: 2rem 0.8rem 0.4rem -8rem;
 }

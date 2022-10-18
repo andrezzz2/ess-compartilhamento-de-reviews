@@ -19,10 +19,8 @@ module.exports = databaseController => {
                     message: "Erro ao buscar usuário, tente novamente mais tarde."
                 }
                 res.status(502).send({responseObject: responseObject});
-
             }
             if(user){   //login certo
-
                 const {accessToken, refreshToken} = session.init(req.body.username);
                 let responseObject = {
                     user: user,
@@ -31,20 +29,15 @@ module.exports = databaseController => {
                     refreshToken: refreshToken
                 }
                 res.status(201).send({responseObject: responseObject});
-
             }
             else{   //login errado
-
                 let responseObject = {
                     user: null,
                     message: "Usuário ou senha incorretos."
                 }
                 res.status(406).send({responseObject: responseObject});
-
             }
-    
         });
-    
     });
     
     //public route
@@ -166,8 +159,6 @@ module.exports = databaseController => {
             res.status(502).send({responseObject: req.body.responseObject});
     
         });
-
-    
     });   
     
     
