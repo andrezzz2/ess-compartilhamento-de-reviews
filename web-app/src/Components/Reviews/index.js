@@ -74,12 +74,11 @@ function Reviews ( {requestedUser} ){
             </div>
             )
         }
-        }
-        
+    }        
 
     return (
         <div className="Reviews">
-            <ShowReviewByType/>
+            Não existem reviews desse usuário.
         </div>
     )
 }
