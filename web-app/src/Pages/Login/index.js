@@ -13,22 +13,28 @@ function Login({ User, setUser }) {
 
     function login(){
 
-        axios.post('http://localhost:8080/login', {username: usernameInput.current.value, password: passwordInput.current.value}).then((response)=>{
+        if(usernameInput.current.value==="" || passwordInput.current.value===""){
+            setServerResponse("Os campos de usuário e senha devem estar preenchidos");
+        } else {
+
+            axios.post('http://localhost:8080/login', {username: usernameInput.current.value, password: passwordInput.current.value}).then((response)=>{
             
-            setServerResponse(response.data.responseObject.message);
+                setServerResponse(response.data.responseObject.message);
 
-            if(response.data.responseObject.user){  //operação de login deu certo
+                if(response.data.responseObject.user){  //operação de login deu certo
 
-                localStorage.setItem("x-access-token", response.data.responseObject.accessToken);
-                localStorage.setItem("x-refresh-token", response.data.responseObject.refreshToken);
-                localStorage.setItem("user", JSON.stringify(response.data.responseObject.user));
-                setUser(response.data.responseObject.user);
+                    localStorage.setItem("x-access-token", response.data.responseObject.accessToken);
+                    localStorage.setItem("x-refresh-token", response.data.responseObject.refreshToken);
+                    localStorage.setItem("user", JSON.stringify(response.data.responseObject.user));
+                    setUser(response.data.responseObject.user);
 
-            }
-            
-        }).catch(erro=>{
-            console.error(erro.toJSON());
-        });
+                }
+                
+            }).catch(erro=>{
+                console.error(erro.toJSON());
+            });
+
+        } 
 
     };
 
