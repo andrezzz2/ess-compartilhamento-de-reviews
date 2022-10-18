@@ -33,10 +33,12 @@ Given("Eu estou logado com o usuário {string} de senha {string}", async functio
 }); 
 
 Given("Eu tenho todas as listas com algum item", async function(){
-
    return ;
-
 });
+
+Given("Eu não tenho nenhum item nas listas", async function(){
+    return ;
+ });
 
 Given("Eu estou na página {string}", async function(path){
 
@@ -174,6 +176,48 @@ Then("O livro com id {string} se expande e mostra título {string} status {strin
     let bookText = await book.getText();
     expect(bookText).to.equal(titulo+'\n'+year+'\n'+status);
     book.findElement(By.css('[rate="'+rate+'"]'));
+    
+})
+
+Then("A lista movies exibe a mensagem {string}", async function(emptyListMessage){
+    
+    let emptyList;
+    try{    
+        emptyList = await driver.wait(until.elementLocated(By.id("movieEmptyList")), 2000);
+    } catch (error){
+        emptyList = await driver.wait(until.elementIsVisible(driver.findElement(By.id("movieEmptyList"))), 2000);
+    }
+    
+    let emptyListText = await emptyList.getText();
+    expect(emptyListText).to.equal(emptyListMessage);
+    
+})
+
+Then("A lista series exibe a mensagem {string}", async function(emptyListMessage){
+    
+    let emptyList;
+    try{    
+        emptyList = await driver.wait(until.elementLocated(By.id("serieEmptyList")), 2000);
+    } catch (error){
+        emptyList = await driver.wait(until.elementIsVisible(driver.findElement(By.id("serieEmptyList"))), 2000);
+    }
+    
+    let emptyListText = await emptyList.getText();
+    expect(emptyListText).to.equal(emptyListMessage);
+    
+})
+
+Then("A lista books exibe a mensagem {string}", async function(emptyListMessage){
+    
+    let emptyList;
+    try{    
+        emptyList = await driver.wait(until.elementLocated(By.id("bookEmptyList")), 2000);
+    } catch (error){
+        emptyList = await driver.wait(until.elementIsVisible(driver.findElement(By.id("bookEmptyList"))), 2000);
+    }
+    
+    let emptyListText = await emptyList.getText();
+    expect(emptyListText).to.equal(emptyListMessage);
     
 })
 

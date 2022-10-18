@@ -294,7 +294,7 @@ function Lists({ requestedUser, User, setUser }) {
                     {requestedUser.moviesList.length > 0 ?
                         <></>
                         :
-                        <div className="EmptyList">
+                        <div className="EmptyList" id="movieEmptyList">
                             <p data-testid="EmptyMoviesListMessage">Empty List</p>
                         </div>
                     }
@@ -346,7 +346,7 @@ function Lists({ requestedUser, User, setUser }) {
                     {requestedUser.seriesList.length > 0 ?
                         <></>
                         :
-                        <div className="EmptyList">
+                        <div className="EmptyList" id="serieEmptyList">
                             <p data-testid="EmptySeriesListMessage">Empty List</p>
                         </div>
                     }
@@ -396,7 +396,7 @@ function Lists({ requestedUser, User, setUser }) {
                     {requestedUser.booksList.length > 0 ?
                         <></>
                         :
-                        <div className="EmptyList">
+                        <div className="EmptyList" id="bookEmptyList">
                             <p data-testid="EmptyBooksListMessage">Empty List</p>
                         </div>
                     }

@@ -1,10 +1,11 @@
-const assert = require("assert");
 const { Given, When, Then } = require("cucumber");
+const chai = require("chai");
+var expect = chai.expect;
 
 require('chromedriver');
 const seleniumWebdriver = require('selenium-webdriver');
 const {By,until} = require('selenium-webdriver');
-/*
+
 let driver = new seleniumWebdriver.Builder()
                   .forBrowser('chrome')
                   .build();
