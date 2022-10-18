@@ -1,6 +1,7 @@
 Feature: Amigos_seguidores
 
-    Scenario: Mostrar lista de amigos de um usuário
+    
+    Scenario: Mostrar lista de followers de um usuário
         Given Eu estou logado com o usuario "mmag2" e senha "senha123"
         And Eu estou na pagina de profile
         When Eu clico em "Followers"
@@ -20,7 +21,7 @@ Feature: Amigos_seguidores
         And No seu perfil aparece o botao de "Follow"
 
     Scenario: Mostra lista de amigos vazia de um usuário
-        Given O usuário "alan" possui lista de amigos vazia
+        Given O usuário "jjp" possui lista de amigos vazia
         And Eu estou logado como "alan"
         And Eu estou na página "/perfil"
         When Eu clico em "/amigos"
@@ -32,6 +33,25 @@ Feature: Amigos_seguidores
         When Eu clico no usuário "alan"
         Then O site mostra a página "/perfil/alan" do usuário "alan"
 
+    Scenario: Visitar a lista de followers de um seguidor
+        Given Eu estou logado com o usuario "mmag2" na pagina de "profile"
+        And clico na aba de "Followers"
+        When eu clico em "andrezzz"
+        And clico na aba de "Followers" no perfil de "andrezzz"
+        Then os seguidores de "andrezzz" aparecem na minha tela 
+    
+    Scenario: Mostrar lista de following de um usuário
+        Given Eu estou logado com o usuario "mmag2" e senha "senha123"
+        And Eu estou na pagina de "profile"
+        When Eu clico em "Following"
+        Then O site mostra a lista de amigos do usuário "mmag2"
+
+        Scenario: Visitar a lista de following de um seguidor
+        Given Eu estou logado com o usuario "mmag2" na pagina de "profile"
+        And clico na aba de "Followers"
+        When eu clico em "andrezzz"
+        And clico na aba de "Following" no perfil de "andrezzz"
+        Then os seguidores de "andrezzz" aparecem na minha tela 
     
 
 
