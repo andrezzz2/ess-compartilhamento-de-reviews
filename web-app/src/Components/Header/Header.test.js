@@ -24,7 +24,7 @@ describe('Usuário deslogado', () => {
         render(<Header User={mockUser}/>);
         
         expect(screen.getByTestId('HeaderLoginButton')).toBeInTheDocument();
-        expect(screen.getByText('Login')).toHaveAttribute('href', 'http://localhost:3000/login');
+        expect(screen.getByTestId('HeaderLoginButton')).toHaveAttribute('href', 'http://localhost:3000/login');
 
     });
 
@@ -34,7 +34,7 @@ describe('Usuário deslogado', () => {
         render(<Header User={mockUser}/>);
         
         expect(screen.getByTestId('HeaderSignUpButton')).toBeInTheDocument();
-        expect(screen.getByText('Sign Up')).toHaveAttribute('href', 'http://localhost:3000/signUp');
+        expect(screen.getByTestId('HeaderSignUpButton')).toHaveAttribute('href', 'http://localhost:3000/signUp');
 
     });
 
