@@ -6,9 +6,6 @@ import {render, screen, cleanup, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Followers from './';
 
-afterEach(cleanup);
-
-
 
 describe('Usuário com seguidores', () => {
 
