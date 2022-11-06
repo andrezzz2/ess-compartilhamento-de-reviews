@@ -1,7 +1,7 @@
 # ess-compartilhamento-de-reviews
 
 ## Descrição
-Projeto para disciplina de engenharia de software e sistemas com intuito de cobrir algumas features de usuário comum de um aplicativo de compartilhamento de reviews
+Projeto para disciplina de engenharia de software e sistemas com intuito de cobrir algumas features de usuário comum de um aplicativo de compartilhamento de reviews.
 
 ## Tecnologias utilizadas
 
